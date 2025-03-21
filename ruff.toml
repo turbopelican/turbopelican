@@ -1,0 +1,10 @@
+[lint]
+select = ["ALL"]
+ignore = ["T20", "EM", "TRY003"]
+
+[lint.extend-per-file-ignores]
+"__main__.py" = ["BLE001"]
+
+[lint.pydocstyle]
+convention = "google"
+
