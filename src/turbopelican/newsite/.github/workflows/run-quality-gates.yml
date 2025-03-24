@@ -1,0 +1,38 @@
+name: Build static site
+run-name: ${{ github.actor }}
+on:
+  push:
+    braches:
+      - main
+jobs:
+  build-static-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+      - run: uv sync
+      - name: Generate content
+        run: .venv/bin/pelican content
+      - name: Upload the static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: output/
+
+  deploy:
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build-static-site
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
