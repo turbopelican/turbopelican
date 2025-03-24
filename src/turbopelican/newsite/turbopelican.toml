@@ -1,0 +1,8 @@
+[pelican]
+author = "Elliot Simpson"
+sitename = "MySite"
+timezone  = "Pacific/Auckland"
+default_lang = "en"
+
+[publish]
+site_url = "https://clockback.github.io"

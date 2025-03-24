@@ -1,6 +1,14 @@
 [lint]
 select = ["ALL"]
-ignore = ["T20", "EM", "TRY003"]
+ignore = [
+    # Rulesets
+    "EM",
+    "T20",
+
+    # Specific rules
+    "TRY003",
+    "S603"
+]
 
 [lint.extend-per-file-ignores]
 "__main__.py" = ["BLE001"]

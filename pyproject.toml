@@ -7,7 +7,16 @@ authors = [
     { name = "Elliot Simpson", email = "elliot@p-s.co.nz" }
 ]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "langcodes>=3.5.0",
+    "pydantic>=2.10.6",
+    "tomlkit>=0.13.2",
+    "tzdata>=2025.1",
+    "tzlocal>=5.3.1",
+]
+
+[project.scripts]
+turbopelican = "turbopelican.__main__:main"
 
 [build-system]
 requires = ["hatchling"]
