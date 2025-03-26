@@ -1,6 +1,6 @@
 # turbopelican
 
-An uber quick tool to create a Pelican static-site and deploy it to GitHub Pages.
+An uber-quick tool to create a Pelican static-site and deploy it to GitHub Pages.
 
 ## Usage
 

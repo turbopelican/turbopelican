@@ -1,7 +1,7 @@
 [project]
 name = "turbopelican"
 version = "0.1.0"
-description = "Add your description here"
+description = "An uber-quick tool to create a Pelican static-site and deploy it to GitHub Pages."
 readme = "README.md"
 authors = [
     { name = "Elliot Simpson", email = "elliot@p-s.co.nz" }
