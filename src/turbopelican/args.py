@@ -188,11 +188,11 @@ def _get_site_url(cli_site_url: str | None, path: Path) -> str:
     )
     if filtered_name:
         default_url = f"https://{filtered_name}.github.io"
-        chosen_name = input(f"What is your website URL? [{default_url}]")
+        chosen_name = input(f"What is your website URL? [{default_url}] ")
         if not chosen_name:
             return default_url
     else:
-        chosen_name = input("What is your website URL: ").removesuffix(".github.io")
+        chosen_name = input("What is your website URL? ").removesuffix(".github.io")
         if not chosen_name:
             raise ValueError("Website URL not provided.")
 
