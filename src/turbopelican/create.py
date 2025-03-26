@@ -4,6 +4,7 @@ Author: Elliot Simpson
 """
 
 import shutil
+import subprocess
 from pathlib import Path
 from typing import cast
 
@@ -12,7 +13,7 @@ import tomlkit
 from turbopelican.args import TurboConfiguration
 
 
-def generate(directory: Path) -> None:
+def generate_repository(directory: Path) -> None:
     """Generates the files in place for turbopelican to use.
 
     Args:
@@ -26,6 +27,15 @@ def generate(directory: Path) -> None:
         directory.rmdir()
     to_copy = Path(__file__).parent / "newsite"
     shutil.copytree(to_copy, directory)
+
+    git_path = shutil.which("git")
+    if git_path is None:
+        raise OSError("git not installed")
+    subprocess.run([git_path, "init"], check=True, cwd=directory)
+
+    uv_path = shutil.which("uv")
+    if uv_path:
+        subprocess.run([uv_path, "sync"], check=True, cwd=directory)
 
 
 def update_website(args: TurboConfiguration) -> None:
