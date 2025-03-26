@@ -1,6 +1,7 @@
 [project]
 name = "turbopelican"
 version = "0.1.0"
+license = "AGPL-3.0-or-later"
 description = "An uber-quick tool to create a Pelican static-site and deploy it to GitHub Pages."
 readme = "README.md"
 authors = [
