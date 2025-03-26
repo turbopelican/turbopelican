@@ -16,6 +16,10 @@ dependencies = [
     "tzlocal>=5.3.1",
 ]
 
+[project.urls]
+Source = "https://github.com/clockback/turbopelican"
+Issues = "https://github.com/clockback/turbopelican/issues"
+
 [project.scripts]
 turbopelican = "turbopelican.__main__:main"
 
