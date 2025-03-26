@@ -8,7 +8,7 @@ from collections.abc import Callable
 from typing import TypeVar
 
 from turbopelican.args import get_args
-from turbopelican.create import generate, update_pyproject, update_website
+from turbopelican.create import generate_repository, update_pyproject, update_website
 
 T = TypeVar("T")
 
@@ -34,7 +34,7 @@ def suppress(function: Callable[[], T]) -> Callable[[], T]:
 def main() -> None:
     """Parses the command-line arguments and runs."""
     args = get_args()
-    generate(args.directory)
+    generate_repository(args.directory)
     update_website(args)
     update_pyproject(args.directory)
 
