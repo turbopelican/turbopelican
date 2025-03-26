@@ -16,5 +16,5 @@ You can learn more about Pelican [here](https://getpelican.com).
 
 ### Notes
 
-Pelican still targets Python 3.9, which does not bundle built-in support for reading TOML configuration. Projects using `turbopelican` requires Python 3.11 or higher, and therefore adopts the newer convention of placing configuration in a TOML file rather than Python scripts. Generally, you should only need to modify `turbopelican.toml`, rather than `pelicanconf.py` or `publishconf.py`.
+Pelican still targets Python 3.9, which does not bundle built-in support for reading TOML configuration. Projects using `turbopelican` require Python 3.11 or higher, and therefore adopt the newer convention of placing configuration in a TOML file rather than Python scripts. Generally, you should only need to modify `turbopelican.toml`, rather than `pelicanconf.py` or `publishconf.py`.
 
