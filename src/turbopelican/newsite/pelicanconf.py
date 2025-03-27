@@ -12,7 +12,7 @@ with Path("turbopelican.toml").open("rb") as config:
 
 AUTHOR = turbopelican_config["pelican"]["author"]
 SITENAME = turbopelican_config["pelican"]["sitename"]
-SITEURL = turbopelican_config["publish"]["site_url"]
+SITEURL = ""
 
 PATH = "content"
 
