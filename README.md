@@ -1,3 +1,5 @@
+<div align="center"><img width="400" alt="turbopelican logo" src="./assets/logo.svg"/></div>
+
 # turbopelican
 
 An uber-quick tool to create a Pelican static-site and deploy it to GitHub Pages.
