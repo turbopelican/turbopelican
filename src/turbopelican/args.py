@@ -154,7 +154,7 @@ def _get_default_lang(cli_default_lang: str | None) -> str:
         cli_default_lang: The default language provided by the CLI if applicable.
 
     Returns:
-        The default langauge of the website.
+        The default language of the website.
     """
     if cli_default_lang:
         return cli_default_lang
@@ -164,7 +164,7 @@ def _get_default_lang(cli_default_lang: str | None) -> str:
         return "en"
 
     if not langcodes.Language.get(chosen_lang).is_valid():
-        raise ValueError(f"Invalid langauge: {chosen_lang}")
+        raise ValueError(f"Invalid language: {chosen_lang}")
 
     return chosen_lang
 
