@@ -1,4 +1,4 @@
-<div align="center"><img width="400" alt="turbopelican logo" src="./assets/logo.svg"/></div>
+<div align="center"><img width="400" alt="turbopelican logo" src="https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/logo.svg"/></div>
 
 # turbopelican
 
