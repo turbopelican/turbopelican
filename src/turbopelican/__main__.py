@@ -34,7 +34,7 @@ def suppress(function: Callable[[], T]) -> Callable[[], T]:
 def main() -> None:
     """Parses the command-line arguments and runs."""
     args = get_args()
-    generate_repository(args.directory)
+    generate_repository(args.directory, quiet=args.quiet)
     update_website(args)
     update_pyproject(args.directory)
 

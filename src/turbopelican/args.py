@@ -23,6 +23,7 @@ class TurboConfiguration(BaseModel):
     timezone: str
     default_lang: str
     site_url: str
+    quiet: bool
 
 
 def _get_raw_args() -> argparse.Namespace:
@@ -65,6 +66,13 @@ def _get_raw_args() -> argparse.Namespace:
         "--site-url",
         help="The url of the website.",
         nargs="?",
+    )
+    parser.add_argument(
+        "--quiet",
+        "-q",
+        help="Suppresses all output.",
+        action="store_true",
+        default=False,
     )
     return parser.parse_args()
 
@@ -232,4 +240,5 @@ def get_args() -> TurboConfiguration:
         timezone=timezone,
         default_lang=default_lang,
         site_url=site_url,
+        quiet=raw_args.quiet,
     )
