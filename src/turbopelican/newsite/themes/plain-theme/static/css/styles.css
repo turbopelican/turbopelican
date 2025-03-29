@@ -1,0 +1,21 @@
+body {
+	background-color: #151515;
+	color: azure;
+	font-family: sans-serif;
+}
+
+main {
+	max-width: 900px;
+	margin: auto;
+}
+
+h1 {
+	text-align: center;
+	color: #89bcff;
+}
+
+a {
+	color: #89bcff;
+	text-decoration: none;
+	font-weight: bold;
+}
