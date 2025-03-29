@@ -2,6 +2,8 @@
 
 # turbopelican
 
+[![turbopelican](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/adding-badge/assets/badge/v1.json)](https://github.com/clockback/turbopelican)
+
 An uber-quick tool to create a Pelican static-site and deploy it to GitHub
 Pages.
 
@@ -25,7 +27,6 @@ You will then need to open your GitHub repository's settings, and under
 deployment**" allows you to choose a source. Choose GitHub actions, and your
 site should be published.
 
-
 You can learn more about Pelican [here](https://getpelican.com).
 
 ### Configuration
@@ -35,4 +36,3 @@ reading TOML configuration. Projects using `turbopelican` require Python 3.11
 or higher, and therefore adopt the newer convention of placing configuration
 in a TOML file rather than Python scripts. Generally, you should only need to
 modify `turbopelican.toml`, rather than `pelicanconf.py` or `publishconf.py`.
-
