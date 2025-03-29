@@ -1,0 +1,19 @@
+<html lang="{{ lang }}">
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ SITENAME }}</title>
+		<meta name="viewport" content="width=device-width, intitial-scale=1">
+		<meta name="description" content="Personal page for {{ AUTHOR }}">
+		<link rel="stylesheet" type="text/css" href="{{ SITE_URL }}/theme/css/styles.css">
+	</head>
+	<body>
+		<header>
+			<a href="/">
+				<h1>{{ SITENAME }}</h1>
+			</a>
+		</header>
+		<main>
+			{% block content %}{% endblock %}
+		</main>
+	</body>
+</html>

@@ -42,3 +42,18 @@ SOCIAL = (
 )
 
 DEFAULT_PAGINATION = False
+
+THEME = "themes/plain-theme"
+
+ARTICLE_PATHS: list[str] = []
+PAGE_PATHS = [""]
+PAGE_SAVE_AS = "{slug}.html"
+
+STATIC_PATHS = ["static", "images"]
+EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
+    "static/favicon.ico": {"path": "favicon.ico"},
+    "images/logo.svg": {"path": "logo.svg"},
+}
+
+INDEX_SAVE_AS = ""
+INDEX_URL = ""

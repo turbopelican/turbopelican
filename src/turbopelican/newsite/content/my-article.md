@@ -1,7 +1,7 @@
-Title: Turbo pelican!
-Date: 2025-03-19 17:45
-Category: Review
+Title: My article
 
-# Get started
+## My article
 
-Congratulations on setting up your GitHub page with TurboPelican.
+You can write on this page however you like. Markdown is converted into HTML
+for you by Pelican.
+
