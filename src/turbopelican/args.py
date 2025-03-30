@@ -24,6 +24,7 @@ class TurboConfiguration(BaseModel):
     default_lang: str
     site_url: str
     quiet: bool
+    no_input: bool
 
 
 def _get_raw_args() -> argparse.Namespace:
@@ -74,10 +75,17 @@ def _get_raw_args() -> argparse.Namespace:
         action="store_true",
         default=False,
     )
+    parser.add_argument(
+        "--no-input",
+        "-n",
+        help="Raises an error if user input required to operate.",
+        action="store_true",
+        default=False,
+    )
     return parser.parse_args()
 
 
-def _get_author(cli_author: str | None, git_path: str) -> str:
+def _get_author(cli_author: str | None, git_path: str, *, no_input: str) -> str:
     """Obtains the author of the website/package.
 
     The priority order is: provided by CLI; provided by user input; and if
@@ -86,12 +94,16 @@ def _get_author(cli_author: str | None, git_path: str) -> str:
     Args:
         cli_author: The author provided by the CLI if applicable.
         git_path: The string path to the git instance.
+        no_input: Whether or not to raise an error if user input required.
 
     Returns:
         The name of the author.
     """
     if cli_author:
         return cli_author
+
+    if no_input:
+        raise ValueError("Could not obtain author without user input.")
 
     get_default_author = subprocess.run(
         [git_path, "config", "--get", "user.name"],
@@ -110,12 +122,13 @@ def _get_author(cli_author: str | None, git_path: str) -> str:
     return input(f"Who is the website author? [{default_author}] ") or default_author
 
 
-def _get_site_name(cli_site_name: str | None, path: Path) -> str:
+def _get_site_name(cli_site_name: str | None, path: Path, *, no_input: str) -> str:
     """Returns the name of the website.
 
     Args:
         cli_site_name: The site-name provided by the CLI if applicable.
         path: The resolved path to the directory where the project is located.
+        no_input: Whether or not to raise an error if user input required.
 
     Returns:
         The name of the website.
@@ -123,20 +136,27 @@ def _get_site_name(cli_site_name: str | None, path: Path) -> str:
     if cli_site_name:
         return cli_site_name
 
+    if no_input:
+        raise ValueError("Could not obtain site name without user input.")
+
     return input(f"What is the name of the website? [{path.name}] ") or path.name
 
 
-def _get_timezone(cli_timezone: str | None) -> str:
+def _get_timezone(cli_timezone: str | None, *, no_input: str) -> str:
     """Returns the timezone for the website.
 
     Args:
         cli_timezone: The timezone provided by the CLI if applicable.
+        no_input: Whether or not to raise an error if user input required.
 
     Returns:
         The timezone of the website.
     """
     if cli_timezone:
         return cli_timezone
+
+    if no_input:
+        raise ValueError("Could not obtain timezone without user input.")
 
     default_local_zone = get_localzone()
     if not isinstance(default_local_zone, ZoneInfo):
@@ -155,17 +175,21 @@ def _get_timezone(cli_timezone: str | None) -> str:
     return chosen_local_zone
 
 
-def _get_default_lang(cli_default_lang: str | None) -> str:
+def _get_default_lang(cli_default_lang: str | None, *, no_input: str) -> str:
     """Returns the default language for the website.
 
     Args:
         cli_default_lang: The default language provided by the CLI if applicable.
+        no_input: Whether or not to raise an error if user input required.
 
     Returns:
         The default language of the website.
     """
     if cli_default_lang:
         return cli_default_lang
+
+    if no_input:
+        raise ValueError("Could not obtain default language without user input.")
 
     chosen_lang = input("What language will your website use? [en] ")
     if not chosen_lang:
@@ -177,18 +201,22 @@ def _get_default_lang(cli_default_lang: str | None) -> str:
     return chosen_lang
 
 
-def _get_site_url(cli_site_url: str | None, path: Path) -> str:
+def _get_site_url(cli_site_url: str | None, path: Path, *, no_input: str) -> str:
     """Returns the website URL.
 
     Args:
         cli_site_url: The site URL provided by the CLI if applicable.
         path: The resolved path to the directory where the project is located.
+        no_input: Whether or not to raise an error if user input required.
 
     Returns:
         The website URL.
     """
     if cli_site_url:
         return cli_site_url
+
+    if no_input:
+        raise ValueError("Could not obtain site URL without user input.")
 
     website_name = path.name.removesuffix(".github.io").replace("_", "-")
     filtered_name = "".join(
@@ -227,11 +255,11 @@ def get_args() -> TurboConfiguration:
 
     raw_args = _get_raw_args()
     path = Path(raw_args.directory).resolve()
-    author = _get_author(raw_args.author, git_path)
-    site_name = _get_site_name(raw_args.site_name, path)
-    timezone = _get_timezone(raw_args.timezone)
-    default_lang = _get_default_lang(raw_args.default_lang)
-    site_url = _get_site_url(raw_args.site_url, path)
+    author = _get_author(raw_args.author, git_path, no_input=raw_args.no_input)
+    site_name = _get_site_name(raw_args.site_name, path, no_input=raw_args.no_input)
+    timezone = _get_timezone(raw_args.timezone, no_input=raw_args.no_input)
+    default_lang = _get_default_lang(raw_args.default_lang, no_input=raw_args.no_input)
+    site_url = _get_site_url(raw_args.site_url, path, no_input=raw_args.no_input)
 
     return TurboConfiguration(
         directory=path,
@@ -241,4 +269,5 @@ def get_args() -> TurboConfiguration:
         default_lang=default_lang,
         site_url=site_url,
         quiet=raw_args.quiet,
+        no_input=raw_args.no_input,
     )
