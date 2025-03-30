@@ -2,7 +2,7 @@
 
 # turbopelican
 
-[![turbopelican](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/adding-badge/assets/badge/v1.json)](https://github.com/clockback/turbopelican)
+[![turbopelican](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/badge/v1.json)](https://github.com/clockback/turbopelican)
 
 An uber-quick tool to create a Pelican static-site and deploy it to GitHub
 Pages.
