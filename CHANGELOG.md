@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 0.2.1
+
+### Bug fixes
+
+- In the version prior, users were given the GitHub workflow
+  `run-quality-gates.yml`, despite the file not containing quality gates.
+  Renamed to `turbopelican.yml`.
+
+### Other changes
+
+- Correcting logo in `README.md` for universal viewing on media like PyPI.
+- Condensing logo SVG size.
+- Including turbopelican badge in `README.md`.
+- Expanding the `README.md` instructions with more comprehensive instructions.
+- Adding "Typing :: Typed" classifier to project metadata.
+
 ## Version 0.2.0
 
 ### Features
