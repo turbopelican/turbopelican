@@ -23,7 +23,8 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Internet :: WWW/HTTP :: Site Management",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Software Development :: Code Generators"
+    "Topic :: Software Development :: Code Generators",
+    "Typing :: Typed"
 ]
 dependencies = [
     "langcodes>=3.5.0",
