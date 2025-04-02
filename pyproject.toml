@@ -35,9 +35,9 @@ dependencies = [
 ]
 
 [project.urls]
-Source = "https://github.com/clockback/turbopelican"
-Issues = "https://github.com/clockback/turbopelican/issues"
-Changelog = "https://github.com/clockback/turbopelican/blob/main/CHANGELOG.md"
+Source = "https://github.com/turbopelican/turbopelican"
+Issues = "https://github.com/turbopelican/turbopelican/issues"
+Changelog = "https://github.com/turbopelican/turbopelican/blob/main/CHANGELOG.md"
 
 [project.scripts]
 turbopelican = "turbopelican.__main__:main"

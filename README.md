@@ -1,8 +1,8 @@
-<div align="center"><img width="400" alt="turbopelican logo" src="https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/logo.svg"/></div>
+<div align="center"><img width="400" alt="turbopelican logo" src="https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/logo.svg"/></div>
 
 # turbopelican
 
-[![turbopelican](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/badge/v1.json)](https://github.com/clockback/turbopelican)
+[![turbopelican](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/badge/v1.json)](https://github.com/turbopelican/turbopelican)
 
 An uber-quick tool to create a Pelican static-site and deploy it to GitHub
 Pages.
@@ -16,30 +16,30 @@ source for your website
 For example, if you want the website to be `https://johndoe.github.io`, your
 GitHub repository will need to be called `johndoe.github.io`.
 
-![Create your repository on GitHub](https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/docs/create-repo.png)
+![Create your repository on GitHub](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/create-repo.png)
 
 After your repository is created, copy the git repository URL. You'll need it
 later.
 
-![Obtain your repository URL](https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/docs/get-repo-reference.png)
+![Obtain your repository URL](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/get-repo-reference.png)
 
 Then enter your settings for your repository, and under "**Code and
 automation**" click "**Pages**". The section "**Build and deployment**" allows
 you to choose a source. Chose "**GitHub actions**".
 
-![Configure site publication](https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/docs/github-actions-settings.png)
+![Configure site publication](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/github-actions-settings.png)
 
 Next, you need to run `turbopelican`. Users are recommended to run
 `turbopelican` using `uvx`:
 
 ```sh
-$ uvx turbopelican clockback.github.io
+$ uvx turbopelican turbopelican.github.io
 Who is the website author? [Ilya Simpson]
-What is the name of the website? [clockback.github.io] Time to Clock Back
+What is the name of the website? [turbopelican.github.io] Time to Clock Back
 What timezone will your website use? [Pacific/Auckland]
 What language will your website use? [en]
-What is your website URL? [https://clockback.github.io]
-Initialized empty Git repository in /home/elliot/projects/clockback.github.io/.git/
+What is your website URL? [https://turbopelican.github.io]
+Initialized empty Git repository in /home/elliot/projects/turbopelican.github.io/.git/
 Using CPython 3.11.11
 Creating virtual environment at: .venv
 Resolved 23 packages in 0.66ms
@@ -79,17 +79,17 @@ GitHub repository will need to be called `johndoe.github.io`.
 You will then need to push your code to GitHub:
 
 ```sh
-cd clockback.github.io
+cd turbopelican.github.io
 git add .
 git commit -q -m "Initial commit."
-git remote add origin git@github.com:clockback/clockback.github.io.git # Use your own git repo reference
+git remote add origin git@github.com:turbopelican/turbopelican.github.io.git # Use your own git repo reference
 git push -q --set-upstream origin main
 ```
 
 Now look at your repository on GitHub. You should be able to see the
 repository:
 
-![View new repository](https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/docs/view-new-repo.png)
+![View new repository](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/view-new-repo.png)
 
 If you navigate back to the settings for GitHub Pages, you should see a
 message informing you that your website is already live.
@@ -97,11 +97,11 @@ message informing you that your website is already live.
 > ℹ️  **_NOTE:_** It may take a minute for this prompt to appear, because
 GitHub Actions must first deploy your website.
 
-![Site is live](https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/docs/site-is-live.png)
+![Site is live](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/site-is-live.png)
 
 If you follow the link, you should be able to see your newly deployed website.
 
-![View website](https://raw.githubusercontent.com/clockback/turbopelican/refs/heads/main/assets/docs/main-page.png)
+![View website](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/main-page.png)
 
 You can learn more about Pelican [here](https://getpelican.com).
 

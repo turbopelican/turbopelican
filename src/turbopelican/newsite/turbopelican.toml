@@ -5,4 +5,4 @@ timezone  = "Pacific/Auckland"
 default_lang = "en"
 
 [publish]
-site_url = "https://clockback.github.io"
+site_url = "https://turbopelican.github.io"
