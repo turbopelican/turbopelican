@@ -1,8 +1,33 @@
 [pelican]
 author = "Elliot Simpson"
 sitename = "MySite"
+
 timezone  = "Pacific/Auckland"
+
 default_lang = "en"
+
+path = "content"
+
+default_pagination = false
+
+theme = "themes/plain-theme"
+
+article_paths = []
+page_paths = [""]
+page_save_as = "{slug}.html"
+
+static_paths = ["static", "images"]
+
+index_save_as = ""
+index_url = ""
+
+[[pelican.extra_path_metadata]]
+origin = "static/favicon.ico"
+path = "favicon.ico"
+
+[[pelican.extra_path_metadata]]
+origin = "images/logo.svg"
+path = "logo.svg"
 
 [publish]
 site_url = "https://clockback.github.io"
