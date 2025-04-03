@@ -7,18 +7,18 @@ import tomllib
 from pathlib import Path
 
 with Path("turbopelican.toml").open("rb") as config:
-    turbopelican_config = tomllib.load(config)
+    turbopelican_config = tomllib.load(config)["pelican"]
 
 
-AUTHOR = turbopelican_config["pelican"]["author"]
-SITENAME = turbopelican_config["pelican"]["sitename"]
+AUTHOR: str = turbopelican_config["author"]
+SITENAME: str = turbopelican_config["sitename"]
 SITEURL = ""
 
-PATH = "content"
+TIMEZONE: str = turbopelican_config["timezone"]
 
-TIMEZONE = turbopelican_config["pelican"]["timezone"]
+DEFAULT_LANG: str = turbopelican_config["default_lang"]
 
-DEFAULT_LANG = turbopelican_config["pelican"]["default_lang"]
+PATH: str = turbopelican_config["path"]
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -28,24 +28,30 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = ()
+LINKS: tuple[tuple[str, str], ...] = tuple(
+    (link["title"], link["url"]) for link in turbopelican_config.get("links", [])
+)
 
 # Social widget
-SOCIAL = ()
+SOCIAL: tuple[tuple[str, str], ...] = tuple(
+    (link["title"], link["url"]) for link in turbopelican_config.get("social", [])
+)
 
-DEFAULT_PAGINATION = False
+DEFAULT_PAGINATION: bool = turbopelican_config["default_pagination"]
 
-THEME = "themes/plain-theme"
+THEME: str = turbopelican_config["theme"]
 
-ARTICLE_PATHS: list[str] = []
-PAGE_PATHS = [""]
-PAGE_SAVE_AS = "{slug}.html"
+ARTICLE_PATHS: list[str] = turbopelican_config["article_paths"]
+PAGE_PATHS: list[str] = turbopelican_config["page_paths"]
+PAGE_SAVE_AS: str = turbopelican_config["page_save_as"]
 
-STATIC_PATHS = ["static", "images"]
+STATIC_PATHS: list[str] = turbopelican_config["static_paths"]
 EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
-    "static/favicon.ico": {"path": "favicon.ico"},
-    "images/logo.svg": {"path": "logo.svg"},
+    metadata["origin"]: {
+        key: value for (key, value) in metadata.items() if key != "origin"
+    }
+    for metadata in turbopelican_config["extra_path_metadata"]
 }
 
-INDEX_SAVE_AS = ""
-INDEX_URL = ""
+INDEX_SAVE_AS: str = turbopelican_config["index_save_as"]
+INDEX_URL: str = turbopelican_config["index_url"]
