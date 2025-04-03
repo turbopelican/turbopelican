@@ -14,10 +14,13 @@ __all__ = [
     "CATEGORY_FEED_ATOM",
     "DEFAULT_LANG",
     "DEFAULT_PAGINATION",
+    "DELETE_OUTPUT_DIRECTORY",
     "FEED_ALL_ATOM",
     "LINKS",
     "PATH",
+    "RELATIVE_URLS",
     "SITENAME",
+    "SITEURL",
     "SOCIAL",
     "TIMEZONE",
     "TRANSLATION_FEED_ATOM",
@@ -46,9 +49,9 @@ with Path("turbopelican.toml").open("rb") as config:
 
 # If your site is available via HTTPS, make sure SITEURL begins with https://
 SITEURL = pelicanconf["publish"]["site_url"]
-RELATIVE_URLS = False
+RELATIVE_URLS = pelicanconf["publish"]["relative_urls"]
 
-FEED_ALL_ATOM = "feeds/all.atom.xml"
-CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
+FEED_ALL_ATOM = pelicanconf["publish"]["feed_all_atom"]
+CATEGORY_FEED_ATOM = pelicanconf["publish"]["category_feed_atom"]
 
-DELETE_OUTPUT_DIRECTORY = True
+DELETE_OUTPUT_DIRECTORY = pelicanconf["publish"]["delete_output_directory"]
