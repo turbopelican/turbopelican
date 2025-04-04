@@ -46,7 +46,7 @@ Next, you need to run `turbopelican`. Users are recommended to run
 `turbopelican` using `uvx`:
 
 ```sh
-$ uvx turbopelican turbopelican.github.io
+$ uvx turbopelican init turbopelican.github.io
 Who is the website author? [Ilya Simpson]
 What is the name of the website? [turbopelican.github.io] Time to Clock Back
 What timezone will your website use? [Pacific/Auckland]
