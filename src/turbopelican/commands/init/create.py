@@ -3,6 +3,7 @@
 Author: Elliot Simpson
 """
 
+import importlib.resources as pkg_resources
 import shutil
 import subprocess
 from pathlib import Path
@@ -10,7 +11,7 @@ from typing import cast
 
 import tomlkit
 
-from turbopelican.args import TurboConfiguration
+from turbopelican.commands.init.config import TurboConfiguration
 
 
 def generate_repository(directory: Path, *, quiet: bool = True) -> None:
@@ -26,8 +27,10 @@ def generate_repository(directory: Path, *, quiet: bool = True) -> None:
         )
     if directory.exists():
         directory.rmdir()
-    to_copy = Path(__file__).parent / "newsite"
-    shutil.copytree(to_copy, directory)
+    with pkg_resources.as_file(
+        pkg_resources.files(__name__.split(".", 1)[0]).joinpath("newsite"),
+    ) as p:
+        shutil.copytree(p, directory)
 
     git_path = shutil.which("git")
     if git_path is None:
