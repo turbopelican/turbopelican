@@ -33,7 +33,7 @@ Next, you need to run `turbopelican`. Users are recommended to run
 `turbopelican` using `uvx`:
 
 ```sh
-$ uvx turbopelican clockback.github.io
+$ uvx turbopelican init clockback.github.io
 Who is the website author? [Ilya Simpson]
 What is the name of the website? [clockback.github.io] Time to Clock Back
 What timezone will your website use? [Pacific/Auckland]
