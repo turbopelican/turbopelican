@@ -1,5 +1,35 @@
 # Changelog
 
+## Version 0.3.0
+
+### Deprecated features
+
+- Running `turbopelican` without a subcommand is now deprecated.
+
+### Features
+
+- Introducing `--no-input` flag. This should cause `turbopelican` to raise an
+  error if the command the user ran is insufficient without receiving further
+  arguments via standard input.
+- Introducing `--use-defaults` flag. This causes `turbopelican` to search for
+  the provided configuration settings in the following order:
+  1. Command-line arguments
+  2. Default arguments
+  3. Standard input (unless using `--no-input` flag)
+- Removing links and social media from deployed configuration files.
+- `turbopelican.toml` should now contain all configuration that was previously
+  contained in `pelicanconf.py` and `publishconf.py`.
+- A subparser for `turbopelican` allows initializing repositories via the
+  `turbopelican init` command.
+- Putting contents in the `README.md` file in deployed repositories.
+
+### Other changes
+
+- Creating profile picture for organization.
+- Shifting repository to `turbopelican` GitHub organization. No longer hosted
+  by `clockback`.
+- Writing summary of tool's purpose in `README.md`.
+
 ## Version 0.2.1
 
 ### Bug fixes
