@@ -7,10 +7,23 @@
 An uber-quick tool to create a Pelican static-site and deploy it to GitHub
 Pages.
 
+## Explanation
+
+GitHub lets you host static websites at your own subdomain. If your GitHub
+username is **mrjohndoe**, you can host a website at
+`https://mrjohndoe.github.io`. The same applies for organizations. If your
+GitHub organization is called **MySpecialOrg**, you can host a website at
+`https://myspecialorg.github.io`.
+
+`turbopelican` is a tool which swiftly creates a static website to deploy at
+your subdomain. Any developer with a GitHub account and `uv` installed
+(**[see here](https://docs.astral.sh/uv/getting-started/installation/)**) can
+deploy a website in minutes.
+
 ## Usage
 
 Before you run `turbopelican`, create a new repository where you will keep the
-source for your website
+source for your website.
 
 > ℹ️  **_NOTE:_**  Make sure that the site-url uses the GitHub repository's name.
 For example, if you want the website to be `https://johndoe.github.io`, your
