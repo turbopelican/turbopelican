@@ -14,6 +14,23 @@ import tomlkit
 from turbopelican.commands.init.config import TurboConfiguration
 
 
+def uv_sync(directory: Path, *, quiet: bool = True) -> None:
+    """Sets up the repository with uv.
+
+    Args:
+        directory: The path where the repository is to be initialized.
+        quiet: Whether or not to suppress output.
+    """
+    uv_path = shutil.which("uv")
+    if not uv_path:
+        return
+
+    uv_sync_args = [uv_path, "sync"]
+    if quiet:
+        uv_sync_args.append("--quiet")
+    subprocess.run(uv_sync_args, check=True, cwd=directory)
+
+
 def generate_repository(directory: Path, *, quiet: bool = True) -> None:
     """Generates the files in place for turbopelican to use.
 
@@ -43,12 +60,7 @@ def generate_repository(directory: Path, *, quiet: bool = True) -> None:
     git_use_main_branch = [git_path, "branch", "-m", "main"]
     subprocess.run(git_use_main_branch, check=True, cwd=directory)
 
-    uv_path = shutil.which("uv")
-    if uv_path:
-        uv_sync_args = [uv_path, "sync"]
-        if quiet:
-            uv_sync_args.append("--quiet")
-        subprocess.run(uv_sync_args, check=True, cwd=directory)
+    uv_sync(directory, quiet=quiet)
 
 
 def update_website(args: TurboConfiguration) -> None:
