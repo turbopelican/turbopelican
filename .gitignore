@@ -11,3 +11,8 @@ wheels/
 
 # Environment variables
 .env
+
+# Deployed lock file
+# This makes it as easy as possible for turbopelican to be installed with the
+# latest possible version.
+src/turbopelican/_newsite/uv.lock
