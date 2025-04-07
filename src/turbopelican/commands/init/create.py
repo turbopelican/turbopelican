@@ -40,6 +40,9 @@ def generate_repository(directory: Path, *, quiet: bool = True) -> None:
         git_init_args.append("--quiet")
     subprocess.run(git_init_args, check=True, cwd=directory)
 
+    git_use_main_branch = [git_path, "branch", "-m", "main"]
+    subprocess.run(git_use_main_branch, check=True, cwd=directory)
+
     uv_path = shutil.which("uv")
     if uv_path:
         uv_sync_args = [uv_path, "sync"]
