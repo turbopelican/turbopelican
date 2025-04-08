@@ -11,32 +11,32 @@ from typing import cast
 
 import tomlkit
 
-from turbopelican.commands.init.config import TurboConfiguration
+from turbopelican.commands.init.config import TurboConfiguration, Verbosity
 
 
-def uv_sync(directory: Path, *, quiet: bool = True) -> None:
+def uv_sync(directory: Path, *, verbosity: Verbosity) -> None:
     """Sets up the repository with uv.
 
     Args:
         directory: The path where the repository is to be initialized.
-        quiet: Whether or not to suppress output.
+        verbosity: Whether or not to suppress output.
     """
     uv_path = shutil.which("uv")
     if not uv_path:
         return
 
     uv_sync_args = [uv_path, "sync"]
-    if quiet:
+    if verbosity == Verbosity.QUIET:
         uv_sync_args.append("--quiet")
     subprocess.run(uv_sync_args, check=True, cwd=directory)
 
 
-def generate_repository(directory: Path, *, quiet: bool = True) -> None:
+def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
     """Generates the files in place for turbopelican to use.
 
     Args:
         directory: The path where the repository is to be initialized.
-        quiet: Whether or not to suppress output.
+        verbosity: Whether or not to suppress output.
     """
     if not directory.parent.exists():
         raise ValueError(
@@ -53,14 +53,14 @@ def generate_repository(directory: Path, *, quiet: bool = True) -> None:
     if git_path is None:
         raise OSError("git not installed")
     git_init_args = [git_path, "init"]
-    if quiet:
+    if verbosity == Verbosity.QUIET:
         git_init_args.append("--quiet")
     subprocess.run(git_init_args, check=True, cwd=directory)
 
     git_use_main_branch = [git_path, "branch", "-m", "main"]
     subprocess.run(git_use_main_branch, check=True, cwd=directory)
 
-    uv_sync(directory, quiet=quiet)
+    uv_sync(directory, verbosity=verbosity)
 
 
 def update_website(args: TurboConfiguration) -> None:

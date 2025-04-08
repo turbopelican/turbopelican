@@ -83,6 +83,6 @@ def command(raw_args: Namespace) -> None:
         raw_args: The command-line provided arguments.
     """
     config = TurboConfiguration.from_args(raw_args)
-    generate_repository(config.directory, quiet=config.quiet)
+    generate_repository(config.directory, verbosity=config.verbosity)
     update_website(config)
     update_pyproject(config.directory)
