@@ -38,6 +38,10 @@ class HandleDefaultsMode(StrEnum):
     USE_DEFAULTS = "USE_DEFAULTS"
 
 
+class ConfigurationError(ValueError):
+    """The configuration cannot be correctly evaluated, due to missing inputs."""
+
+
 class TurboConfiguration(BaseModel):
     """The command line arguments to configure the turbopelican website/project."""
 
@@ -144,7 +148,8 @@ class TurboConfiguration(BaseModel):
             input_mode == InputMode.REJECT_INPUT
             and handle_defaults_mode == HandleDefaultsMode.REQUIRE_STANDARD_INPUT
         ):
-            raise ValueError("Could not obtain author without user input.")
+            message = "Could not obtain author without user input."
+            raise ConfigurationError(message)
 
         get_default_author = subprocess.run(
             [git_path, "config", "--get", "user.name"],
@@ -155,7 +160,7 @@ class TurboConfiguration(BaseModel):
 
         if get_default_author.returncode:
             if input_mode == InputMode.REJECT_INPUT:
-                raise ValueError("Could not obtain author without user input.")
+                raise ConfigurationError("Could not obtain author without user input.")
             author = ""
             while not author:
                 author = input("Who is the website author? ")
@@ -165,7 +170,7 @@ class TurboConfiguration(BaseModel):
         if handle_defaults_mode == HandleDefaultsMode.USE_DEFAULTS:
             return default_author
         if input_mode == InputMode.REJECT_INPUT:
-            raise ValueError("Could not obtain author without user input.")
+            raise ConfigurationError("Could not obtain author without user input.")
         return (
             input(f"Who is the website author? [{default_author}] ") or default_author
         )
@@ -196,7 +201,7 @@ class TurboConfiguration(BaseModel):
             return path.name
 
         if input_mode == InputMode.REJECT_INPUT:
-            raise ValueError("Could not obtain site name without user input.")
+            raise ConfigurationError("Could not obtain site name without user input.")
 
         return input(f"What is the name of the website? [{path.name}] ") or path.name
 
@@ -224,25 +229,26 @@ class TurboConfiguration(BaseModel):
             input_mode == InputMode.REJECT_INPUT
             and handle_defaults_mode == HandleDefaultsMode.REQUIRE_STANDARD_INPUT
         ):
-            raise ValueError("Could not obtain timezone without user input.")
+            raise ConfigurationError("Could not obtain timezone without user input.")
 
         default_local_zone = get_localzone()
         if not isinstance(default_local_zone, ZoneInfo):
             if input_mode == InputMode.REJECT_INPUT:
-                raise ValueError("Could not obtain local zone without user input.")
+                message = "Could not obtain local zone without user input."
+                raise ConfigurationError(message)
             chosen_local_zone = input("What timezone will your website use? ")
             if not chosen_local_zone:
-                raise ValueError("No timezone provided.")
+                raise ConfigurationError("No timezone provided.")
         elif handle_defaults_mode == HandleDefaultsMode.USE_DEFAULTS:
             return default_local_zone.key
         elif input_mode == InputMode.REJECT_INPUT:
-            raise ValueError("Could not obtain local zone without user input.")
+            raise ConfigurationError("Could not obtain local zone without user input.")
         else:
             prompt = f"What timezone will your website use? [{default_local_zone.key}] "
             chosen_local_zone = input(prompt) or default_local_zone.key
 
         if chosen_local_zone not in available_timezones():
-            raise ValueError(f"Invalid timezone provided: {chosen_local_zone}")
+            raise ConfigurationError(f"Invalid timezone provided: {chosen_local_zone}")
 
         return chosen_local_zone
 
@@ -269,14 +275,15 @@ class TurboConfiguration(BaseModel):
         if handle_defaults_mode == HandleDefaultsMode.USE_DEFAULTS:
             return "en"
         if input_mode == InputMode.REJECT_INPUT:
-            raise ValueError("Could not obtain default language without user input.")
+            message = "Could not obtain default language without user input."
+            raise ConfigurationError(message)
 
         chosen_lang = input("What language will your website use? [en] ")
         if not chosen_lang:
             return "en"
 
         if not langcodes.Language.get(chosen_lang).is_valid():
-            raise ValueError(f"Invalid language: {chosen_lang}")
+            raise ConfigurationError(f"Invalid language: {chosen_lang}")
 
         return chosen_lang
 
@@ -288,15 +295,15 @@ class TurboConfiguration(BaseModel):
             site_url: The site URL that the user has proposed.
         """
         if not (site_url.startswith("https://") and site_url.endswith(".github.io")):
-            raise ValueError(f"Invalid website URL: {site_url}")
+            raise ConfigurationError(f"Invalid website URL: {site_url}")
 
         assess_name = site_url.removesuffix(".github.io").removeprefix("https://")
         if not assess_name:
-            raise ValueError(f"Invalid website URL: {site_url}")
+            raise ConfigurationError(f"Invalid website URL: {site_url}")
 
         for char in assess_name:
             if not (char.isalpha() or char.isdigit() or char == "-"):
-                raise ValueError(f"Invalid website URL: {site_url}")
+                raise ConfigurationError(f"Invalid website URL: {site_url}")
 
     @classmethod
     def _get_site_url(
@@ -325,7 +332,7 @@ class TurboConfiguration(BaseModel):
             input_mode == InputMode.REJECT_INPUT
             and handle_defaults_mode == HandleDefaultsMode.REQUIRE_STANDARD_INPUT
         ):
-            raise ValueError("Could not obtain site URL without user input.")
+            raise ConfigurationError("Could not obtain site URL without user input.")
 
         website_name = path.name.removesuffix(".github.io").replace("_", "-")
         filtered_name = "".join(
@@ -341,11 +348,11 @@ class TurboConfiguration(BaseModel):
             if not chosen_name:
                 return default_url
         elif input_mode == InputMode.REJECT_INPUT:
-            raise ValueError("Could not obtain site URL without user input.")
+            raise ConfigurationError("Could not obtain site URL without user input.")
         else:
             chosen_name = input("What is your website URL? ").removesuffix(".github.io")
             if not chosen_name:
-                raise ValueError("Website URL not provided.")
+                raise ConfigurationError("Website URL not provided.")
 
         cls._validate_site_url(chosen_name)
         return chosen_name
