@@ -169,8 +169,6 @@ class TurboConfiguration(BaseModel):
         default_author = get_default_author.stdout.strip()
         if handle_defaults_mode == HandleDefaultsMode.USE_DEFAULTS:
             return default_author
-        if input_mode == InputMode.REJECT_INPUT:
-            raise ConfigurationError("Could not obtain author without user input.")
         return (
             input(f"Who is the website author? [{default_author}] ") or default_author
         )
