@@ -14,6 +14,12 @@ ignore = [
 
 [lint.extend-per-file-ignores]
 "__main__.py" = ["BLE001"]
+"**/tests/test_*.py" = [
+    "D100",
+    "S101",
+    "SLF001",
+]
+"**/tests/__init__.py" = ["D104"]
 
 [lint.pydocstyle]
 convention = "google"
