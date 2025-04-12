@@ -10,8 +10,15 @@ from contextlib import redirect_stderr
 from turbopelican.commands.init import init
 
 
-def get_raw_args_without_subcommand() -> argparse.Namespace | None:
+def get_raw_args_without_subcommand(
+    *,
+    inputs: list[str] | None = None,
+) -> argparse.Namespace | None:
     """If no subcommand was passed to the parser, operates without it.
+
+    Args:
+        inputs: The list of inputs to the parser. Defaults to None, in which
+            case it uses the command-line arguments.
 
     Returns:
         If valid without a subcommand, the corresponding namespace. Otherwise,
@@ -26,7 +33,7 @@ def get_raw_args_without_subcommand() -> argparse.Namespace | None:
     try:
         f = io.StringIO()
         with redirect_stderr(f):
-            args = parser.parse_args()
+            args = parser.parse_args(inputs)
     except SystemExit:
         return None
     else:
@@ -40,8 +47,12 @@ def get_raw_args_without_subcommand() -> argparse.Namespace | None:
     return args
 
 
-def get_raw_args() -> argparse.Namespace:
+def get_raw_args(*, inputs: list[str] | None = None) -> argparse.Namespace:
     """Defines the turbopelican API and returns the provided CLI arguments.
+
+    Args:
+        inputs: The list of inputs to the parser. Defaults to None, in which
+            case it uses the command-line arguments.
 
     Returns:
         The argparse namespace for the project.
@@ -63,11 +74,11 @@ def get_raw_args() -> argparse.Namespace:
     f = io.StringIO()
     try:
         with redirect_stderr(f):
-            return parser.parse_args()
+            return parser.parse_args(inputs)
     except SystemExit as exc:
         if not exc.code:
             raise
-        raw_args = get_raw_args_without_subcommand()
+        raw_args = get_raw_args_without_subcommand(inputs=inputs)
 
         # Raises the original error if needed.
         if raw_args is None:
