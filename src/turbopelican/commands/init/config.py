@@ -239,8 +239,6 @@ class TurboConfiguration(BaseModel):
                 raise ConfigurationError("No timezone provided.")
         elif handle_defaults_mode == HandleDefaultsMode.USE_DEFAULTS:
             return default_local_zone.key
-        elif input_mode == InputMode.REJECT_INPUT:
-            raise ConfigurationError("Could not obtain local zone without user input.")
         else:
             prompt = f"What timezone will your website use? [{default_local_zone.key}] "
             chosen_local_zone = input(prompt) or default_local_zone.key
