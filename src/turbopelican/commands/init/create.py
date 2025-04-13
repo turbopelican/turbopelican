@@ -39,7 +39,7 @@ def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
         verbosity: Whether or not to suppress output.
     """
     if not directory.parent.exists():
-        raise ValueError(
+        raise FileNotFoundError(
             f"Cannot create repository. {directory.parent} does not exist.",
         )
     if directory.exists():
