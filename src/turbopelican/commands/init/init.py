@@ -9,6 +9,7 @@ from turbopelican.commands.init.create import (
     generate_repository,
     update_pyproject,
     update_website,
+    uv_sync,
 )
 
 if TYPE_CHECKING:
@@ -86,3 +87,4 @@ def command(raw_args: Namespace) -> None:
     generate_repository(config.directory, verbosity=config.verbosity)
     update_website(config)
     update_pyproject(config.directory)
+    uv_sync(directory=config.directory, verbosity=config.verbosity)

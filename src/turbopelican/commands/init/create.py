@@ -60,8 +60,6 @@ def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
     git_use_main_branch = [git_path, "branch", "-m", "main"]
     subprocess.run(git_use_main_branch, check=True, cwd=directory)
 
-    uv_sync(directory, verbosity=verbosity)
-
 
 def update_website(args: TurboConfiguration) -> None:
     """Updates the Pelican website to use the provided information.
