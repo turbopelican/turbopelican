@@ -619,7 +619,6 @@ def test_turbo_configuration_get_site_url_valid_path_input_valid() -> None:
     assert site_url == "https://mysite.github.io"
 
 
-@pytest.mark.xfail(strict=True)
 @pytest.mark.usefixtures("input_site_name")
 def test_turbo_configuration_get_site_url_invalid_path_input_valid() -> None:
     """Ensures error raised if URL can't be inferred and user enters one."""
