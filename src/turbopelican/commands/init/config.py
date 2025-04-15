@@ -351,7 +351,7 @@ class TurboConfiguration(BaseModel):
         elif input_mode == InputMode.REJECT_INPUT:
             raise ConfigurationError("Could not obtain site URL without user input.")
         else:
-            chosen_name = input("What is your website URL? ").removesuffix(".github.io")
+            chosen_name = input("What is your website URL? ")
             if not chosen_name:
                 raise ConfigurationError("Website URL not provided.")
 
