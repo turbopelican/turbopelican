@@ -464,7 +464,6 @@ def test_turbo_configuration_get_default_lang_input_empty() -> None:
     assert default_lang == "en"
 
 
-@pytest.mark.xfail(strict=True)
 @pytest.mark.usefixtures("input_asia_tbilisi")
 def test_turbo_configuration_get_default_lang_input_unparseable() -> None:
     """Ensures error when an unparseable language is provided."""

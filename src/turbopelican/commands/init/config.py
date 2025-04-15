@@ -278,7 +278,12 @@ class TurboConfiguration(BaseModel):
         if not chosen_lang:
             return "en"
 
-        if not langcodes.Language.get(chosen_lang).is_valid():
+        # Raise exception if the language doesn't appear to be valid.
+        try:
+            language = langcodes.Language.get(chosen_lang)
+        except langcodes.LanguageTagError:
+            raise ConfigurationError(f"Invalid language: {chosen_lang}") from None
+        if not language.is_valid():
             raise ConfigurationError(f"Invalid language: {chosen_lang}")
 
         return chosen_lang
