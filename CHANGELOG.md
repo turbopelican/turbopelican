@@ -1,5 +1,29 @@
 # Changelog
 
+## Version 0.3.1
+
+### Bug fixes
+
+- In the version prior, the default git branch could be master, depending on
+  the version/configuration of `git`. This did not accord with `README.md`.
+  Now the default branch is always `main`.
+
+### Other changes
+
+- Improving `README.md` to show an annotated image demonstrating how to
+  configure a GitHub repository to deploy to GitHub Pages.
+- Using enums `Verbosity`, `InputMode` and `HandleDefaultsMode` rather than
+  booleans for configuration.
+- Using `ConfigurationError` for errors raised by incorrect CLI input, rather
+  than `ValueError`.
+- Using `FileNotFoundError` for when the directory for the repository passed
+  into `turbopelican` does not have an extant parent.
+- Removing unreachable code.
+- Functions `get_raw_args_without_subcommand` and `get_raw_args` now can take
+  argument overrides, useful for testing.
+- Implementing unit tests.
+- Ensuring `uv sync` is run after `pyproject.toml` is updated.
+
 ## Version 0.3.0
 
 ### Deprecated features
