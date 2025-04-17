@@ -9,8 +9,8 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from turbopelican.commands.init import config
-from turbopelican.commands.init.config import (
+from turbopelican._commands.init import config
+from turbopelican._commands.init.config import (
     ConfigurationError,
     HandleDefaultsMode,
     InputMode,

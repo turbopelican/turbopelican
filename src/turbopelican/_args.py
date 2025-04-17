@@ -7,7 +7,7 @@ import argparse
 import io
 from contextlib import redirect_stderr
 
-from turbopelican.commands.init import init
+from turbopelican._commands.init import init
 
 
 def get_raw_args_without_subcommand(

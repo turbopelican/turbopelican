@@ -7,7 +7,7 @@ import sys
 from collections.abc import Callable
 from typing import TypeVar
 
-from turbopelican.args import get_raw_args
+from turbopelican._args import get_raw_args
 
 T = TypeVar("T")
 
