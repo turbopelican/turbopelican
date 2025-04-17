@@ -7,13 +7,13 @@ from unittest import mock
 import pytest
 import tomlkit
 
-from turbopelican.commands.init.config import (
+from turbopelican._commands.init.config import (
     HandleDefaultsMode,
     InputMode,
     TurboConfiguration,
     Verbosity,
 )
-from turbopelican.commands.init.create import (
+from turbopelican._commands.init.create import (
     generate_repository,
     update_pyproject,
     update_website,

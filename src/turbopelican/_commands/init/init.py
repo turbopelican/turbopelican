@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from turbopelican.commands.init.config import TurboConfiguration
-from turbopelican.commands.init.create import (
+from turbopelican._commands.init.config import TurboConfiguration
+from turbopelican._commands.init.create import (
     generate_repository,
     update_pyproject,
     update_website,

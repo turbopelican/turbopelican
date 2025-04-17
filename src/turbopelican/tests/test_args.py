@@ -1,7 +1,7 @@
 from argparse import Namespace
 
-from turbopelican.args import get_raw_args, get_raw_args_without_subcommand
-from turbopelican.commands.init import init
+from turbopelican._args import get_raw_args, get_raw_args_without_subcommand
+from turbopelican._commands.init import init
 
 
 def test_get_raw_args_without_subcommand() -> None:

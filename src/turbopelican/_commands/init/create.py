@@ -11,7 +11,7 @@ from typing import cast
 
 import tomlkit
 
-from turbopelican.commands.init.config import TurboConfiguration, Verbosity
+from turbopelican._commands.init.config import TurboConfiguration, Verbosity
 
 
 def uv_sync(directory: Path, *, verbosity: Verbosity) -> None:
@@ -45,7 +45,7 @@ def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
     if directory.exists():
         directory.rmdir()
     with pkg_resources.as_file(
-        pkg_resources.files(__name__.split(".", 1)[0]).joinpath("newsite"),
+        pkg_resources.files(__name__.split(".", 1)[0]).joinpath("_newsite"),
     ) as p:
         shutil.copytree(p, directory)
 
