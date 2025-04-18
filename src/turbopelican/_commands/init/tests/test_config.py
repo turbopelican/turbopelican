@@ -151,17 +151,15 @@ def test_turbo_configuration_from_args(tmp_path: Path) -> None:
         quiet=True,
     )
     config = TurboConfiguration.from_args(namespace)
-    assert config.model_dump() == {
-        "directory": new_repo,
-        "author": "Fred",
-        "input_mode": InputMode.REJECT_INPUT,
-        "handle_defaults_mode": HandleDefaultsMode.USE_DEFAULTS,
-        "site_name": "my-website",
-        "timezone": "Pacific/Auckland",
-        "default_lang": "en",
-        "site_url": "https://my-website.github.io",
-        "verbosity": Verbosity.QUIET,
-    }
+    assert config.directory == new_repo
+    assert config.author == "Fred"
+    assert config.input_mode == InputMode.REJECT_INPUT
+    assert config.handle_defaults_mode == HandleDefaultsMode.USE_DEFAULTS
+    assert config.site_name == "my-website"
+    assert config.timezone == "Pacific/Auckland"
+    assert config.default_lang == "en"
+    assert config.site_url == "https://my-website.github.io"
+    assert config.verbosity == Verbosity.QUIET
 
 
 def test_turbo_configuration_get_author_cli_provided() -> None:
