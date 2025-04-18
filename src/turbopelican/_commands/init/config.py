@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
 from typing import TYPE_CHECKING
 from zoneinfo import ZoneInfo, available_timezones
 
 import langcodes
-from pydantic import BaseModel
 from tzlocal import get_localzone
 
 if TYPE_CHECKING:
@@ -42,7 +42,8 @@ class ConfigurationError(ValueError):
     """The configuration cannot be correctly evaluated, due to missing inputs."""
 
 
-class TurboConfiguration(BaseModel):
+@dataclass
+class TurboConfiguration:
     """The command line arguments to configure the turbopelican website/project."""
 
     directory: Path
