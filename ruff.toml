@@ -8,6 +8,7 @@ ignore = [
     "T20",
 
     # Specific rules
+    "COM812",
     "TRY003",
     "S603"
 ]
