@@ -12,7 +12,7 @@ jobs:
         with:
           version: "0.6.8"
       - run: uv sync
-      - run: uv run mypy src
+      - run: uv run pyright
       - run: uv run ruff check
       - run: uv run ruff format --check
       - run: uv run pytest

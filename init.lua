@@ -26,10 +26,7 @@ lspconfig.pyright.setup({
     },
     python = {
       typeCheckingMode = 'strict',
-      diagnosticSource = 'mypy',
       analysis = {
-        -- Ignore all files for analysis to exclusively use Ruff for linting
-        ignore = { "*" },
 	useLibraryCodeForTypes = true,
 	autoSearchPaths = true,
 	diagnosticMode = "openFilesOnly",
