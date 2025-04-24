@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import cast
 
 import tomlkit
+import tomlkit.items
 
 from turbopelican._commands.init.config import TurboConfiguration, Verbosity
 

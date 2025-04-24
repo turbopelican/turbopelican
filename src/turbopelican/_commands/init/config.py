@@ -11,6 +11,7 @@ from typing import TYPE_CHECKING
 from zoneinfo import ZoneInfo, available_timezones
 
 import langcodes
+import langcodes.tag_parser
 from tzlocal import get_localzone
 
 if TYPE_CHECKING:
@@ -282,7 +283,7 @@ class TurboConfiguration:
         # Raise exception if the language doesn't appear to be valid.
         try:
             language = langcodes.Language.get(chosen_lang)
-        except langcodes.LanguageTagError:
+        except langcodes.tag_parser.LanguageTagError:
             raise ConfigurationError(f"Invalid language: {chosen_lang}") from None
         if not language.is_valid():
             raise ConfigurationError(f"Invalid language: {chosen_lang}")
