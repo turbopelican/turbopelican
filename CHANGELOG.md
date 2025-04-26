@@ -1,5 +1,29 @@
 # Changelog
 
+## Version 0.3.2
+
+### Bug fixes
+
+- In the version prior, a `ConfigurationError` was inconsistently raised when
+  an incorrect default language is provided. Now making consistent.
+- In the version prior, if no suggestion could be made for the site URL, then
+  irrespective of the site URL provided via standard input, an error was
+  raised. Now the user is able to input a valid site URL successfully.
+
+### Other changes
+
+- Inverting badge colours. Badge should now be higher-contrast.
+- Making Python modules private, so less likely to be imported.
+- Removing pydantic as a dependency. Should make the tool faster to run.
+- Using `pyright` exclusively for static type checking. The Neovim
+  configuration was previously incorrect, so now users of Neovim should be
+  able to see `pyright` warnings.
+- Disabling `missing-trailing-comma` rule, which is not supposed to be used in
+  conjunction with the formatter.
+- Updating all dependencies. Includes bumping `pyright` to v1.1.397 and `ruff`
+  to v0.11.6.
+- Using hatch-vcs to determine package versioning.
+
 ## Version 0.3.1
 
 ### Bug fixes
