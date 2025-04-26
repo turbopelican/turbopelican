@@ -188,7 +188,6 @@ wheels = [
 
 [[package]]
 name = "turbopelican"
-version = "0.3.1"
 source = { editable = "." }
 dependencies = [
     { name = "langcodes" },
