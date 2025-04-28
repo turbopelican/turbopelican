@@ -26,10 +26,13 @@ __all__ = [
     "TRANSLATION_FEED_ATOM",
 ]
 
+import os
+import sys
 import tomllib
 from pathlib import Path
 
-from .pelicanconf import (
+sys.path.append(os.curdir)
+from pelicanconf import (
     AUTHOR,
     AUTHOR_FEED_ATOM,
     AUTHOR_FEED_RSS,
