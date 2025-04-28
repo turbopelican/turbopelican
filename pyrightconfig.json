@@ -1,0 +1,10 @@
+{
+	"executionEnvironments": [
+		{
+			"root": "src"
+		},
+		{
+			"root": "src/turbopelican/_newsite"
+		}
+	]
+}
