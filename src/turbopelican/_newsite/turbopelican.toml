@@ -31,3 +31,7 @@ path = "logo.svg"
 
 [publish]
 site_url = "https://turbopelican.github.io"
+relative_urls = false
+feed_all_atom = "feeds/all.atom.xml"
+category_feed_atom = "feeds/{slug}.atom.xml"
+delete_output_directory = true
