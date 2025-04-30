@@ -6,8 +6,10 @@ Author: Elliot Simpson
 import importlib.resources as pkg_resources
 import shutil
 import subprocess
+from datetime import datetime
 from pathlib import Path
 from typing import cast
+from zoneinfo import ZoneInfo
 
 import tomlkit
 import tomlkit.items
@@ -105,3 +107,15 @@ def update_pyproject(directory: Path) -> None:
 
     with pyproject_conf.open("w", encoding="utf8") as configuration:
         tomlkit.dump(toml, configuration)
+
+
+def update_contents(args: TurboConfiguration) -> None:
+    """Updates the Markdown contents to be ready for publication.
+
+    Args:
+        args: The arguments to configure the website.
+    """
+    today = datetime.now(tz=ZoneInfo(args.timezone)).date()
+    for file in (args.directory / "contents").glob("*.md"):
+        text = file.read_text()
+        file.write_text(text.format(date=today))

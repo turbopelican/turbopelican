@@ -1,4 +1,5 @@
 Title: My article
+Date: {date}
 
 ## My article
 

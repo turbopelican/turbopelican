@@ -6,6 +6,7 @@ from unittest import mock
 
 import pytest
 import tomlkit
+from freezegun import freeze_time
 
 from turbopelican._commands.init.config import (
     HandleDefaultsMode,
@@ -15,6 +16,7 @@ from turbopelican._commands.init.config import (
 )
 from turbopelican._commands.init.create import (
     generate_repository,
+    update_contents,
     update_pyproject,
     update_website,
     uv_sync,
@@ -175,3 +177,41 @@ def test_update_pyproject(tmp_path: Path) -> None:
         toml = tomlkit.load(read_toml)
 
     assert toml.get("project", {}).get("name") == "bobswebsite"
+
+
+@freeze_time("2011-11-11")
+def test_update_contents(tmp_path: Path) -> None:
+    """Checks that the website contents can be updated appropriately.
+
+    Args:
+        tmp_path: A temporary and empty directory.
+    """
+    contents_dir = tmp_path / "contents"
+    contents_dir.mkdir()
+    first_file = contents_dir / "first-article.md"
+    first_file.write_text("Date: {date}")
+    second_file = contents_dir / "second-article.md"
+    second_file.write_text(
+        """
+        Other: 1
+        Date: {date}
+        Something: 2
+        """
+    )
+
+    config = TurboConfiguration(
+        directory=tmp_path,
+        author="Bob",
+        site_name="Bob's website",
+        timezone="Antarctica/Troll",
+        default_lang="ru",
+        site_url="https://hellothere.github.io",
+        verbosity=Verbosity.NORMAL,
+        input_mode=InputMode.REJECT_INPUT,
+        handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
+    )
+
+    update_contents(config)
+
+    assert first_file.read_text() == "Date: 2011-11-11"
+    assert second_file.read_text().splitlines()[2].lstrip() == "Date: 2011-11-11"
