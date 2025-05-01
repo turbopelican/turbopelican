@@ -186,7 +186,7 @@ def test_update_contents(tmp_path: Path) -> None:
     Args:
         tmp_path: A temporary and empty directory.
     """
-    contents_dir = tmp_path / "contents"
+    contents_dir = tmp_path / "content"
     contents_dir.mkdir()
     first_file = contents_dir / "first-article.md"
     first_file.write_text("Date: {date}")
