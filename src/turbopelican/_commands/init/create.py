@@ -116,6 +116,6 @@ def update_contents(args: TurboConfiguration) -> None:
         args: The arguments to configure the website.
     """
     today = datetime.now(tz=ZoneInfo(args.timezone)).date()
-    for file in (args.directory / "contents").glob("*.md"):
+    for file in (args.directory / "content").glob("*.md"):
         text = file.read_text()
         file.write_text(text.format(date=today))
