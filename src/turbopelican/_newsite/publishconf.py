@@ -8,6 +8,7 @@ explicitly specify it as your config file.
 # explicitly specify it as your config file.
 
 __all__ = [
+    "ARTICLE_PATHS",
     "AUTHOR",
     "AUTHOR_FEED_ATOM",
     "AUTHOR_FEED_RSS",
@@ -15,13 +16,20 @@ __all__ = [
     "DEFAULT_LANG",
     "DEFAULT_PAGINATION",
     "DELETE_OUTPUT_DIRECTORY",
+    "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
+    "INDEX_SAVE_AS",
+    "INDEX_URL",
     "LINKS",
+    "PAGE_PATHS",
+    "PAGE_SAVE_AS",
     "PATH",
     "RELATIVE_URLS",
     "SITENAME",
     "SITEURL",
     "SOCIAL",
+    "STATIC_PATHS",
+    "THEME",
     "TIMEZONE",
     "TRANSLATION_FEED_ATOM",
 ]
@@ -33,15 +41,23 @@ from pathlib import Path
 
 sys.path.append(os.curdir)
 from pelicanconf import (
+    ARTICLE_PATHS,
     AUTHOR,
     AUTHOR_FEED_ATOM,
     AUTHOR_FEED_RSS,
     DEFAULT_LANG,
     DEFAULT_PAGINATION,
+    EXTRA_PATH_METADATA,
+    INDEX_SAVE_AS,
+    INDEX_URL,
     LINKS,
+    PAGE_PATHS,
+    PAGE_SAVE_AS,
     PATH,
     SITENAME,
     SOCIAL,
+    STATIC_PATHS,
+    THEME,
     TIMEZONE,
     TRANSLATION_FEED_ATOM,
 )
