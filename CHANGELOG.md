@@ -1,5 +1,37 @@
 # Changelog
 
+## Version 0.3.3
+
+### Bug fixes
+
+- In the version prior, attempting to build a static site using the
+  settings for publication would result in an `ImportError` being raised, due
+  to `publishconf.py` not containing its parent directory in the `PYTHONPATH`.
+  Now `PYTHONPATH` is updated so that it imports `pelicanconf.py`
+  successfully.
+- In the version prior, attempting to build a static site using the
+  settings for publication would (were it not for the bug above), result in
+  `publishconf.py` attempting to access non-existent TOML, causing an error.
+  Now placing the TOML inside by default.
+- In the version prior, attempting to build a static site using the
+  settings for publication would (were it not for the bugs above), result in
+  missing variables, causing Pelican to raise an error when attempting to
+  overwrite an existing `output/index.html` file. Now importing the required
+  variables from `pelicanconf.py`.
+- In the version prior, GitHub Actions incorrectly built the static site using
+  the default configuration, which is not supposed to be used for publication.
+  Now uses the appropriate configuration.
+- Fixing spelling mistake in documentation.
+
+### Other changes
+
+- Both `pelicanconf.py` and `publishconf.py` should now contain complete
+  `__all__` lists.
+- Now including a run of `turbopelican` in the continuous integration, to be
+  checked by GitHub Actions.
+- Now providing a `Makefile` to both set up the repository and to perform the
+  same tasks that are used in the continuous integration.
+
 ## Version 0.3.2
 
 ### Bug fixes
