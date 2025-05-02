@@ -155,7 +155,7 @@ def test_update_website(tmp_path: Path) -> None:
 
 
 def test_update_pyproject(tmp_path: Path) -> None:
-    """Checks that the project can be udpated appropriately.
+    """Checks that the project can be updated appropriately.
 
     Args:
         tmp_path: A temporary and empty directory.
