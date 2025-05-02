@@ -7,25 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: turbopelican
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
           version: "0.6.8"
-      - run: uv sync
-        working-directory: turbopelican
-      - run: uv run pyright
-        working-directory: turbopelican
-      - run: uv run ruff check
-        working-directory: turbopelican
-      - run: uv run ruff format --check
-        working-directory: turbopelican
-      - run: uv run pytest
-        working-directory: turbopelican
-      - run: uv run turbopelican init -nd --author "GitHub Actions" ../mywebsite
-        working-directory: turbopelican
-      - run: uv run pelican content
-        working-directory: mywebsite
-      - run: uv run pelican -s publishconf.py
-        working-directory: mywebsite
+      - run: make build
+      - run: make ci
