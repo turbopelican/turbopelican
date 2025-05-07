@@ -1,4 +1,7 @@
-namespace-packages = ["src/turbopelican/_newsite"]
+namespace-packages = [
+    "src/turbopelican/_templates",
+    "src/turbopelican/_templates/newsite",
+]
 
 [lint]
 select = ["ALL"]
