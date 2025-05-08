@@ -1,4 +1,5 @@
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
@@ -12,6 +13,7 @@ from turbopelican._utils.config import (
     _access_setting_cluster,
     _find_config,
     _find_config_file,
+    _get_extract_path_metadata,
     _get_project_root,
     _setting_getter,
 )
@@ -189,6 +191,12 @@ def test_setting_getter() -> None:
     assert setting_getter_fallback(int, "z") is None
 
 
+def test_get_extract_path_metadata() -> None:
+    """Checks extract path metadata can be transformed for use by Pelican."""
+    getter = mock.Mock(return_value=[{"origin": "a", "path": "b"}])
+    assert _get_extract_path_metadata(getter) == {"a": {"path": "b"}}
+
+
 def test_load_config(tmp_path: Path) -> None:
     """Checks that the configuration can be loaded successfully.
 
@@ -241,9 +249,7 @@ def test_load_config(tmp_path: Path) -> None:
             page_paths=[""],
             page_save_as="{slug}.html",
             static_paths=["static"],
-            extra_path_metadata=[
-                {"origin": "static/myasset.png", "path": "myasset.png"}
-            ],
+            extra_path_metadata={"static/myasset.png": {"path": "myasset.png"}},
             index_save_as="",
             index_url="",
         ),

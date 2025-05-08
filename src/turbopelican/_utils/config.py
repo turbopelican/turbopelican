@@ -10,7 +10,7 @@ __all__ = ["Configuration", "PelicanConfiguration", "TurbopelicanError", "load_c
 import tomllib
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Protocol, TypedDict, TypeVar
+from typing import Protocol, TypeVar
 
 Toml = str | int | float | list["Toml"] | dict[str, "Toml"]
 T = TypeVar("T", bound=Toml)
@@ -18,16 +18,6 @@ T = TypeVar("T", bound=Toml)
 
 class TurbopelicanError(ValueError):
     """Error to be raised when turbopelican raises any generic error."""
-
-
-class ExtraPathMetadata(TypedDict):
-    """A mapping between the origin (whence the metadata comes) and its destination."""
-
-    origin: str
-    """The path to where the metadata is kept in the code."""
-
-    path: str
-    """The path to where the metadata is placed in the static output."""
 
 
 @dataclass(frozen=True)
@@ -47,7 +37,7 @@ class PelicanConfiguration:
     page_paths: list[str]
     page_save_as: str
     static_paths: list[str]
-    extra_path_metadata: list[ExtraPathMetadata]
+    extra_path_metadata: dict[str, dict[str, str]]
     index_save_as: str
     index_url: str
 
@@ -251,6 +241,23 @@ def _setting_getter(
     return _access_setting_as, _access_setting_as_with_fallback
 
 
+def _get_extract_path_metadata(getter: SettingGetter) -> dict[str, dict[str, str]]:
+    """Converts the path metadata into a form acceptable for Pelican.
+
+    Args:
+        getter: The function to obtain settings.
+
+    Returns:
+        The EXTRACT_PATH_METADATA setting.
+    """
+    return {
+        metadata["origin"]: {
+            key: value for (key, value) in metadata.items() if key != "origin"
+        }
+        for metadata in getter(list, "extra_path_metadata")
+    }
+
+
 def load_config(start_path: Path | str = ".") -> Configuration:
     """Loads the configuration into reusable structures.
 
@@ -279,7 +286,7 @@ def load_config(start_path: Path | str = ".") -> Configuration:
             page_paths=pelican_conf_get(list, "page_paths"),
             page_save_as=pelican_conf_get(str, "page_save_as"),
             static_paths=pelican_conf_get(list, "static_paths"),
-            extra_path_metadata=pelican_conf_get(list, "extra_path_metadata"),
+            extra_path_metadata=_get_extract_path_metadata(pelican_conf_get),
             index_save_as=pelican_conf_get(str, "index_save_as"),
             index_url=pelican_conf_get(str, "index_url"),
         ),
