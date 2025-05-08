@@ -52,6 +52,8 @@ def test_uv_sync(mock_subprocess_run: mock.Mock) -> None:
         ["/usr/bin/uv", "sync"],
         check=True,
         cwd=Path(),
+        text=True,
+        capture_output=True,
     )
 
 
@@ -63,6 +65,8 @@ def test_uv_sync_quiet(mock_subprocess_run: mock.Mock) -> None:
         ["/usr/bin/uv", "sync", "--quiet"],
         check=True,
         cwd=Path(),
+        text=True,
+        capture_output=True,
     )
 
 
