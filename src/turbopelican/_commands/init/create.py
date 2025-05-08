@@ -31,7 +31,14 @@ def uv_sync(directory: Path, *, verbosity: Verbosity) -> None:
     uv_sync_args = [uv_path, "sync"]
     if verbosity == Verbosity.QUIET:
         uv_sync_args.append("--quiet")
-    subprocess.run(uv_sync_args, check=True, cwd=directory)
+
+    try:
+        subprocess.run(
+            uv_sync_args, check=True, cwd=directory, text=True, capture_output=True
+        )
+    except subprocess.CalledProcessError as exc:
+        exc.add_note(exc.stderr)
+        raise
 
 
 def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
