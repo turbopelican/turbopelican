@@ -251,7 +251,7 @@ def _setting_getter(
     return _access_setting_as, _access_setting_as_with_fallback
 
 
-def load_config(start_path: Path) -> Configuration:
+def load_config(start_path: Path | str = ".") -> Configuration:
     """Loads the configuration into reusable structures.
 
     Args:
