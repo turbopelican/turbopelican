@@ -1,6 +1,6 @@
 .PHONY: build lint format test type-check integration-test ci
 
-TEMP_DIR := $(shell mktemp -d)
+TEMP_DIR := $(shell mktemp -d -t tmp.turbopelican.XXXXXXXXXX)
 TARGET := $(TEMP_DIR)/mywebsite
 
 build:
