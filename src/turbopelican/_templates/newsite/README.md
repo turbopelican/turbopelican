@@ -1,5 +1,7 @@
 # My turbopelican site
 
+[![turbopelican](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/badge/v2.json)](https://github.com/turbopelican/turbopelican)
+
 Thank you for choosing
 [turbopelican](https://github.com/turbopelican/turbopelican)!
 
