@@ -20,8 +20,9 @@ type-check:
 
 integration-test:
 	uv run turbopelican init --author "GNU make" "$(TARGET)" -nd
-	VIRTUAL_ENV="$(TARGET)/.venv" uv run --directory "$(TARGET)" pelican content
-	VIRTUAL_ENV="$(TARGET)/.venv" uv run --directory "$(TARGET)" pelican -s publishconf.py content
+	VIRTUAL_ENV="$(TARGET)/.venv" uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
+	VIRTUAL_ENV="$(TARGET)/.venv" uv run --directory "$(TARGET)" --no-sync pelican content
+	VIRTUAL_ENV="$(TARGET)/.venv" uv run --directory "$(TARGET)" --no-sync pelican -s publishconf.py content
 	@rm -rf "$(TEMP_DIR)"
 
 ci: lint format test type-check integration-test
