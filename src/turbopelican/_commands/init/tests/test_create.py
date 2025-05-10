@@ -11,6 +11,7 @@ from freezegun import freeze_time
 from turbopelican._commands.init.config import (
     HandleDefaultsMode,
     InputMode,
+    InstallType,
     TurboConfiguration,
     Verbosity,
 )
@@ -78,6 +79,22 @@ def test_uv_sync_missing(mock_subprocess_run: mock.Mock) -> None:
     mock_subprocess_run.assert_not_called()
 
 
+@pytest.fixture
+def config(tmp_path: Path) -> TurboConfiguration:
+    return TurboConfiguration(
+        directory=tmp_path,
+        author="Bob",
+        site_name="Bob's website",
+        timezone="Antarctica/Troll",
+        default_lang="ru",
+        site_url="https://hellothere.github.io",
+        verbosity=Verbosity.NORMAL,
+        input_mode=InputMode.REJECT_INPUT,
+        handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
+        install_type=InstallType.FULL_INSTALL,
+    )
+
+
 def test_copy_template(tmp_path: Path) -> None:
     """Tests that a template can be copied successfully.
 
@@ -94,50 +111,51 @@ def test_copy_template(tmp_path: Path) -> None:
     assert (copy_to / "turbopelican.toml").exists()
 
 
-def test_generate_repository_bad_directory(tmp_path: Path) -> None:
+def test_generate_repository_bad_directory(config: TurboConfiguration) -> None:
     """Tests that the appropriate error is raised when an invalid directory is given.
 
     Args:
-        tmp_path: A temporary and empty directory.
+        config: The configuration for Turbopelican. Suppied via fixture.
     """
+    config.directory = config.directory / "inextant" / "myrepo"
     with pytest.raises(FileNotFoundError):
-        generate_repository(tmp_path / "inextant" / "myrepo", verbosity=Verbosity.QUIET)
+        generate_repository(config)
 
 
 @pytest.mark.usefixtures("mock_subprocess_run")
-def test_generate_repository_new_folder(tmp_path: Path) -> None:
+def test_generate_repository_new_folder(config: TurboConfiguration) -> None:
     """Tests that the repository can be generated successfully, creating a new folder.
 
     Args:
-        tmp_path: A temporary and empty directory.
+        config: The configuration for Turbopelican. Suppied via fixture.
     """
-    path_to_repo = tmp_path / "myrepo"
-    generate_repository(path_to_repo, verbosity=Verbosity.NORMAL)
-    assert (path_to_repo / "turbopelican.toml").exists()
+    config.directory = config.directory / "myrepo"
+    generate_repository(config)
+    assert (config.directory / "turbopelican.toml").exists()
 
 
 @pytest.mark.usefixtures("mock_subprocess_run")
-def test_generate_repository_empty_folder(tmp_path: Path) -> None:
+def test_generate_repository_empty_folder(config: TurboConfiguration) -> None:
     """Tests that the repository can be generated successfully in an empty folder.
 
     Args:
-        tmp_path: A temporary and empty directory.
+        config: The configuration for Turbopelican. Suppied via fixture.
     """
-    path_to_repo = tmp_path / "myrepo"
-    path_to_repo.mkdir()
-    generate_repository(path_to_repo, verbosity=Verbosity.NORMAL)
-    assert (path_to_repo / "turbopelican.toml").exists()
+    config.directory = config.directory / "myrepo"
+    config.directory.mkdir()
+    generate_repository(config)
+    assert (config.directory / "turbopelican.toml").exists()
 
 
-def test_update_website(tmp_path: Path) -> None:
+def test_update_website(config: TurboConfiguration) -> None:
     """Checks that `turbopelican.toml` is updated appropraitely.
 
     Args:
-        tmp_path: A temporary and empty directory.
+        config: The configuration for Turbopelican. Suppied via fixture.
     """
-    path_to_repo = tmp_path / "myrepo"
-    path_to_repo.mkdir()
-    path_to_toml = path_to_repo / "turbopelican.toml"
+    config.directory = config.directory / "myrepo"
+    config.directory.mkdir()
+    path_to_toml = config.directory / "turbopelican.toml"
     with path_to_toml.open("w", encoding="utf8") as write_toml:
         write_toml.write(
             """
@@ -152,17 +170,6 @@ def test_update_website(tmp_path: Path) -> None:
             """,
         )
 
-    config = TurboConfiguration(
-        directory=path_to_repo,
-        author="Bob",
-        site_name="Bob's website",
-        timezone="Antarctica/Troll",
-        default_lang="ru",
-        site_url="https://hellothere.github.io",
-        verbosity=Verbosity.NORMAL,
-        input_mode=InputMode.REJECT_INPUT,
-        handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
-    )
     update_website(config)
 
     with path_to_toml.open(encoding="utf8") as read_toml:
@@ -201,13 +208,13 @@ def test_update_pyproject(tmp_path: Path) -> None:
 
 
 @freeze_time("2011-11-11")
-def test_update_contents(tmp_path: Path) -> None:
+def test_update_contents(config: TurboConfiguration) -> None:
     """Checks that the website contents can be updated appropriately.
 
     Args:
-        tmp_path: A temporary and empty directory.
+        config: The configuration for Turbopelican. Suppied via fixture.
     """
-    contents_dir = tmp_path / "content"
+    contents_dir = config.directory / "content"
     contents_dir.mkdir()
     first_file = contents_dir / "first-article.md"
     first_file.write_text("Date: {date}")
@@ -218,18 +225,6 @@ def test_update_contents(tmp_path: Path) -> None:
         Date: {date}
         Something: 2
         """
-    )
-
-    config = TurboConfiguration(
-        directory=tmp_path,
-        author="Bob",
-        site_name="Bob's website",
-        timezone="Antarctica/Troll",
-        default_lang="ru",
-        site_url="https://hellothere.github.io",
-        verbosity=Verbosity.NORMAL,
-        input_mode=InputMode.REJECT_INPUT,
-        handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
     )
 
     update_contents(config)

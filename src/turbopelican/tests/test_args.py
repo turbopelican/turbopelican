@@ -20,6 +20,7 @@ def test_get_raw_args_without_subcommand() -> None:
         site_url=None,
         no_input=False,
         func=init.command,
+        minimal_install=False,
     )
 
 
@@ -37,4 +38,5 @@ def test_get_raw_args() -> None:
         site_url=None,
         no_input=False,
         func=init.command,
+        minimal_install=False,
     )

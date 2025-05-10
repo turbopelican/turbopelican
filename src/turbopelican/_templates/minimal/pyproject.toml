@@ -1,0 +1,9 @@
+[project]
+name = "mypelicansite"
+version = "0.1.0"
+description = "My personal website."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pelican[markdown]>=4.11.0",
+]
