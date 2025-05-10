@@ -15,6 +15,7 @@ from turbopelican._commands.init.config import (
     Verbosity,
 )
 from turbopelican._commands.init.create import (
+    _copy_template,
     generate_repository,
     update_contents,
     update_pyproject,
@@ -75,6 +76,22 @@ def test_uv_sync_missing(mock_subprocess_run: mock.Mock) -> None:
     """Tests that repository is synced appropriately."""
     uv_sync(Path(), verbosity=Verbosity.NORMAL)
     mock_subprocess_run.assert_not_called()
+
+
+def test_copy_template(tmp_path: Path) -> None:
+    """Tests that a template can be copied successfully.
+
+    Args:
+        tmp_path: A temporary and empty directory.
+    """
+    copy_to = tmp_path / "copy_here"
+    copy_to.mkdir()
+    _copy_template(copy_to, "newsite")
+    path_to_conf = copy_to / "pelicanconf.py"
+    original_text = path_to_conf.read_text()
+    _copy_template(copy_to, "minimal")
+    assert path_to_conf.read_text() != original_text
+    assert (copy_to / "turbopelican.toml").exists()
 
 
 def test_generate_repository_bad_directory(tmp_path: Path) -> None:
