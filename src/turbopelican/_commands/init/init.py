@@ -75,6 +75,12 @@ def add_options(parser: ArgumentParser) -> None:
         action="store_true",
         default=False,
     )
+    parser.add_argument(
+        "--minimal-install",
+        help="Do not install turbopelican in the virtual environment.",
+        action="store_true",
+        default=False,
+    )
     parser.set_defaults(func=command)
 
 
@@ -85,7 +91,7 @@ def command(raw_args: Namespace) -> None:
         raw_args: The command-line provided arguments.
     """
     config = TurboConfiguration.from_args(raw_args)
-    generate_repository(config.directory, verbosity=config.verbosity)
+    generate_repository(config)
     update_website(config)
     update_pyproject(config.directory)
     update_contents(config)
