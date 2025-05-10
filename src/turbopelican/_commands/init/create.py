@@ -8,7 +8,7 @@ import shutil
 import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import cast
+from typing import Literal, cast
 from zoneinfo import ZoneInfo
 
 import tomlkit
@@ -41,6 +41,19 @@ def uv_sync(directory: Path, *, verbosity: Verbosity) -> None:
         raise
 
 
+def _copy_template(directory: Path, name: Literal["newsite", "minimal"]) -> None:
+    """Copies all the files from a template over.
+
+    Args:
+        directory: The path where the repository is to be initialized.
+        name: The name of the template to copy.
+    """
+    with pkg_resources.as_file(
+        pkg_resources.files(__name__.split(".", 1)[0]).joinpath("_templates", name)
+    ) as p:
+        shutil.copytree(p, directory, dirs_exist_ok=True)
+
+
 def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
     """Generates the files in place for turbopelican to use.
 
@@ -54,12 +67,7 @@ def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
         )
     if directory.exists():
         directory.rmdir()
-    with pkg_resources.as_file(
-        pkg_resources.files(__name__.split(".", 1)[0]).joinpath(
-            "_templates", "newsite"
-        ),
-    ) as p:
-        shutil.copytree(p, directory)
+    _copy_template(directory, "newsite")
 
     git_path = shutil.which("git")
     if git_path is None:
