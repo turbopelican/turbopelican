@@ -39,6 +39,13 @@ class HandleDefaultsMode(StrEnum):
     USE_DEFAULTS = "USE_DEFAULTS"
 
 
+class InstallType(StrEnum):
+    """Whether Turbopelican should be installed in the virtual environment or not."""
+
+    MINIMAL_INSTALL = "MINIMAL_INSTALL"
+    FULL_INSTALL = "FULL_INSTALL"
+
+
 class ConfigurationError(ValueError):
     """The configuration cannot be correctly evaluated, due to missing inputs."""
 
@@ -56,6 +63,7 @@ class TurboConfiguration:
     verbosity: Verbosity
     input_mode: InputMode
     handle_defaults_mode: HandleDefaultsMode
+    install_type: InstallType
 
     @classmethod
     def from_args(cls, raw_args: Namespace) -> TurboConfiguration:
@@ -78,6 +86,11 @@ class TurboConfiguration:
             HandleDefaultsMode.USE_DEFAULTS
             if raw_args.use_defaults
             else HandleDefaultsMode.REQUIRE_STANDARD_INPUT
+        )
+        install_type = (
+            InstallType.MINIMAL_INSTALL
+            if raw_args.minimal_install
+            else InstallType.FULL_INSTALL
         )
 
         author = cls._get_author(
@@ -119,6 +132,7 @@ class TurboConfiguration:
             verbosity=verbosity,
             input_mode=input_mode,
             handle_defaults_mode=handle_defaults_mode,
+            install_type=install_type,
         )
 
     @staticmethod

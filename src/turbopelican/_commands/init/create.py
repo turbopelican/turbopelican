@@ -14,7 +14,11 @@ from zoneinfo import ZoneInfo
 import tomlkit
 import tomlkit.items
 
-from turbopelican._commands.init.config import TurboConfiguration, Verbosity
+from turbopelican._commands.init.config import (
+    InstallType,
+    TurboConfiguration,
+    Verbosity,
+)
 
 
 def uv_sync(directory: Path, *, verbosity: Verbosity) -> None:
@@ -54,31 +58,32 @@ def _copy_template(directory: Path, name: Literal["newsite", "minimal"]) -> None
         shutil.copytree(p, directory, dirs_exist_ok=True)
 
 
-def generate_repository(directory: Path, *, verbosity: Verbosity) -> None:
+def generate_repository(args: TurboConfiguration) -> None:
     """Generates the files in place for turbopelican to use.
 
     Args:
-        directory: The path where the repository is to be initialized.
-        verbosity: Whether or not to suppress output.
+        args: The arguments to configure the website.
     """
-    if not directory.parent.exists():
+    if not args.directory.parent.exists():
         raise FileNotFoundError(
-            f"Cannot create repository. {directory.parent} does not exist.",
+            f"Cannot create repository. {args.directory.parent} does not exist.",
         )
-    if directory.exists():
-        directory.rmdir()
-    _copy_template(directory, "newsite")
+    if args.directory.exists():
+        args.directory.rmdir()
+    _copy_template(args.directory, "newsite")
+    if args.install_type == InstallType.MINIMAL_INSTALL:
+        _copy_template(args.directory, "minimal")
 
     git_path = shutil.which("git")
     if git_path is None:
         raise OSError("git not installed")
     git_init_args = [git_path, "init"]
-    if verbosity == Verbosity.QUIET:
+    if args.verbosity == Verbosity.QUIET:
         git_init_args.append("--quiet")
-    subprocess.run(git_init_args, check=True, cwd=directory)
+    subprocess.run(git_init_args, check=True, cwd=args.directory)
 
     git_use_main_branch = [git_path, "branch", "-m", "main"]
-    subprocess.run(git_use_main_branch, check=True, cwd=directory)
+    subprocess.run(git_use_main_branch, check=True, cwd=args.directory)
 
 
 def update_website(args: TurboConfiguration) -> None:
