@@ -1,5 +1,30 @@
 # Changelog
 
+## Version 0.4.0
+
+### Features
+
+- Allowing the user to import `turbopelican`, which simplifies the process
+  of loading configuration from `turbopelican.toml` or `pyproject.toml`.
+- By default, new projects use the `load_config` function from `turbopelican`
+  to load their configuration without the need for parsing TOML manually.
+- Introducing `--minimal-install` flag to allow the user to create a project
+  without installing `turbopelican` as a dependency thereof.
+- New projects now include a Turbopelican badge in their `README.md` file.
+
+### Other changes
+
+- Stopping `pyright` from sending hint diagnostics to NeoVim. This would
+  result in any variable prefixed with an underscore causing a hint.
+- The template for the new website directory, as well as override templates,
+  are now kept together in one parent folder.
+- Silencing warnings during run of `make ci` that uv is interacting with the
+  `mywebsite` project's virtual environment when a different virtual
+  environment is activated. This is intentional behaviour, and needs no
+  warning.
+- Updating all dependencies. Includes bumping `tzdata` to v2025.2, `pyright`
+  to v1.1.400 and `ruff` to v0.11.9.
+
 ## Version 0.3.3
 
 ### Bug fixes
