@@ -4,7 +4,7 @@ from unittest import mock
 import pytest
 
 from turbopelican import load_config
-from turbopelican._utils.config import (
+from turbopelican._utils.config.config import (
     Configuration,
     PelicanConfiguration,
     PublishConfiguration,
