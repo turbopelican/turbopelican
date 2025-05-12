@@ -27,6 +27,7 @@ classifiers = [
 ]
 dependencies = [
     "langcodes>=3.5.0",
+    "pydantic>=2.11.4",
     "tomlkit>=0.13.3",
     "tzdata>=2025.2",
     "tzlocal>=5.3.1",
