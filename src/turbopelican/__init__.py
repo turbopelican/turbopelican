@@ -3,11 +3,22 @@
 Author: Elliot Simpson.
 """
 
-__all__ = ["Configuration", "PelicanConfiguration", "TurbopelicanError", "load_config"]
+__all__ = [
+    "Configuration",
+    "PelicanConfig",
+    "PelicanConfiguration",
+    "PublishConfiguration",
+    "TurbopelicanError",
+    "config",
+    "load_config",
+]
 
 from turbopelican._utils.config.config import (
     Configuration,
+    PelicanConfig,
     PelicanConfiguration,
+    PublishConfiguration,
+    config,
     load_config,
 )
 from turbopelican._utils.errors import TurbopelicanError
