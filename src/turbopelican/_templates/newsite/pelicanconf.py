@@ -11,6 +11,7 @@ __all__ = [
     "CATEGORY_FEED_ATOM",
     "DEFAULT_LANG",
     "DEFAULT_PAGINATION",
+    "DELETE_OUTPUT_DIRECTORY",
     "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
     "INDEX_SAVE_AS",
@@ -18,6 +19,7 @@ __all__ = [
     "PAGE_PATHS",
     "PAGE_SAVE_AS",
     "PATH",
+    "RELATIVE_URLS",
     "SITENAME",
     "SITEURL",
     "SOCIAL",
@@ -27,28 +29,30 @@ __all__ = [
     "TRANSLATION_FEED_ATOM",
 ]
 
-from turbopelican import load_config
+from turbopelican import config
 
-_config = load_config().pelican
+_config = config()
 
 ARTICLE_PATHS: list[str] = _config.article_paths
-AUTHOR: str = _config.author
-AUTHOR_FEED_ATOM: None = None
-AUTHOR_FEED_RSS: None = None
-CATEGORY_FEED_ATOM: None = None
+AUTHOR: str | None = _config.author
+AUTHOR_FEED_ATOM: str | None = _config.author_feed_atom
+AUTHOR_FEED_RSS: str | None = _config.author_feed_rss
+CATEGORY_FEED_ATOM: str | None = _config.category_feed_atom
 DEFAULT_LANG: str = _config.default_lang
-DEFAULT_PAGINATION: bool = _config.default_pagination
+DEFAULT_PAGINATION: int | bool = _config.default_pagination
+DELETE_OUTPUT_DIRECTORY: bool = _config.delete_output_directory
 EXTRA_PATH_METADATA: dict[str, dict[str, str]] = _config.extra_path_metadata
-FEED_ALL_ATOM: None = None
+FEED_ALL_ATOM: str | None = _config.feed_all_atom
 INDEX_SAVE_AS: str = _config.index_save_as
 LINKS: tuple[tuple[str, str], ...] = _config.links
 PAGE_PATHS: list[str] = _config.page_paths
 PAGE_SAVE_AS: str = _config.page_save_as
 PATH: str = _config.path
+RELATIVE_URLS: bool = _config.relative_urls
 SITENAME: str = _config.sitename
-SITEURL: str = ""
+SITEURL: str = _config.site_url
 SOCIAL: tuple[tuple[str, str], ...] = _config.social
 STATIC_PATHS: list[str] = _config.static_paths
 THEME: str = _config.theme
 TIMEZONE: str = _config.timezone
-TRANSLATION_FEED_ATOM: None = None
+TRANSLATION_FEED_ATOM: str | None = _config.translation_feed_atom
