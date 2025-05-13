@@ -19,7 +19,6 @@ page_save_as = "{slug}.html"
 static_paths = ["static", "images"]
 
 index_save_as = ""
-index_url = ""
 
 [[pelican.extra_path_metadata]]
 origin = "static/favicon.ico"

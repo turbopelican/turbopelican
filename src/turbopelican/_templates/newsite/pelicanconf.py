@@ -14,7 +14,6 @@ __all__ = [
     "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
     "INDEX_SAVE_AS",
-    "INDEX_URL",
     "LINKS",
     "PAGE_PATHS",
     "PAGE_SAVE_AS",
@@ -42,7 +41,6 @@ DEFAULT_PAGINATION: bool = _config.default_pagination
 EXTRA_PATH_METADATA: dict[str, dict[str, str]] = _config.extra_path_metadata
 FEED_ALL_ATOM: None = None
 INDEX_SAVE_AS: str = _config.index_save_as
-INDEX_URL: str = _config.index_url
 LINKS: tuple[tuple[str, str], ...] = _config.links
 PAGE_PATHS: list[str] = _config.page_paths
 PAGE_SAVE_AS: str = _config.page_save_as

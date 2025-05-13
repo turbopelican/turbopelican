@@ -39,7 +39,6 @@ class PelicanConfiguration:
     static_paths: list[str]
     extra_path_metadata: dict[str, dict[str, str]]
     index_save_as: str
-    index_url: str
 
 
 @dataclass(frozen=True)
@@ -288,7 +287,6 @@ def load_config(start_path: Path | str = ".") -> Configuration:
             static_paths=pelican_conf_get(list, "static_paths"),
             extra_path_metadata=_get_extract_path_metadata(pelican_conf_get),
             index_save_as=pelican_conf_get(str, "index_save_as"),
-            index_url=pelican_conf_get(str, "index_url"),
         ),
         publish=PublishConfiguration(
             site_url=publish_conf_get(str, "site_url"),

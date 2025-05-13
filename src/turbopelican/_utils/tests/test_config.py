@@ -219,7 +219,6 @@ def test_load_config(tmp_path: Path) -> None:
         page_save_as = "{slug}.html"
         static_paths = ["static"]
         index_save_as = ""
-        index_url = ""
 
         [[pelican.extra_path_metadata]]
         origin = "static/myasset.png"
@@ -251,7 +250,6 @@ def test_load_config(tmp_path: Path) -> None:
             static_paths=["static"],
             extra_path_metadata={"static/myasset.png": {"path": "myasset.png"}},
             index_save_as="",
-            index_url="",
         ),
         publish=PublishConfiguration(
             site_url="https://mysitename.github.io",
