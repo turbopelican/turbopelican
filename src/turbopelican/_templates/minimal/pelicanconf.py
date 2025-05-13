@@ -14,7 +14,6 @@ __all__ = [
     "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
     "INDEX_SAVE_AS",
-    "INDEX_URL",
     "LINKS",
     "PAGE_PATHS",
     "PAGE_SAVE_AS",
@@ -79,4 +78,3 @@ EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
 }
 
 INDEX_SAVE_AS: str = turbopelican_config["index_save_as"]
-INDEX_URL: str = turbopelican_config["index_url"]
