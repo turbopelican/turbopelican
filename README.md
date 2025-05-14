@@ -125,3 +125,32 @@ reading TOML configuration. Projects using `turbopelican` require Python 3.11
 or higher, and therefore adopt the newer convention of placing configuration
 in a TOML file rather than Python scripts. Generally, you should only need to
 modify `turbopelican.toml`, rather than `pelicanconf.py` or `publishconf.py`.
+
+## Development
+
+Ensure you have [uv](https://docs.astral.sh/uv/getting-started/installation/)
+and [git](https://git-scm.com/downloads) installed. You will need to create a
+[fork](https://github.com/turbopelican/turbopelican/fork) of the repository.
+Then you should navigate to GitHub Actions
+(*https://github.com/yourusername/turbopelican/actions*) and enable workflows
+on your repository. After that, you can clone your fork onto your computer.
+
+```sh
+git clone git@github.com:yourusername/turbopelican.git
+cd turbopelican
+uv sync
+```
+
+When you need to check that the branch can pass CI, you can run the Makefile
+like so:
+
+```sh
+make ci
+```
+
+Once you push your branch to GitHub, the workflow "**Run CI**" should run. If
+you have not enabled workflows yet, do so, and then run the workflow manually.
+Pull requests should be made only for branches which pass CI. Once it has
+passed, you should then open a pull request. If you are contributing a new
+feature or breaking changes, you should set the base reference to the current
+feature branch. Otherwise, you should set the base reference to **main**.
