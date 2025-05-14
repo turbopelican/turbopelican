@@ -1,5 +1,26 @@
 # Changelog
 
+## Version 0.4.1
+
+### Bug fixes
+
+- In version 0.2.0, a phantom setting `INDEX_URL` was mistakenly introduced.
+  Now it has been removed.
+
+### Other changes
+
+- Enabling developers to start the "**Run CI**" workflow manually, rather than
+  the workflow only running after a push. This is so that contributors who
+  push to their own fork, without first enabling the use of workflows, can
+  still easily run the workflow on their branch.
+- Adding a section to the `README.md` titled "**Development**", which outlines
+  who developers can contribute to Turbopelican.
+- Adding a table of contents to `README.md` for improved navigation.
+- Removing unused `pyright` execution environment (directory does not exist
+  anymore), which was previously incorrect anyway.
+- Shifting `pyright` configuration into `pyproject.toml` to minimize the
+  number of files at the root level.
+
 ## Version 0.4.0
 
 ### Features
