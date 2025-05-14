@@ -1,6 +1,8 @@
 name: Run CI
 run-name: ${{ github.actor }}
-on: [push]
+on:
+  - push
+  - workflow_dispatch
 
 jobs:
   ci:
