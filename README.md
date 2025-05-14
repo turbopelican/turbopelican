@@ -7,6 +7,11 @@
 An uber-quick tool to create a Pelican static-site and deploy it to GitHub
 Pages.
 
+* [Explanation](#explanation)
+* [Usage](#usage)
+  * [Configuration](#configuration)
+* [Development](#development)
+
 ## Explanation
 
 GitHub lets you host static websites at your own subdomain. If your GitHub
