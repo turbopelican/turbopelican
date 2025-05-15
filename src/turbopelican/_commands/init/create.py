@@ -16,8 +16,8 @@ import tomlkit
 import tomlkit.items
 
 from turbopelican._commands.init.config import (
+    InitConfiguration,
     InstallType,
-    TurboConfiguration,
     Verbosity,
 )
 
@@ -71,7 +71,7 @@ def _copy_template(directory: Path, name: Literal["newsite", "minimal"]) -> None
         shutil.copytree(p, directory, dirs_exist_ok=True)
 
 
-def generate_repository(args: TurboConfiguration) -> None:
+def generate_repository(args: InitConfiguration) -> None:
     """Generates the files in place for turbopelican to use.
 
     Args:
@@ -99,7 +99,7 @@ def generate_repository(args: TurboConfiguration) -> None:
     subprocess.run(git_use_main_branch, check=True, cwd=args.directory)
 
 
-def update_website(args: TurboConfiguration) -> None:
+def update_website(args: InitConfiguration) -> None:
     """Updates the Pelican website to use the provided information.
 
     Args:
@@ -144,7 +144,7 @@ def update_pyproject(directory: Path) -> None:
         tomlkit.dump(toml, configuration)
 
 
-def update_contents(args: TurboConfiguration) -> None:
+def update_contents(args: InitConfiguration) -> None:
     """Updates the Markdown contents to be ready for publication.
 
     Args:
