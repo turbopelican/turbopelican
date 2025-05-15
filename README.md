@@ -53,49 +53,7 @@ you to choose a source. Chose "**GitHub actions**".
 Next, you need to run `turbopelican`. Users are recommended to run
 `turbopelican` using `uvx`:
 
-```sh
-$ uvx turbopelican init turbopelican.github.io
-Who is the website author? [Ilya Simpson]
-What is the name of the website? [turbopelican.github.io] Time to Clock Back
-What timezone will your website use? [Pacific/Auckland]
-What language will your website use? [en]
-What is your website URL? [https://turbopelican.github.io]
-Initialized empty Git repository in /home/elliot/projects/turbopelican.github.io/.git/
-Using CPython 3.11.11
-Creating virtual environment at: .venv
-Resolved 30 packages in 6ms
-Installed 29 packages in 29ms
- + anyio==4.9.0
- + blinker==1.9.0
- + docutils==0.21.2
- + feedgenerator==2.1.0
- + idna==3.10
- + jinja2==3.1.6
- + langcodes==3.5.0
- + language-data==1.3.0
- + marisa-trie==1.2.1
- + markdown==3.8
- + markdown-it-py==3.0.0
- + markupsafe==3.0.2
- + mdurl==0.1.2
- + ordered-set==4.1.0
- + pelican==4.11.0
- + pygments==2.18.0
- + python-dateutil==2.9.0.post0
- + pytz==2025.2
- + rich==14.0.0
- + setuptools==80.8.0
- + six==1.17.0
- + sniffio==1.3.1
- + tomlkit==0.13.2
- + turbopelican==0.4.2
- + typing-extensions==4.13.2
- + tzdata==2025.2
- + tzlocal==5.3.1
- + unidecode==1.4.0
- + watchfiles==1.0.5
-⚡ Turbopelican initialized! ⚡
-```
+![Run turbopelican](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/run-turbopelican-init.gif)
 
 You can use the defaults, or choose your own values. In the example above, I
 have decided to give the website a non-default name, but I have left the other

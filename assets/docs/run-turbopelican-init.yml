@@ -1,0 +1,334 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /home/user
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 74
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 21
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: null
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "#000000"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 1
+    content: "\r\n"
+  - delay: 100
+    content: "user@host:~$ "
+  - delay: 994
+    content: u
+  - delay: 128
+    content: v
+  - delay: 176
+    content: x
+  - delay: 109
+    content: ' '
+  - delay: 115
+    content: t
+  - delay: 124
+    content: u
+  - delay: 127
+    content: r
+  - delay: 125
+    content: b
+  - delay: 108
+    content: o
+  - delay: 104
+    content: p
+  - delay: 140
+    content: e
+  - delay: 156
+    content: l
+  - delay: 95
+    content: i
+  - delay: 144
+    content: c
+  - delay: 161
+    content: a
+  - delay: 104
+    content: 'n'
+  - delay: 140
+    content: ' '
+  - delay: 160
+    content: i
+  - delay: 80
+    content: 'n'
+  - delay: 159
+    content: i
+  - delay: 161
+    content: t
+  - delay: 111
+    content: ' '
+  - delay: 80
+    content: m
+  - delay: 125
+    content: 'y'
+  - delay: 160
+    content: '-'
+  - delay: 144
+    content: t
+  - delay: 104
+    content: u
+  - delay: 143
+    content: r
+  - delay: 124
+    content: b
+  - delay: 161
+    content: o
+  - delay: 100
+    content: p
+  - delay: 143
+    content: e
+  - delay: 144
+    content: l
+  - delay: 80
+    content: i
+  - delay: 96
+    content: c
+  - delay: 144
+    content: a
+  - delay: 177
+    content: 'n'
+  - delay: 120
+    content: '-'
+  - delay: 191
+    content: w
+  - delay: 64
+    content: e
+  - delay: 128
+    content: b
+  - delay: 192
+    content: s
+  - delay: 192
+    content: i
+  - delay: 112
+    content: t
+  - delay: 128
+    content: e
+  - delay: 124
+    content: "\r\n\e[?2004l\r\e]133;C\e\\\r"
+  - delay: 51
+    content: "\e[37m⠋\e[0m \e[2mResolving dependencies...                                               \e[0m\r\e[2K\e[37m⠙\e[0m \e[2mResolving dependencies...                                               \e[0m\r\e[2K\e[37m⠋\e[0m \e[2mResolving dependencies...                                               \e[0m\r\e[2K\e[37m⠙\e[0m \e[2mResolving dependencies...                                               \e[0m"
+  - delay: 38
+    content: "\r\e[2K\e[37m⠙\e[0m \e[2mturbopelican==0.5.0                                                     \e[0m"
+  - delay: 84
+    content: "\r\e[2K\e[37m⠙\e[0m \e[2mlangcodes==3.5.0                                                        \e[0m"
+  - delay: 36
+    content: "\r\e[2K\e[37m⠙\e[0m \e[2mpydantic==2.11.5                                                        \e[0m"
+  - delay: 41
+    content: "\r\e[2K\e[37m⠹\e[0m \e[2mpydantic==2.11.5                                                        \e[0m"
+  - delay: 112
+    content: "\r\e[2K\e[37m⠹\e[0m \e[2mpydantic-core==2.33.2                                                   \e[0m"
+  - delay: 7
+    content: "\r\e[2K\e[37m⠹\e[0m \e[2mtomlkit==0.13.3                                                         \e[0m\r\e[2K\e[37m⠹\e[0m \e[2mtzdata==2025.2                                                          \e[0m\r\e[2K\e[37m⠹\e[0m \e[2mtzlocal==5.3.1                                                          \e[0m\r\e[2K\e[37m⠹\e[0m \e[2mlanguage-data==1.3.0                                                    \e[0m\r\e[2K\e[37m⠹\e[0m \e[2mannotated-types==0.7.0                                                  \e[0m\r\e[2K\e[37m⠹\e[0m \e[2mtyping-extensions==4.14.0                                               \e[0m\r\e[2K\e[37m⠹\e[0m \e[2mtyping-inspection==0.4.1                                                \e[0m"
+  - delay: 16
+    content: "\r\e[2K\e[37m⠹\e[0m \e[2mmarisa-trie==1.2.1                                                      \e[0m"
+  - delay: 33
+    content: "\r\e[2K\e[37m⠹\e[0m \e[2msetuptools==80.9.0                                                      \e[0m"
+  - delay: 12
+    content: "\r\e[2K\e[37m⠹\e[0m \e[2m                                                                        \e[0m\r\e[2K\e[37m⠋\e[0m \e[2mPreparing packages...\e[0m (0/0)                                             \r\e[2K\e[37m⠋\e[0m \e[2mPreparing packages...\e[0m (0/13)                                            \r\e[2K\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)                                            "
+  - delay: 26
+    content: "\r\e[2K\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtyping-inspection\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/14.21 KiB        \e[1A\r\e[2K\e[1B\r\e[2K\e[1A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtyping-inspection\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 14.21 KiB/14.21 KiB      \e[1A\r\e[2K\e[1B\r\e[2K\e[1A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtyping-inspection\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 14.21 KiB/14.21 KiB\r\n\e[2mtomlkit   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/37.99 KiB               \e[2A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[2A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtyping-inspection\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 14.21 KiB/14.21 KiB\r\n\e[2mtzlocal   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/37.99 KiB               \e[3A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[3A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mannotated-types\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/13.32 KiB\r\n\e[2mtyping-inspection\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 14.21 KiB/14.21 KiB\r\n\e[2mtzlocal   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/37.99 KiB               \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mannotated-types\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/13.32 KiB\r\n\e[2mtyping-inspection\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 14.21 KiB/14.21 KiB\r\n\e[2mtzlocal   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/42.81 KiB        \e[5A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[5A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mannotated-types\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/13.32 KiB\r\n\e[2mtzlocal   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/42.81 KiB        "
+  - delay: 18
+    content: "\e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mannotated-types\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/13.32 KiB\r\n\e[2mtzlocal   \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m------------\e[2m------------------\e[0m\e[0m 14.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/42.81 KiB        \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mannotated-types\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/13.32 KiB\r\n\e[2mtzlocal   \e[0m \e[32m--------------------------\e[2m----\e[0m\e[0m 14.89 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m------------\e[2m------------------\e[0m\e[0m 14.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/42.81 KiB        \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mannotated-types\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 13.32 KiB/13.32 KiB\r\n\e[2mtzlocal   \e[0m \e[32m--------------------------\e[2m----\e[0m\e[0m 14.89 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m------------\e[2m------------------\e[0m\e[0m 14.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/42.81 KiB        \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mannotated-types\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 13.32 KiB/13.32 KiB\r\n\e[2mtzlocal   \e[0m \e[32m--------------------------\e[2m----\e[0m\e[0m 14.89 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m------------\e[2m------------------\e[0m\e[0m 14.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 14.84 KiB/42.81 KiB      \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m--------------------------\e[2m----\e[0m\e[0m 14.89 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m------------\e[2m------------------\e[0m\e[0m 14.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 14.84 KiB/42.81 KiB      "
+  - delay: 9
+    content: "\e[3A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[3A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m--------------------------\e[2m----\e[0m\e[0m 14.89 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m------------\e[2m------------------\e[0m\e[0m 14.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 14.84 KiB/42.81 KiB\r\n\e[2msetuptools\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/1.15 MiB                \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m--------------------------\e[2m----\e[0m\e[0m 14.89 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 30.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 14.84 KiB/42.81 KiB\r\n\e[2msetuptools\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/1.15 MiB                \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 17.60 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 30.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 14.84 KiB/42.81 KiB\r\n\e[2msetuptools\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/1.15 MiB                \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 17.60 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 30.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m----------------------\e[2m--------\e[0m\e[0m 30.84 KiB/42.81 KiB\r\n\e[2msetuptools\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/1.15 MiB                \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 17.60 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 30.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 42.81 KiB/42.81 KiB\r\n\e[2msetuptools\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/1.15 MiB                \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 17.60 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 30.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 42.81 KiB/42.81 KiB\r\n\e[2msetuptools\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 16.00 KiB/1.15 MiB              \e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 17.60 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 30.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 42.81 KiB/42.81 KiB\r\n\e[2mlangcodes \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/178.69 KiB\r\n\e[2msetuptools\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 16.00 KiB/1.15 MiB              \e[5A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[5A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzlocal   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 17.60 KiB/17.60 KiB\r\n\e[2mtomlkit   \e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 30.89 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 42.81 KiB/42.81 KiB\r\n\e[2mturbopelican\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/82.50 KiB\r\n\e[2mlangcodes \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/178.69 KiB\r\n\e[2msetuptools\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 16.00 KiB/1.15 MiB              \e[6A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[6A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtomlkit   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 37.99 KiB/37.99 KiB\r\n\e[2mtyping-extensions\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 42.81 KiB/42.81 KiB\r\n\e[2mturbopelican\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/82.50 KiB\r\n\e[2mlangcodes \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/178.69 KiB\r\n\e[2mtzdata    \e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 14.88 KiB/339.69 KiB\r\n\e[2msetuptools\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 16.00 KiB/1.15 MiB              \e[6A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[6A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtomlkit   \e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 37.99 KiB/37.99 KiB\r\n\e[2mturbopelican\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/82.50 KiB\r\n\e[2mlangcodes \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/178.69 KiB\r\n\e[2mtzdata    \e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 14.88 KiB/339.69 KiB\r\n\e[2msetuptools\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 32.00 KiB/1.15 MiB              \e[5A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[5A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mturbopelican\e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/82.50 KiB\r\n\e[2mlangcodes \e[0m \e[32m\e[2m------------------------------\e[0m\e[0m     0 B/178.69 KiB\r\n\e[2mtzdata    \e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 14.88 KiB/339.69 KiB\r\n\e[2msetuptools\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 32.00 KiB/1.15 MiB              "
+  - delay: 38
+    content: "\e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mturbopelican\e[0m \e[32m------------------------------\e[2m\e[0m\e[0m 80.00 KiB/82.50 KiB\r\n\e[2mlangcodes \e[0m \e[32m-------------\e[2m-----------------\e[0m\e[0m 72.74 KiB/178.69 KiB\r\n\e[2mtzdata    \e[0m \e[32m---------\e[2m---------------------\e[0m\e[0m 101.02 KiB/339.69 KiB\r\n\e[2mpydantic  \e[0m \e[32m------\e[2m------------------------\e[0m\e[0m 78.74 KiB/433.82 KiB\r\n\e[2msetuptools\e[0m \e[32m----\e[2m--------------------------\e[0m\e[0m 141.03 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 80.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 80.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 80.00 KiB/5.14 MiB           "
+  - delay: 15
+    content: "\e[8A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[8A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mlangcodes \e[0m \e[32m-------------\e[2m-----------------\e[0m\e[0m 72.74 KiB/178.69 KiB\r\n\e[2mtzdata    \e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 117.02 KiB/339.69 KiB\r\n\e[2mpydantic  \e[0m \e[32m-------\e[2m-----------------------\e[0m\e[0m 94.74 KiB/433.82 KiB\r\n\e[2msetuptools\e[0m \e[32m-----\e[2m-------------------------\e[0m\e[0m 157.03 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 80.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 96.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m-\e[2m-----------------------------\e[0m\e[0m 80.00 KiB/5.14 MiB           "
+  - delay: 23
+    content: "\e[7A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[7A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzdata    \e[0m \e[32m---------------\e[2m---------------\e[0m\e[0m 158.88 KiB/339.69 KiB\r\n\e[2mpydantic  \e[0m \e[32m-------------\e[2m-----------------\e[0m\e[0m 174.64 KiB/433.82 KiB\r\n\e[2msetuptools\e[0m \e[32m-------\e[2m-----------------------\e[0m\e[0m 240.20 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m----\e[2m--------------------------\e[0m\e[0m 160.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m---\e[2m---------------------------\e[0m\e[0m 192.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 192.00 KiB/5.14 MiB          "
+  - delay: 15
+    content: "\e[6A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[6A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mtzdata    \e[0m \e[32m-----------------\e[2m-------------\e[0m\e[0m 190.88 KiB/339.69 KiB\r\n\e[2mpydantic  \e[0m \e[32m--------------\e[2m----------------\e[0m\e[0m 190.74 KiB/433.82 KiB\r\n\e[2msetuptools\e[0m \e[32m-------\e[2m-----------------------\e[0m\e[0m 253.03 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m-----\e[2m-------------------------\e[0m\e[0m 192.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m----\e[2m--------------------------\e[0m\e[0m 224.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m--\e[2m----------------------------\e[0m\e[0m 208.00 KiB/5.14 MiB          "
+  - delay: 40
+    content: "\e[6A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[6A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mpydantic  \e[0m \e[32m------------------------\e[2m------\e[0m\e[0m 334.74 KiB/433.82 KiB\r\n\e[2msetuptools\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 397.03 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m---------\e[2m---------------------\e[0m\e[0m 384.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m-------\e[2m-----------------------\e[0m\e[0m 448.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m---\e[2m---------------------------\e[0m\e[0m 371.28 KiB/5.14 MiB          "
+  - delay: 5
+    content: "\e[5A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[5A\e[37m⠙\e[0m \e[2mPreparing packages...\e[0m (0/13)\r\n\e[2mpydantic  \e[0m \e[32m---------------------------\e[2m---\e[0m\e[0m 382.74 KiB/433.82 KiB\r\n\e[2msetuptools\e[0m \e[32m------------\e[2m------------------\e[0m\e[0m 448.19 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m----------\e[2m--------------------\e[0m\e[0m 431.89 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m--------\e[2m----------------------\e[0m\e[0m 496.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m---\e[2m---------------------------\e[0m\e[0m 416.00 KiB/5.14 MiB          "
+  - delay: 8
+    content: "\e[5A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[5A\e[37m⠹\e[0m \e[2mPreparing packages...\e[0m (8/13)\r\n\e[2msetuptools\e[0m \e[32m--------------\e[2m----------------\e[0m\e[0m 509.03 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 480.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m---------\e[2m---------------------\e[0m\e[0m 576.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m---\e[2m---------------------------\e[0m\e[0m 480.00 KiB/5.14 MiB          "
+  - delay: 57
+    content: "\e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠹\e[0m \e[2mPreparing packages...\e[0m (8/13)\r\n\e[2msetuptools\e[0m \e[32m----------------\e[2m--------------\e[0m\e[0m 605.03 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m-------------\e[2m-----------------\e[0m\e[0m 544.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m-----------\e[2m-------------------\e[0m\e[0m 672.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m----\e[2m--------------------------\e[0m\e[0m 592.00 KiB/5.14 MiB          "
+  - delay: 42
+    content: "\e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠹\e[0m \e[2mPreparing packages...\e[0m (8/13)\r\n\e[2msetuptools\e[0m \e[32m----------------------\e[2m--------\e[0m\e[0m 859.53 KiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m------------------\e[2m------------\e[0m\e[0m 784.00 KiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m---------------\e[2m---------------\e[0m\e[0m 912.00 KiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m-----\e[2m-------------------------\e[0m\e[0m 848.00 KiB/5.14 MiB          "
+  - delay: 43
+    content: "\e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠹\e[0m \e[2mPreparing packages...\e[0m (8/13)\r\n\e[2msetuptools\e[0m \e[32m----------------------------\e[2m--\e[0m\e[0m 1.04 MiB/1.15 MiB\r\n\e[2mmarisa-trie\e[0m \e[32m-------------------------\e[2m-----\e[0m\e[0m 1.05 MiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m--------------------\e[2m----------\e[0m\e[0m 1.22 MiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m-------\e[2m-----------------------\e[0m\e[0m 1.08 MiB/5.14 MiB            "
+  - delay: 11
+    content: "\e[4A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[4A\e[37m⠹\e[0m \e[2mPreparing packages...\e[0m (8/13)\r\n\e[2mmarisa-trie\e[0m \e[32m--------------------------\e[2m----\e[0m\e[0m 1.09 MiB/1.29 MiB\r\n\e[2mpydantic-core\e[0m \e[32m---------------------\e[2m---------\e[0m\e[0m 1.28 MiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m-------\e[2m-----------------------\e[0m\e[0m 1.16 MiB/5.14 MiB            "
+  - delay: 23
+    content: "\e[3A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[3A\e[37m⠹\e[0m \e[2mPreparing packages...\e[0m (8/13)\r\n\e[2mpydantic-core\e[0m \e[32m------------------------\e[2m------\e[0m\e[0m 1.52 MiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m--------\e[2m----------------------\e[0m\e[0m 1.36 MiB/5.14 MiB            "
+  - delay: 16
+    content: "\e[2A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[2A\e[37m⠹\e[0m \e[2mPreparing packages...\e[0m (8/13)\r\n\e[2mpydantic-core\e[0m \e[32m-----------------------------\e[2m-\e[0m\e[0m 1.83 MiB/1.91 MiB\r\n\e[2mlanguage-data\e[0m \e[32m---------\e[2m---------------------\e[0m\e[0m 1.51 MiB/5.14 MiB            "
+  - delay: 6
+    content: "\e[2A\r\e[2K\e[1B\r\e[2K\e[1B\r\e[2K\e[2A\e[37m⠸\e[0m \e[2mPreparing packages...\e[0m (11/13)\r\n\e[2mlanguage-data\e[0m \e[32m----------\e[2m--------------------\e[0m\e[0m 1.59 MiB/5.14 MiB            "
+  - delay: 44
+    content: "\e[1A\r\e[2K\e[1B\r\e[2K\e[1A\e[37m⠸\e[0m \e[2mPreparing packages...\e[0m (11/13)\r\n\e[2mlanguage-data\e[0m \e[32m-------------\e[2m-----------------\e[0m\e[0m 2.22 MiB/5.14 MiB            "
+  - delay: 50
+    content: "\e[1A\r\e[2K\e[1B\r\e[2K\e[1A\e[37m⠸\e[0m \e[2mPreparing packages...\e[0m (11/13)\r\n\e[2mlanguage-data\e[0m \e[32m------------------\e[2m------------\e[0m\e[0m 3.05 MiB/5.14 MiB            "
+  - delay: 50
+    content: "\e[1A\r\e[2K\e[1B\r\e[2K\e[1A\e[37m⠸\e[0m \e[2mPreparing packages...\e[0m (11/13)\r\n\e[2mlanguage-data\e[0m \e[32m----------------------------\e[2m--\e[0m\e[0m 4.75 MiB/5.14 MiB            "
+  - delay: 15
+    content: "\e[1A\r\e[2K\e[1B\r\e[2K\e[1A\e[37m⠸\e[0m \e[2mPreparing packages...\e[0m (11/13)                                           \r\e[2K░░░░░░░░░░░░░░░░░░░░ [0/0] \e[2mInstalling wheels...                           \e[0m\r\e[2K░░░░░░░░░░░░░░░░░░░░ [0/13] \e[2mInstalling wheels...                          \e[0m\r\e[2K░░░░░░░░░░░░░░░░░░░░ [0/13] \e[2mtyping-inspection==0.4.1                      \e[0m\r\e[2K█░░░░░░░░░░░░░░░░░░░ [1/13] \e[2mtyping-inspection==0.4.1                      \e[0m\r\e[2K█░░░░░░░░░░░░░░░░░░░ [1/13] \e[2mtomlkit==0.13.3                               \e[0m\r\e[2K███░░░░░░░░░░░░░░░░░ [2/13] \e[2mtomlkit==0.13.3                               \e[0m\r\e[2K███░░░░░░░░░░░░░░░░░ [2/13] \e[2mtyping-extensions==4.14.0                     \e[0m\r\e[2K████░░░░░░░░░░░░░░░░ [3/13] \e[2mtyping-extensions==4.14.0                     \e[0m\r\e[2K████░░░░░░░░░░░░░░░░ [3/13] \e[2mpydantic-core==2.33.2                         \e[0m\r\e[2K██████░░░░░░░░░░░░░░ [4/13] \e[2mpydantic-core==2.33.2                         \e[0m\r\e[2K██████░░░░░░░░░░░░░░ [4/13] \e[2mannotated-types==0.7.0                        \e[0m\r\e[2K███████░░░░░░░░░░░░░ [5/13] \e[2mannotated-types==0.7.0                        \e[0m\r\e[2K███████░░░░░░░░░░░░░ [5/13] \e[2mlangcodes==3.5.0                              \e[0m\r\e[2K█████████░░░░░░░░░░░ [6/13] \e[2mlangcodes==3.5.0                              \e[0m\r\e[2K█████████░░░░░░░░░░░ [6/13] \e[2mmarisa-trie==1.2.1                            \e[0m\r\e[2K██████████░░░░░░░░░░ [7/13] \e[2mmarisa-trie==1.2.1                            \e[0m\r\e[2K██████████░░░░░░░░░░ [7/13] \e[2mtzlocal==5.3.1                                \e[0m\r\e[2K████████████░░░░░░░░ [8/13] \e[2mtzlocal==5.3.1                                \e[0m\r\e[2K████████████░░░░░░░░ [8/13] \e[2mpydantic==2.11.5                              \e[0m\r\e[2K█████████████░░░░░░░ [9/13] \e[2mpydantic==2.11.5                              \e[0m"
+  - delay: 26
+    content: "\r\e[2K\e[2mInstalled \e[1m13 packages\e[0m \e[2min 30ms\e[0m\e[0m\r\n"
+  - delay: 389
+    content: 'Who is the website author? [Ilya Simpson] '
+  - delay: 668
+    content: "\r\nWhat is the name of the website? [my-turbopelican-website] "
+  - delay: 708
+    content: M
+  - delay: 240
+    content: 'y'
+  - delay: 79
+    content: ' '
+  - delay: 272
+    content: W
+  - delay: 224
+    content: e
+  - delay: 192
+    content: b
+  - delay: 160
+    content: s
+  - delay: 112
+    content: i
+  - delay: 80
+    content: t
+  - delay: 80
+    content: e
+  - delay: 369
+    content: "\r\nWhat timezone will your website use? [Pacific/Auckland] "
+  - delay: 895
+    content: "\r\n"
+  - delay: 7
+    content: 'What language will your website use? [en] '
+  - delay: 1224
+    content: "\r\nWhat is your website URL? [https://my-turbopelican-website.github.io] "
+  - delay: 1312
+    content: "\r\n"
+  - delay: 12
+    content: "Initialized empty Git repository in /home/user/my-turbopelican-website/.git/\r\n"
+  - delay: 50
+    content: "Using CPython 3.11.11\r\nCreating virtual environment at: .venv\r\n"
+  - delay: 353
+    content: "Resolved 34 packages in 351ms\r\n"
+  - delay: 93
+    content: "Downloading pelican (23.0MiB)\r\nDownloading marisa-trie (1.3MiB)\r\nDownloading pydantic-core (1.9MiB)\r\nDownloading pygments (1.1MiB)\r\nDownloading setuptools (1.1MiB)\r\nDownloading language-data (5.1MiB)\r\n"
+  - delay: 640
+    content: " Downloaded setuptools\r\n"
+  - delay: 13
+    content: " Downloaded pygments\r\n"
+  - delay: 75
+    content: " Downloaded marisa-trie\r\n"
+  - delay: 6
+    content: " Downloaded pydantic-core\r\n"
+  - delay: 309
+    content: " Downloaded language-data\r\n"
+  - delay: 855
+    content: " Downloaded pelican\r\nPrepared 33 packages in 1.98s\r\n"
+  - delay: 29
+    content: "Installed 33 packages in 28ms\r\n + annotated-types==0.7.0\r\n + anyio==4.9.0\r\n + blinker==1.9.0\r\n + docutils==0.21.2\r\n + feedgenerator==2.1.0\r\n + idna==3.10\r\n + jinja2==3.1.6\r\n + langcodes==3.5.0\r\n + language-data==1.3.0\r\n + marisa-trie==1.2.1\r\n + markdown==3.8\r\n + markdown-it-py==3.0.0\r\n + markupsafe==3.0.2\r\n + mdurl==0.1.2\r\n + ordered-set==4.1.0\r\n + pelican==4.11.0\r\n + pydantic==2.11.5\r\n + pydantic-core==2.33.2\r\n + pygments==2.18.0\r\n + python-dateutil==2.9.0.post0\r\n + pytz==2025.2\r\n + rich==14.0.0\r\n + setuptools==80.9.0\r\n + six==1.17.0\r\n + sniffio==1.3.1\r\n + tomlkit==0.13.3\r\n + turbopelican==0.5.0\r\n + typing-extensions==4.14.0\r\n + typing-inspection==0.4.1\r\n + tzdata==2025.2\r\n + tzlocal==5.3.1\r\n + unidecode==1.4.0\r\n + watchfiles==1.0.5\r\n"
+  - delay: 8
+    content: "⚡ Turbopelican initialized! ⚡\r\n"
+  - delay: 28
+    content: "user@host:~$ "
+  - delay: 1626
+    content: "\ruser@host:~$ "
