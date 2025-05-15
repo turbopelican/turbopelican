@@ -1,5 +1,6 @@
 import shutil
 import subprocess
+import sys
 from collections.abc import Generator
 from pathlib import Path
 from unittest import mock
@@ -40,6 +41,18 @@ def mock_shutil_which_uv_missing() -> Generator[None, None, None]:
 
 
 @pytest.fixture
+def mock_subprocess_popen() -> Generator[mock.Mock, None, None]:
+    """Mocks out `subprocess.Popen`."""
+    mock_process = mock.Mock()
+    mock_process.stderr = None
+    mock_process.returncode = 0
+    with mock.patch.object(
+        subprocess, "Popen", return_value=mock_process
+    ) as mock_subprocess_popen:
+        yield mock_subprocess_popen
+
+
+@pytest.fixture
 def mock_subprocess_run() -> Generator[mock.Mock, None, None]:
     """Mocks out `subprocess.run`."""
     with mock.patch.object(subprocess, "run") as mock_subprocess_run:
@@ -47,28 +60,30 @@ def mock_subprocess_run() -> Generator[mock.Mock, None, None]:
 
 
 @pytest.mark.usefixtures("mock_shutil_which_uv")
-def test_uv_sync(mock_subprocess_run: mock.Mock) -> None:
+def test_uv_sync(mock_subprocess_popen: mock.Mock) -> None:
     """Tests that repository is synced appropriately."""
     uv_sync(Path(), verbosity=Verbosity.NORMAL)
-    mock_subprocess_run.assert_called_once_with(
+    mock_subprocess_popen.assert_called_once_with(
         ["/usr/bin/uv", "sync"],
-        check=True,
+        stdout=sys.stdout,
+        stderr=subprocess.PIPE,
         cwd=Path(),
         text=True,
-        capture_output=True,
+        bufsize=1,
     )
 
 
 @pytest.mark.usefixtures("mock_shutil_which_uv")
-def test_uv_sync_quiet(mock_subprocess_run: mock.Mock) -> None:
+def test_uv_sync_quiet(mock_subprocess_popen: mock.Mock) -> None:
     """Tests that repository is synced appropriately."""
     uv_sync(Path(), verbosity=Verbosity.QUIET)
-    mock_subprocess_run.assert_called_once_with(
+    mock_subprocess_popen.assert_called_once_with(
         ["/usr/bin/uv", "sync", "--quiet"],
-        check=True,
+        stdout=sys.stdout,
+        stderr=subprocess.PIPE,
         cwd=Path(),
         text=True,
-        capture_output=True,
+        bufsize=1,
     )
 
 

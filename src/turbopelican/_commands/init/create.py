@@ -6,6 +6,7 @@ Author: Elliot Simpson
 import importlib.resources as pkg_resources
 import shutil
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Literal, cast
@@ -36,13 +37,25 @@ def uv_sync(directory: Path, *, verbosity: Verbosity) -> None:
     if verbosity == Verbosity.QUIET:
         uv_sync_args.append("--quiet")
 
-    try:
-        subprocess.run(
-            uv_sync_args, check=True, cwd=directory, text=True, capture_output=True
-        )
-    except subprocess.CalledProcessError as exc:
-        exc.add_note(exc.stderr)
-        raise
+    # Ensure warnings concerning virtual environments are filtered out.
+    process = subprocess.Popen(
+        uv_sync_args,
+        stdout=sys.stdout,
+        stderr=subprocess.PIPE,
+        cwd=directory,
+        text=True,
+        bufsize=1,
+    )
+    while process.stderr:
+        stderr_line = process.stderr.readline()
+        if not stderr_line:
+            break
+        if "does not match the project environment path" not in stderr_line:
+            print(stderr_line, file=sys.stderr, end="")
+
+    process.wait()
+    if process.returncode:
+        raise subprocess.CalledProcessError(process.returncode, process.args)
 
 
 def _copy_template(directory: Path, name: Literal["newsite", "minimal"]) -> None:
