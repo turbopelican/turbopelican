@@ -11,6 +11,7 @@ Pages.
 * [Usage](#usage)
   * [Configuration](#configuration)
 * [Development](#development)
+  * [NeoVim](#neovim)
 
 ## Explanation
 
@@ -159,3 +160,18 @@ Pull requests should be made only for branches which pass CI. Once it has
 passed, you should then open a pull request. If you are contributing a new
 feature or breaking changes, you should set the base reference to the current
 feature branch. Otherwise, you should set the base reference to **main**.
+
+### NeoVim
+
+Contributors to turbopelican are encouraged to use
+[NeoVim](https://neovim.io/) as their IDE during development, in conjunction
+with [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig). When you
+launch NeoVim, you should pass the project's IDE settings like so:
+
+```sh
+. .venv/bin/activate
+nvim -u init.lua
+```
+
+This will ensure that you receive Ruff and Pyright warnings in your editor. It
+will also automatically format any Python code on write.
