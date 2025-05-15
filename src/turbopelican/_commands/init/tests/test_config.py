@@ -13,8 +13,8 @@ from turbopelican._commands.init import config
 from turbopelican._commands.init.config import (
     ConfigurationError,
     HandleDefaultsMode,
+    InitConfiguration,
     InputMode,
-    TurboConfiguration,
     Verbosity,
 )
 
@@ -151,7 +151,7 @@ def test_turbo_configuration_from_args(tmp_path: Path) -> None:
         quiet=True,
         minimal_install=False,
     )
-    config = TurboConfiguration.from_args(namespace)
+    config = InitConfiguration.from_args(namespace)
     assert config.directory == new_repo
     assert config.author == "Fred"
     assert config.input_mode == InputMode.REJECT_INPUT
@@ -165,7 +165,7 @@ def test_turbo_configuration_from_args(tmp_path: Path) -> None:
 
 def test_turbo_configuration_get_author_cli_provided() -> None:
     """Ensure that the CLI-provided author takes precedence."""
-    author = TurboConfiguration._get_author(
+    author = InitConfiguration._get_author(
         "Fred",
         git_path="",
         input_mode=InputMode.ACCEPT_INPUT,
@@ -177,7 +177,7 @@ def test_turbo_configuration_get_author_cli_provided() -> None:
 def test_turbo_configuration_get_author_unavailable() -> None:
     """Ensure that an error is raised when the author cannot be obtained."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_author(
+        InitConfiguration._get_author(
             None,
             git_path="",
             input_mode=InputMode.REJECT_INPUT,
@@ -189,7 +189,7 @@ def test_turbo_configuration_get_author_unavailable() -> None:
 def test_turbo_configuration_get_author_git_failure_no_input() -> None:
     """Ensure when git author search fails and input not permitted, error is raised."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_author(
+        InitConfiguration._get_author(
             None,
             git_path="",
             input_mode=InputMode.REJECT_INPUT,
@@ -200,7 +200,7 @@ def test_turbo_configuration_get_author_git_failure_no_input() -> None:
 @pytest.mark.usefixtures("git_cannot_get_author", "input_sam")
 def test_turbo_configuration_get_author_git_failure_use_input() -> None:
     """Ensure when git author search fails and input permitted, standard input works."""
-    author = TurboConfiguration._get_author(
+    author = InitConfiguration._get_author(
         None,
         git_path="",
         input_mode=InputMode.ACCEPT_INPUT,
@@ -212,7 +212,7 @@ def test_turbo_configuration_get_author_git_failure_use_input() -> None:
 @pytest.mark.usefixtures("git_get_author_fred")
 def test_turbo_configuration_get_author_via_git_succeed_use_default() -> None:
     """Ensure when git author search succeeds, defaults can be returned."""
-    author = TurboConfiguration._get_author(
+    author = InitConfiguration._get_author(
         None,
         git_path="",
         input_mode=InputMode.ACCEPT_INPUT,
@@ -224,7 +224,7 @@ def test_turbo_configuration_get_author_via_git_succeed_use_default() -> None:
 @pytest.mark.usefixtures("git_get_author_fred", "input_nothing")
 def test_turbo_configuration_get_author_via_git_succeed_empty_input() -> None:
     """Ensure when git author search succeeds, defaults can be shown."""
-    author = TurboConfiguration._get_author(
+    author = InitConfiguration._get_author(
         None,
         git_path="",
         input_mode=InputMode.ACCEPT_INPUT,
@@ -236,7 +236,7 @@ def test_turbo_configuration_get_author_via_git_succeed_empty_input() -> None:
 @pytest.mark.usefixtures("git_get_author_fred", "input_sam")
 def test_turbo_configuration_get_author_via_git_succeed_take_input() -> None:
     """Ensure when git author search succeeds, standard input can be returned."""
-    author = TurboConfiguration._get_author(
+    author = InitConfiguration._get_author(
         None,
         git_path="",
         input_mode=InputMode.ACCEPT_INPUT,
@@ -247,7 +247,7 @@ def test_turbo_configuration_get_author_via_git_succeed_take_input() -> None:
 
 def test_turbo_configuration_get_site_name_cli_provided() -> None:
     """Ensure that the CLI-provided author takes precedence."""
-    site_name = TurboConfiguration._get_site_name(
+    site_name = InitConfiguration._get_site_name(
         cli_site_name="My Website",
         path=Path("/path/to/website"),
         input_mode=InputMode.ACCEPT_INPUT,
@@ -258,7 +258,7 @@ def test_turbo_configuration_get_site_name_cli_provided() -> None:
 
 def test_turbo_configuration_get_site_name_use_defaults() -> None:
     """Ensure that the site name can be inferred from the path name."""
-    site_name = TurboConfiguration._get_site_name(
+    site_name = InitConfiguration._get_site_name(
         cli_site_name=None,
         path=Path("/path/to/website"),
         input_mode=InputMode.ACCEPT_INPUT,
@@ -270,7 +270,7 @@ def test_turbo_configuration_get_site_name_use_defaults() -> None:
 def test_turbo_configuration_get_site_name_unavailable() -> None:
     """Ensure that an error is raised when the path name cannot be obtained."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_site_name(
+        InitConfiguration._get_site_name(
             cli_site_name=None,
             path=Path("/path/to/website"),
             input_mode=InputMode.REJECT_INPUT,
@@ -281,7 +281,7 @@ def test_turbo_configuration_get_site_name_unavailable() -> None:
 @pytest.mark.usefixtures("input_my_page")
 def test_turbo_configuration_get_site_name_take_input() -> None:
     """Ensure that the site name can be received via standard input."""
-    site_name = TurboConfiguration._get_site_name(
+    site_name = InitConfiguration._get_site_name(
         cli_site_name=None,
         path=Path("/path/to/website"),
         input_mode=InputMode.ACCEPT_INPUT,
@@ -293,7 +293,7 @@ def test_turbo_configuration_get_site_name_take_input() -> None:
 @pytest.mark.usefixtures("input_nothing")
 def test_turbo_configuration_get_site_name_empty_input() -> None:
     """Ensure that the site name, when the user provides no input, can be defaulted."""
-    site_name = TurboConfiguration._get_site_name(
+    site_name = InitConfiguration._get_site_name(
         cli_site_name=None,
         path=Path("/path/to/website"),
         input_mode=InputMode.ACCEPT_INPUT,
@@ -304,7 +304,7 @@ def test_turbo_configuration_get_site_name_empty_input() -> None:
 
 def test_turbo_configuration_get_timezone_cli_provided() -> None:
     """Ensure that the timezone can be provided via the CLI."""
-    timezone = TurboConfiguration._get_timezone(
+    timezone = InitConfiguration._get_timezone(
         "fr",
         input_mode=InputMode.ACCEPT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.USE_DEFAULTS,
@@ -315,7 +315,7 @@ def test_turbo_configuration_get_timezone_cli_provided() -> None:
 def test_turbo_configuration_get_timezone_unavailable() -> None:
     """Ensures that an error is raised when the timezone cannot be obtained."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_timezone(
+        InitConfiguration._get_timezone(
             None,
             input_mode=InputMode.REJECT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -326,7 +326,7 @@ def test_turbo_configuration_get_timezone_unavailable() -> None:
 def test_turbo_configuration_get_timezone_default_unavailable_no_input() -> None:
     """Ensures error is raised when timezone cannot be obtained and input is blocked."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_timezone(
+        InitConfiguration._get_timezone(
             None,
             input_mode=InputMode.REJECT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.USE_DEFAULTS,
@@ -337,7 +337,7 @@ def test_turbo_configuration_get_timezone_default_unavailable_no_input() -> None
 def test_turbo_configuration_get_timezone_default_unavailable_input_empty() -> None:
     """Ensures error is raised when timezone can't be obtained and user inputs blank."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_timezone(
+        InitConfiguration._get_timezone(
             None,
             input_mode=InputMode.ACCEPT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.USE_DEFAULTS,
@@ -347,7 +347,7 @@ def test_turbo_configuration_get_timezone_default_unavailable_input_empty() -> N
 @pytest.mark.usefixtures("get_localzone_zoneinfo")
 def test_turbo_configuration_get_timezone_use_default() -> None:
     """Ensures default timezone can be used."""
-    timezone = TurboConfiguration._get_timezone(
+    timezone = InitConfiguration._get_timezone(
         None,
         input_mode=InputMode.REJECT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.USE_DEFAULTS,
@@ -359,7 +359,7 @@ def test_turbo_configuration_get_timezone_use_default() -> None:
 def test_turbo_configuration_get_timezone_found_default_input_invalid() -> None:
     """Ensures error is raised if after default found, invalid timezone inputted."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_timezone(
+        InitConfiguration._get_timezone(
             None,
             input_mode=InputMode.ACCEPT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -370,7 +370,7 @@ def test_turbo_configuration_get_timezone_found_default_input_invalid() -> None:
 def test_turbo_configuration_get_timezone_found_no_default_input_invalid() -> None:
     """Ensures error is raised if no default found, invalid timezone inputted."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_timezone(
+        InitConfiguration._get_timezone(
             None,
             input_mode=InputMode.ACCEPT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -384,7 +384,7 @@ def test_turbo_configuration_get_timezone_found_no_default_input_invalid() -> No
 )
 def test_turbo_configuration_get_timezone_found_no_default_input_valid() -> None:
     """Ensures success if when no default found, a valid timezone is inputted."""
-    timezone = TurboConfiguration._get_timezone(
+    timezone = InitConfiguration._get_timezone(
         None,
         input_mode=InputMode.ACCEPT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -399,7 +399,7 @@ def test_turbo_configuration_get_timezone_found_no_default_input_valid() -> None
 )
 def test_turbo_configuration_get_timezone_found_default_input_valid() -> None:
     """Ensures success if after default found, a valid timezone is inputted."""
-    timezone = TurboConfiguration._get_timezone(
+    timezone = InitConfiguration._get_timezone(
         None,
         input_mode=InputMode.ACCEPT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -414,7 +414,7 @@ def test_turbo_configuration_get_timezone_found_default_input_valid() -> None:
 )
 def test_turbo_configuration_get_timezone_found_default_input_empty() -> None:
     """Ensures success if after default found, it is manually chosen."""
-    timezone = TurboConfiguration._get_timezone(
+    timezone = InitConfiguration._get_timezone(
         None,
         input_mode=InputMode.ACCEPT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -424,7 +424,7 @@ def test_turbo_configuration_get_timezone_found_default_input_empty() -> None:
 
 def test_turbo_configuration_get_default_lang_cli_provided() -> None:
     """Ensures CLI-provided default langauge takes precedence."""
-    default_lang = TurboConfiguration._get_default_lang(
+    default_lang = InitConfiguration._get_default_lang(
         "fr",
         input_mode=InputMode.REJECT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -434,7 +434,7 @@ def test_turbo_configuration_get_default_lang_cli_provided() -> None:
 
 def test_turbo_configuration_get_default_lang_default_used() -> None:
     """Ensures that the default language is used when defaults can be used."""
-    default_lang = TurboConfiguration._get_default_lang(
+    default_lang = InitConfiguration._get_default_lang(
         None,
         input_mode=InputMode.REJECT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.USE_DEFAULTS,
@@ -445,7 +445,7 @@ def test_turbo_configuration_get_default_lang_default_used() -> None:
 def test_turbo_configuration_get_default_lang_reject_input() -> None:
     """Ensures error raised when no default can be used and input is not allowed."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_default_lang(
+        InitConfiguration._get_default_lang(
             None,
             input_mode=InputMode.REJECT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -455,7 +455,7 @@ def test_turbo_configuration_get_default_lang_reject_input() -> None:
 @pytest.mark.usefixtures("input_nothing")
 def test_turbo_configuration_get_default_lang_input_empty() -> None:
     """Ensures default language returned when user inputs blank default language."""
-    default_lang = TurboConfiguration._get_default_lang(
+    default_lang = InitConfiguration._get_default_lang(
         None,
         input_mode=InputMode.ACCEPT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -467,7 +467,7 @@ def test_turbo_configuration_get_default_lang_input_empty() -> None:
 def test_turbo_configuration_get_default_lang_input_unparseable() -> None:
     """Ensures error when an unparseable language is provided."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_default_lang(
+        InitConfiguration._get_default_lang(
             None,
             input_mode=InputMode.ACCEPT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -478,7 +478,7 @@ def test_turbo_configuration_get_default_lang_input_unparseable() -> None:
 def test_turbo_configuration_get_default_lang_input_unrecognized() -> None:
     """Ensures error when an unrecognized language is provided."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_default_lang(
+        InitConfiguration._get_default_lang(
             None,
             input_mode=InputMode.ACCEPT_INPUT,
             handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -488,7 +488,7 @@ def test_turbo_configuration_get_default_lang_input_unrecognized() -> None:
 @pytest.mark.usefixtures("input_es")
 def test_turbo_configuration_get_default_lang_input_recognized() -> None:
     """Ensures error when a recognized language is provided."""
-    default_lang = TurboConfiguration._get_default_lang(
+    default_lang = InitConfiguration._get_default_lang(
         None,
         input_mode=InputMode.ACCEPT_INPUT,
         handle_defaults_mode=HandleDefaultsMode.REQUIRE_STANDARD_INPUT,
@@ -511,12 +511,12 @@ def test_turbo_configuration_validate_site_url(site_url: str, *, valid: bool) ->
     """Ensures an error is raised if and only if the provided site URL is invalid."""
     context = pytest.raises(ConfigurationError) if not valid else nullcontext()
     with context:
-        TurboConfiguration._validate_site_url(site_url)
+        InitConfiguration._validate_site_url(site_url)
 
 
 def test_turbo_configuration_get_site_url_cli_provided() -> None:
     """Ensures that the CLI-provided site URL takes precedence."""
-    site_url = TurboConfiguration._get_site_url(
+    site_url = InitConfiguration._get_site_url(
         "https://hello-world-123.github.io",
         Path(),
         input_mode=InputMode.REJECT_INPUT,
@@ -528,7 +528,7 @@ def test_turbo_configuration_get_site_url_cli_provided() -> None:
 def test_turbo_configuration_get_site_url_no_user_input() -> None:
     """Ensures error is raised when no way for URL to be obtained."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_site_url(
+        InitConfiguration._get_site_url(
             None,
             Path(),
             input_mode=InputMode.REJECT_INPUT,
@@ -538,7 +538,7 @@ def test_turbo_configuration_get_site_url_no_user_input() -> None:
 
 def test_turbo_configuration_get_site_url_valid_path_use_default() -> None:
     """Ensures that when path is valid and defaults used, the URL is appropriate."""
-    site_url = TurboConfiguration._get_site_url(
+    site_url = InitConfiguration._get_site_url(
         None,
         Path("valid_website_name"),
         input_mode=InputMode.REJECT_INPUT,
@@ -550,7 +550,7 @@ def test_turbo_configuration_get_site_url_valid_path_use_default() -> None:
 @pytest.mark.usefixtures("input_nothing")
 def test_turbo_configuration_get_site_url_valid_path_input_empty() -> None:
     """Ensures that the user can enter nothing and let the default URL be chosen."""
-    site_url = TurboConfiguration._get_site_url(
+    site_url = InitConfiguration._get_site_url(
         None,
         Path("valid_website_name"),
         input_mode=InputMode.ACCEPT_INPUT,
@@ -562,7 +562,7 @@ def test_turbo_configuration_get_site_url_valid_path_input_empty() -> None:
 def test_turbo_configuration_get_site_url_invalid_path_reject_input() -> None:
     """Ensures error raised if input not allowed and website name can't be inferred."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_site_url(
+        InitConfiguration._get_site_url(
             None,
             Path("^$"),
             input_mode=InputMode.REJECT_INPUT,
@@ -574,7 +574,7 @@ def test_turbo_configuration_get_site_url_invalid_path_reject_input() -> None:
 def test_turbo_configuration_get_site_url_invalid_path_input_empty() -> None:
     """Ensures error raised if URL can't be inferred and user doesn't enter one."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_site_url(
+        InitConfiguration._get_site_url(
             None,
             Path("^$"),
             input_mode=InputMode.ACCEPT_INPUT,
@@ -586,7 +586,7 @@ def test_turbo_configuration_get_site_url_invalid_path_input_empty() -> None:
 def test_turbo_configuration_get_site_url_valid_path_input_invalid() -> None:
     """Ensures error raised if URL can be inferred but user enters badly."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_site_url(
+        InitConfiguration._get_site_url(
             None,
             Path("valid-website-name"),
             input_mode=InputMode.REJECT_INPUT,
@@ -598,7 +598,7 @@ def test_turbo_configuration_get_site_url_valid_path_input_invalid() -> None:
 def test_turbo_configuration_get_site_url_invalid_path_input_invalid() -> None:
     """Ensures error raised if URL can't be inferred and user enters badly."""
     with pytest.raises(ConfigurationError):
-        TurboConfiguration._get_site_url(
+        InitConfiguration._get_site_url(
             None,
             Path("^$"),
             input_mode=InputMode.ACCEPT_INPUT,
@@ -609,7 +609,7 @@ def test_turbo_configuration_get_site_url_invalid_path_input_invalid() -> None:
 @pytest.mark.usefixtures("input_site_name")
 def test_turbo_configuration_get_site_url_valid_path_input_valid() -> None:
     """Ensures error raised if URL can be inferred but user enters differently."""
-    site_url = TurboConfiguration._get_site_url(
+    site_url = InitConfiguration._get_site_url(
         None,
         Path("valid-website-name"),
         input_mode=InputMode.ACCEPT_INPUT,
@@ -621,7 +621,7 @@ def test_turbo_configuration_get_site_url_valid_path_input_valid() -> None:
 @pytest.mark.usefixtures("input_site_name")
 def test_turbo_configuration_get_site_url_invalid_path_input_valid() -> None:
     """Ensures error raised if URL can't be inferred and user enters one."""
-    site_url = TurboConfiguration._get_site_url(
+    site_url = InitConfiguration._get_site_url(
         None,
         Path("^$"),
         input_mode=InputMode.ACCEPT_INPUT,

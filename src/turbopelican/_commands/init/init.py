@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from turbopelican._commands.init.config import TurboConfiguration
+from turbopelican._commands.init.config import InitConfiguration
 from turbopelican._commands.init.create import (
     generate_repository,
     update_contents,
@@ -90,7 +90,7 @@ def command(raw_args: Namespace) -> None:
     Args:
         raw_args: The command-line provided arguments.
     """
-    config = TurboConfiguration.from_args(raw_args)
+    config = InitConfiguration.from_args(raw_args)
     generate_repository(config)
     update_website(config)
     update_pyproject(config.directory)

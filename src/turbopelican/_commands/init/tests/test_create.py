@@ -11,9 +11,9 @@ from freezegun import freeze_time
 
 from turbopelican._commands.init.config import (
     HandleDefaultsMode,
+    InitConfiguration,
     InputMode,
     InstallType,
-    TurboConfiguration,
     Verbosity,
 )
 from turbopelican._commands.init.create import (
@@ -95,8 +95,8 @@ def test_uv_sync_missing(mock_subprocess_run: mock.Mock) -> None:
 
 
 @pytest.fixture
-def config(tmp_path: Path) -> TurboConfiguration:
-    return TurboConfiguration(
+def config(tmp_path: Path) -> InitConfiguration:
+    return InitConfiguration(
         directory=tmp_path,
         author="Bob",
         site_name="Bob's website",
@@ -126,7 +126,7 @@ def test_copy_template(tmp_path: Path) -> None:
     assert (copy_to / "turbopelican.toml").exists()
 
 
-def test_generate_repository_bad_directory(config: TurboConfiguration) -> None:
+def test_generate_repository_bad_directory(config: InitConfiguration) -> None:
     """Tests that the appropriate error is raised when an invalid directory is given.
 
     Args:
@@ -138,7 +138,7 @@ def test_generate_repository_bad_directory(config: TurboConfiguration) -> None:
 
 
 @pytest.mark.usefixtures("mock_subprocess_run")
-def test_generate_repository_new_folder(config: TurboConfiguration) -> None:
+def test_generate_repository_new_folder(config: InitConfiguration) -> None:
     """Tests that the repository can be generated successfully, creating a new folder.
 
     Args:
@@ -150,7 +150,7 @@ def test_generate_repository_new_folder(config: TurboConfiguration) -> None:
 
 
 @pytest.mark.usefixtures("mock_subprocess_run")
-def test_generate_repository_empty_folder(config: TurboConfiguration) -> None:
+def test_generate_repository_empty_folder(config: InitConfiguration) -> None:
     """Tests that the repository can be generated successfully in an empty folder.
 
     Args:
@@ -162,7 +162,7 @@ def test_generate_repository_empty_folder(config: TurboConfiguration) -> None:
     assert (config.directory / "turbopelican.toml").exists()
 
 
-def test_update_website(config: TurboConfiguration) -> None:
+def test_update_website(config: InitConfiguration) -> None:
     """Checks that `turbopelican.toml` is updated appropraitely.
 
     Args:
@@ -223,7 +223,7 @@ def test_update_pyproject(tmp_path: Path) -> None:
 
 
 @freeze_time("2011-11-11")
-def test_update_contents(config: TurboConfiguration) -> None:
+def test_update_contents(config: InitConfiguration) -> None:
     """Checks that the website contents can be updated appropriately.
 
     Args:

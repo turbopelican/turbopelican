@@ -51,7 +51,7 @@ class ConfigurationError(ValueError):
 
 
 @dataclass
-class TurboConfiguration:
+class InitConfiguration:
     """The command line arguments to configure the turbopelican website/project."""
 
     directory: Path
@@ -66,7 +66,7 @@ class TurboConfiguration:
     install_type: InstallType
 
     @classmethod
-    def from_args(cls, raw_args: Namespace) -> TurboConfiguration:
+    def from_args(cls, raw_args: Namespace) -> InitConfiguration:
         """Returns the command-line arguments in a Pydantic object.
 
         Returns:
@@ -122,7 +122,7 @@ class TurboConfiguration:
             handle_defaults_mode=handle_defaults_mode,
         )
 
-        return TurboConfiguration(
+        return InitConfiguration(
             directory=path,
             author=author,
             site_name=site_name,
