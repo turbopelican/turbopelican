@@ -1,5 +1,27 @@
 # Changelog
 
+## Version 0.4.2
+
+### Bug fixes
+
+- In version 0.4.0, Turbopelican would suppress all output from `uv sync`,
+  when the desired behaviour was for Turbopelican to suppress only the virtual
+  environment warning. Now the output can be viewed again, minus the warning.
+
+### Other changes
+
+- Providing instructions in `README.md` for editing the Turbopelican
+  repository using NeoVim.
+- Renaming `TurboConfiguration` to `InitConfiguration`. The variables should
+  be clearly distinct so there is not confusion as to which is responsible for
+  what.
+- Prettified `init.lua`. Future changes can be prettified at
+  `https://codebeautify.org/lua-beautifier`.
+- Releasing new versions of Turbopelican automatically. When a version tag is
+  pushed to GitHub, a workflow starts which builds the package and uploads it
+  to PyPI, as well as creating a GitHub release with the appropraite details
+  scraped from `CHANGELOG.md`.
+
 ## Version 0.4.1
 
 ### Bug fixes
