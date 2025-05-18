@@ -12,6 +12,9 @@ wheels/
 # Environment variables
 .env
 
+# Other artifacts
+release-notes.md
+
 # Deployed lock file
 # This makes it as easy as possible for turbopelican to be installed with the
 # latest possible version.
