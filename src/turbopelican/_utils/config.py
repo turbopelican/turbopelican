@@ -5,19 +5,17 @@ Author: Elliot Simpson.
 
 from __future__ import annotations
 
-__all__ = ["Configuration", "PelicanConfiguration", "TurbopelicanError", "load_config"]
+__all__ = ["Configuration", "PelicanConfiguration", "load_config"]
 
 import tomllib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol, TypeVar
 
+from turbopelican._utils.errors.errors import TurbopelicanError
+
 Toml = str | int | float | list["Toml"] | dict[str, "Toml"]
 T = TypeVar("T", bound=Toml)
-
-
-class TurbopelicanError(ValueError):
-    """Error to be raised when turbopelican raises any generic error."""
 
 
 @dataclass(frozen=True)
