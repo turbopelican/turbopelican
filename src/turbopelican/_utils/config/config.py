@@ -84,8 +84,6 @@ class Configuration:
 def _get_project_root(start_path: Path | str = ".") -> Path:
     """Iterates through ancestors until the project root is obtained.
 
-    Deprecated.
-
     Args:
         start_path: The path at which to start searching for `pyproject.toml`.
 
@@ -111,8 +109,6 @@ def _get_project_root(start_path: Path | str = ".") -> Path:
 def _find_config_file(start_path: Path | str = ".") -> Path:
     """Searches for the file which contains the configuration for turbopelican.
 
-    Deprecated.
-
     Args:
         start_path: The path at which to start searching for `pyproject.toml`.
 
@@ -128,8 +124,6 @@ def _find_config_file(start_path: Path | str = ".") -> Path:
 
 def _find_config(start_path: Path | str = ".") -> dict[str, Toml]:
     """Obtains the configuration for turbopelican.
-
-    Deprecated.
 
     Args:
         start_path: The path at which to start searching for `pyproject.toml`.
