@@ -14,18 +14,19 @@ __all__ = [
     "load_config",
 ]
 
-import tomllib
 import warnings
 from dataclasses import dataclass
 from enum import StrEnum
-from pathlib import Path
-from typing import Literal, NoReturn, Protocol, TypeVar
+from typing import TYPE_CHECKING, Literal, NoReturn, Protocol, TypeVar
 
 import pydantic
 
 from turbopelican._utils.errors.errors import TurbopelicanError
+from turbopelican._utils.shared import Toml, find_config
 
-Toml = str | int | float | list["Toml"] | dict[str, "Toml"]
+if TYPE_CHECKING:
+    from pathlib import Path
+
 T = TypeVar("T", bound=Toml)
 
 
@@ -79,68 +80,6 @@ class Configuration:
 
     publish: PublishConfiguration
     """Only used for publishing."""
-
-
-def _get_project_root(start_path: Path | str = ".") -> Path:
-    """Iterates through ancestors until the project root is obtained.
-
-    Args:
-        start_path: The path at which to start searching for `pyproject.toml`.
-
-    Returns:
-        The project root.
-    """
-    child = Path(start_path).resolve() / "starthere"
-    parent = child.parent
-    found = None
-    while child != parent:
-        search = parent / "pyproject.toml"
-        if search.exists():
-            found = parent
-        child = parent
-        parent = child.parent
-
-    if found is None:
-        raise FileNotFoundError("Could not find project root.")
-
-    return found
-
-
-def _find_config_file(start_path: Path | str = ".") -> Path:
-    """Searches for the file which contains the configuration for turbopelican.
-
-    Args:
-        start_path: The path at which to start searching for `pyproject.toml`.
-
-    Returns:
-        The path to the file which contains the configuration for turbopelican.
-    """
-    project_root = _get_project_root(start_path)
-    turbopelican_toml = project_root / "turbopelican.toml"
-    if turbopelican_toml.exists():
-        return turbopelican_toml
-    return project_root / "pyproject.toml"
-
-
-def _find_config(start_path: Path | str = ".") -> dict[str, Toml]:
-    """Obtains the configuration for turbopelican.
-
-    Args:
-        start_path: The path at which to start searching for `pyproject.toml`.
-
-    Returns:
-        The configuration contained in the configuration file.
-    """
-    config_file = _find_config_file(start_path)
-    with config_file.open("rb") as config:
-        contents = tomllib.load(config)
-    if config_file.name == "turbopelican.toml":
-        return_dict = contents
-    else:
-        return_dict = contents["tool"]["turbopelican"]
-    if not isinstance(return_dict, dict):
-        raise TurbopelicanError("turbopelican has not been configured.")
-    return return_dict
 
 
 def _access_setting_cluster(
@@ -305,7 +244,7 @@ def load_config(start_path: Path | str = ".") -> Configuration:
         DeprecationWarning,
         stacklevel=2,
     )
-    config = _find_config(start_path)
+    config = find_config(start_path)
     pelican_conf_get, pelican_conf_get_fallback = _setting_getter(config, "pelican")
     publish_conf_get, _publish_conf_get_fallback = _setting_getter(config, "publish")
 
@@ -632,7 +571,7 @@ def config(
     Returns:
         An instance of the configuration in the appropriate structure.
     """
-    raw_config = _find_config(start_path)
+    raw_config = find_config(start_path)
     try:
         config = _CombinedConfig.model_validate(raw_config)
     except pydantic.ValidationError as exc:
