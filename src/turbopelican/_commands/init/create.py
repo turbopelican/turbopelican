@@ -154,3 +154,13 @@ def update_contents(args: InitConfiguration) -> None:
     for file in (args.directory / "content").glob("*.md"):
         text = file.read_text()
         file.write_text(text.format(date=today))
+
+
+def report_completion(args: InitConfiguration) -> None:
+    """Reports that Turbopelican has finished initializing the repository.
+
+    Args:
+        args: The arguments to configure the website.
+    """
+    if args.verbosity == Verbosity.NORMAL:
+        print("⚡ Turbopelican initialized! ⚡")
