@@ -13,7 +13,7 @@ __all__ = [
     "load_config",
 ]
 
-from turbopelican._utils.config.config import (
+from turbopelican._utils.config import (
     Configuration,
     PelicanConfig,
     PelicanConfiguration,
