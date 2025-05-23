@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from turbopelican._commands.init.config import InitConfiguration
 from turbopelican._commands.init.create import (
     generate_repository,
+    report_completion,
     update_contents,
     update_pyproject,
     update_website,
@@ -96,3 +97,4 @@ def command(raw_args: Namespace) -> None:
     update_pyproject(config.directory)
     update_contents(config)
     uv_sync(directory=config.directory, verbosity=config.verbosity)
+    report_completion(config)
