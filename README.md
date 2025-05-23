@@ -3,6 +3,8 @@
 # turbopelican
 
 [![turbopelican](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/badge/v2.json)](https://github.com/turbopelican/turbopelican)
+[![PyPI Version](https://img.shields.io/pypi/v/turbopelican.svg)](https://pypi.python.org/pypi/turbopelican)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
 An uber-quick tool to create a Pelican static-site and deploy it to GitHub
 Pages.
