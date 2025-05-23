@@ -53,12 +53,12 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS: tuple[tuple[str, str], ...] = tuple(
-    (link["title"], link["url"]) for link in turbopelican_config.get("links", [])
+    map(tuple, turbopelican_config.get("links", []))
 )
 
 # Social widget
 SOCIAL: tuple[tuple[str, str], ...] = tuple(
-    (link["title"], link["url"]) for link in turbopelican_config.get("social", [])
+    map(tuple, turbopelican_config.get("social", []))
 )
 
 DEFAULT_PAGINATION: bool = turbopelican_config["default_pagination"]
