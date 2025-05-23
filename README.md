@@ -63,15 +63,18 @@ What is your website URL? [https://turbopelican.github.io]
 Initialized empty Git repository in /home/elliot/projects/turbopelican.github.io/.git/
 Using CPython 3.11.11
 Creating virtual environment at: .venv
-Resolved 23 packages in 0.66ms
-Installed 21 packages in 13ms
+Resolved 30 packages in 6ms
+Installed 29 packages in 29ms
  + anyio==4.9.0
  + blinker==1.9.0
  + docutils==0.21.2
  + feedgenerator==2.1.0
  + idna==3.10
  + jinja2==3.1.6
- + markdown==3.7
+ + langcodes==3.5.0
+ + language-data==1.3.0
+ + marisa-trie==1.2.1
+ + markdown==3.8
  + markdown-it-py==3.0.0
  + markupsafe==3.0.2
  + mdurl==0.1.2
@@ -79,13 +82,19 @@ Installed 21 packages in 13ms
  + pelican==4.11.0
  + pygments==2.18.0
  + python-dateutil==2.9.0.post0
- + pytz==2025.1
- + rich==13.9.4
+ + pytz==2025.2
+ + rich==14.0.0
+ + setuptools==80.8.0
  + six==1.17.0
  + sniffio==1.3.1
- + typing-extensions==4.12.2
- + unidecode==1.3.8
- + watchfiles==1.0.4
+ + tomlkit==0.13.2
+ + turbopelican==0.4.2
+ + typing-extensions==4.13.2
+ + tzdata==2025.2
+ + tzlocal==5.3.1
+ + unidecode==1.4.0
+ + watchfiles==1.0.5
+⚡ Turbopelican initialized! ⚡
 ```
 
 You can use the defaults, or choose your own values. In the example above, I
