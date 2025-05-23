@@ -19,7 +19,7 @@
   `https://codebeautify.org/lua-beautifier`.
 - Releasing new versions of Turbopelican automatically. When a version tag is
   pushed to GitHub, a workflow starts which builds the package and uploads it
-  to PyPI, as well as creating a GitHub release with the appropraite details
+  to PyPI, as well as creating a GitHub release with the appropriate details
   scraped from `CHANGELOG.md`.
 
 ## Version 0.4.1
