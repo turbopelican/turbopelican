@@ -268,6 +268,9 @@ def load_config(start_path: Path | str = ".") -> Configuration:
     pelican_conf_get, pelican_conf_get_fallback = _setting_getter(config, "pelican")
     publish_conf_get, _publish_conf_get_fallback = _setting_getter(config, "publish")
 
+    pelican_links = tuple(map(tuple, pelican_conf_get_fallback(list, "links") or []))
+    pelican_social = tuple(map(tuple, pelican_conf_get_fallback(list, "social") or []))
+
     return Configuration(
         pelican=PelicanConfiguration(
             author=pelican_conf_get(str, "author"),
@@ -275,8 +278,8 @@ def load_config(start_path: Path | str = ".") -> Configuration:
             timezone=pelican_conf_get(str, "timezone"),
             default_lang=pelican_conf_get(str, "default_lang"),
             path=pelican_conf_get(str, "path"),
-            links=tuple(pelican_conf_get_fallback(list, "links") or []),
-            social=tuple(pelican_conf_get_fallback(list, "social") or []),
+            links=pelican_links,
+            social=pelican_social,
             default_pagination=pelican_conf_get(bool, "default_pagination"),
             theme=pelican_conf_get(str, "theme"),
             article_paths=pelican_conf_get(list, "article_paths"),
