@@ -4,7 +4,40 @@ import pydantic
 import pytest
 
 from turbopelican import PelicanConfig, TurbopelicanError, config
-from turbopelican._utils.config.config import _CombinedConfig, _handle_validation_error
+from turbopelican._utils.config.config import (
+    _CombinedConfig,
+    _handle_validation_error,
+    _validate_list_of_strings,
+    _validate_tuple_of_title_url_pairs,
+    _validate_twice_nested_dict,
+)
+
+
+def test_validate_tuple_of_title_url_pairs() -> None:
+    """Tests the validator for tuples of title/URL pairs."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid string"
+    ):
+        _validate_tuple_of_title_url_pairs(((1, 2),))
+    _validate_tuple_of_title_url_pairs((("a", "b"),))
+
+
+def test_pelicanconfig_validate_list_of_strings() -> None:
+    """Tests the validator for lists of strings."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid string"
+    ):
+        _validate_list_of_strings([1, 2])
+    _validate_list_of_strings(["1", "2"])
+
+
+def test_pelicanconfig_validate_twice_nested_dict() -> None:
+    """Tests the validator for twice-nested dictionaires."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid string"
+    ):
+        _validate_twice_nested_dict({1.2: {"a": "b"}})
+    _validate_twice_nested_dict({"1": {"a": "b"}})
 
 
 def test_pelicanconfig() -> None:
@@ -73,52 +106,6 @@ def test_pelicanconfig_validators() -> None:
     expected.static_paths = ["g", "h"]
     expected.extra_path_metadata = {"i": {"other": "j"}}
     assert config == expected
-
-
-def test_pelicanconfig_validate_links_fail() -> None:
-    """Tests that the validator for links blocks bad links."""
-    with pytest.raises(
-        pydantic.ValidationError, match="Input should be a valid string"
-    ):
-        PelicanConfig._validate_links(((1, 2),))
-
-
-def test_pelicanconfig_validate_social_fail() -> None:
-    """Tests that the validator for social blocks bad social."""
-    with pytest.raises(pydantic.ValidationError, match="Input should be a valid tuple"):
-        PelicanConfig._validate_social((1,))
-
-
-def test_pelicanconfig_validate_article_paths_fail() -> None:
-    """Tests that the validator for article paths blocks bad article paths."""
-    with pytest.raises(
-        pydantic.ValidationError, match="Input should be a valid string"
-    ):
-        PelicanConfig._validate_article_paths([1, 2])
-
-
-def test_pelicanconfig_validate_page_paths_fail() -> None:
-    """Tests that the validator for page paths blocks bad page paths."""
-    with pytest.raises(
-        pydantic.ValidationError, match="Input should be a valid string"
-    ):
-        PelicanConfig._validate_page_paths([{}, {}])
-
-
-def test_pelicanconfig_validate_static_paths_fail() -> None:
-    """Tests that the validator for static paths blocks bad static paths."""
-    with pytest.raises(
-        pydantic.ValidationError, match="Input should be a valid string"
-    ):
-        PelicanConfig._validate_static_paths([{}, {}])
-
-
-def test_pelicanconfig_validate_extra_path_metadata_fail() -> None:
-    """Tests that the validator for extra path metadata paths blocks bad metadata."""
-    with pytest.raises(
-        pydantic.ValidationError, match="Input should be a valid string"
-    ):
-        PelicanConfig._validate_extra_path_metadata({1.2: {"a": "b"}})
 
 
 @pytest.mark.parametrize(

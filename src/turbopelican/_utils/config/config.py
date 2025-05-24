@@ -11,7 +11,7 @@ __all__ = [
 ]
 
 from enum import StrEnum
-from typing import TYPE_CHECKING, Literal, NoReturn, TypeVar
+from typing import TYPE_CHECKING, Annotated, Literal, NoReturn, TypeVar
 
 import pydantic
 
@@ -23,18 +23,62 @@ if TYPE_CHECKING:
 
 T = TypeVar("T", bound=Toml)
 
-Links = pydantic.RootModel[tuple[tuple[str, str], ...]]
-Social = pydantic.RootModel[tuple[tuple[str, str], ...]]
-ArticlePaths = pydantic.RootModel[list[str]]
-PagePaths = pydantic.RootModel[list[str]]
-ExtraPathMetadata = pydantic.RootModel[dict[str, dict[str, str]]]
-StaticPaths = pydantic.RootModel[list[str]]
+
+def _validate_tuple_of_title_url_pairs(value: tuple) -> tuple[tuple[str, str]]:
+    """Raises an error if field is not a tuple with any number of title/URL pairs.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[tuple[tuple[str, str], ...]].model_validate(value)
+    return value
+
+
+def _validate_list_of_strings(value: list) -> list[str]:
+    """Raises an error if field is not a list of strings.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[list[str]].model_validate(value)
+    return value
+
+
+def _validate_twice_nested_dict(value: dict) -> dict[str, dict[str, str]]:
+    """Raises an error if field is not a twice-nested dict with string keys/values.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[dict[str, dict[str, str]]].model_validate(value)
+    return value
+
+
+_TupleOfTitleURLPairs = Annotated[
+    tuple[tuple[str, str], ...],
+    pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
+]
+_ListOfStrings = Annotated[
+    list[str], pydantic.AfterValidator(_validate_list_of_strings)
+]
+_TwiceNestedDict = Annotated[
+    dict[str, dict[str, str]], pydantic.AfterValidator(_validate_twice_nested_dict)
+]
 
 
 class PelicanConfig(pydantic.BaseModel):
     """The configuration passed to Turbopelican."""
 
-    article_paths: list[str] = pydantic.Field(default_factory=[""].copy)
+    article_paths: _ListOfStrings = pydantic.Field(default_factory=[""].copy)
     author: str | None = None
     author_feed_atom: str | None = "feeds/{slug}.atom.xml"
     author_feed_rss: str | None = "feeds/{slug}.rss.xml"
@@ -42,20 +86,18 @@ class PelicanConfig(pydantic.BaseModel):
     default_lang: str = "en"
     default_pagination: int | Literal[False] = False
     delete_output_directory: bool = False
-    extra_path_metadata: dict[str, dict[str, str]] = pydantic.Field(
-        default_factory=dict
-    )
+    extra_path_metadata: _TwiceNestedDict = pydantic.Field(default_factory=dict)
     feed_all_atom: str | None = "feeds/all.atom.xml"
     index_save_as: str = "index.html"
-    links: tuple[tuple[str, str], ...] = ()
-    page_paths: list[str] = pydantic.Field(default_factory=["pages"].copy)
+    links: _TupleOfTitleURLPairs = ()
+    page_paths: _ListOfStrings = pydantic.Field(default_factory=["pages"].copy)
     page_save_as: str = "pages/{slug}.html"
     path: str = "."
     relative_urls: bool = False
     site_url: str = ""
     sitename: str = "A Pelican Blog"
-    social: tuple[tuple[str, str], ...] = ()
-    static_paths: list[str] = pydantic.Field(default_factory=["images"].copy)
+    social: _TupleOfTitleURLPairs = ()
+    static_paths: _ListOfStrings = pydantic.Field(default_factory=["images"].copy)
     theme: str = "notmyidea"
     timezone: str = "UTC"
     translation_feed_atom: str | None = "feeds/all-{lang}.atom.xml"
@@ -134,90 +176,6 @@ class PelicanConfig(pydantic.BaseModel):
             raise TurbopelicanError("Repeated `origin` field in `extra_path_metadata`.")
 
         return transformed
-
-    @pydantic.field_validator("links", mode="after")
-    @classmethod
-    def _validate_links(cls, v: tuple) -> tuple[tuple[str, str], ...]:
-        """Validate the `links` field.
-
-        Args:
-            v: The input value.
-
-        Returns:
-            The input value unchanged.
-        """
-        Links.model_validate(v)
-        return v
-
-    @pydantic.field_validator("social", mode="after")
-    @classmethod
-    def _validate_social(cls, v: tuple) -> tuple[tuple[str, str], ...]:
-        """Validate the `social` field.
-
-        Args:
-            v: The input value.
-
-        Returns:
-            The input value unchanged.
-        """
-        Social.model_validate(v)
-        return v
-
-    @pydantic.field_validator("article_paths", mode="after")
-    @classmethod
-    def _validate_article_paths(cls, v: list) -> list[str]:
-        """Validate the `article_paths` field.
-
-        Args:
-            v: The input value.
-
-        Returns:
-            The input value unchanged.
-        """
-        ArticlePaths.model_validate(v)
-        return v
-
-    @pydantic.field_validator("page_paths", mode="after")
-    @classmethod
-    def _validate_page_paths(cls, v: list) -> list[str]:
-        """Validate the `page_paths` field.
-
-        Args:
-            v: The input value.
-
-        Returns:
-            The input value unchanged.
-        """
-        PagePaths.model_validate(v)
-        return v
-
-    @pydantic.field_validator("static_paths", mode="after")
-    @classmethod
-    def _validate_static_paths(cls, v: list) -> list[str]:
-        """Validate the `static_paths` field.
-
-        Args:
-            v: The input value.
-
-        Returns:
-            The input value unchanged.
-        """
-        StaticPaths.model_validate(v)
-        return v
-
-    @pydantic.field_validator("extra_path_metadata", mode="after")
-    @classmethod
-    def _validate_extra_path_metadata(cls, v: dict) -> dict[str, dict[str, str]]:
-        """Validate the `extra_path_metadata` field.
-
-        Args:
-            v: The input value.
-
-        Returns:
-            The input value unchanged.
-        """
-        ExtraPathMetadata.model_validate(v)
-        return v
 
 
 class _CombinedConfig(pydantic.BaseModel):
