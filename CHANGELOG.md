@@ -1,5 +1,23 @@
 # Changelog
 
+## Version 0.4.3
+
+### Bug fixes
+
+- In version 0.4.0, Turbopelican would parse `links` and `social` as lists of
+  lists, rather than lists of two-element tuples. Now they are parsed as lists
+  of two-element tuples.
+- In version 0.4.0, a minimal Turbopelican project's `pelicanconf.py` would
+  expect to receive arrays of key-value pairs, rather than arrays of arrays
+  when parsing `links` and `social`. This differed from a regular Turbopelican
+  project. Now expecting arrays of arrays.
+
+### Other changes
+
+- Shifting `TurbopelicanError` into separate folder dedicated to errors.
+- Including badges for PyPI project and use of uv in `README.md`.
+- Fixing spelling mistake in `CHANGELOG.md`.
+
 ## Version 0.4.2
 
 ### Bug fixes
