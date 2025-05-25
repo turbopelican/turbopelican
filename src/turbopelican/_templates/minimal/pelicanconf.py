@@ -11,6 +11,7 @@ __all__ = [
     "CATEGORY_FEED_ATOM",
     "DEFAULT_LANG",
     "DEFAULT_PAGINATION",
+    "DELETE_OUTPUT_DIRECTORY",
     "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
     "INDEX_SAVE_AS",
@@ -18,6 +19,7 @@ __all__ = [
     "PAGE_PATHS",
     "PAGE_SAVE_AS",
     "PATH",
+    "RELATIVE_URLS",
     "SITENAME",
     "SITEURL",
     "SOCIAL",
@@ -30,51 +32,69 @@ __all__ = [
 import tomllib
 from pathlib import Path
 
+
+def _nullify_sentinels(data: dict) -> dict:
+    """Recursively replaces sentinel values with None in dictionaries.
+
+    Args:
+        data: Whatever data still contains any sentinel values.
+
+    Returns:
+        The data with sentinel values replaced with None.
+    """
+    if isinstance(data, dict):
+        return {key: _nullify_sentinels(value) for key, value in data.items()}
+    if isinstance(data, list):
+        return list(map(_nullify_sentinels, data))
+    if data == -1:
+        return None
+    return data
+
+
 with Path("turbopelican.toml").open("rb") as config:
-    turbopelican_config = tomllib.load(config)["pelican"]
+    turbopelican_config = _nullify_sentinels(tomllib.load(config)["pelican"])
 
-
-AUTHOR: str = turbopelican_config["author"]
-SITENAME: str = turbopelican_config["sitename"]
-SITEURL = ""
-
-TIMEZONE: str = turbopelican_config["timezone"]
-
-DEFAULT_LANG: str = turbopelican_config["default_lang"]
-
-PATH: str = turbopelican_config["path"]
-
-# Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
-TRANSLATION_FEED_ATOM = None
-AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
-
-# Blogroll
-LINKS: tuple[tuple[str, str], ...] = tuple(
-    map(tuple, turbopelican_config.get("links", []))
+ARTICLE_PATHS: list[str] = turbopelican_config.get("article_paths", [""])
+AUTHOR: str | None = turbopelican_config.get("author", None)
+AUTHOR_FEED_ATOM: str | None = turbopelican_config.get(
+    "author_feed_atom", "feeds/{slug}.atom.xml"
 )
-
-# Social widget
-SOCIAL: tuple[tuple[str, str], ...] = tuple(
-    map(tuple, turbopelican_config.get("social", []))
+AUTHOR_FEED_RSS: str | None = turbopelican_config.get(
+    "author_feed_rss", "feeds/{slug}.rss.xml"
 )
-
-DEFAULT_PAGINATION: bool = turbopelican_config["default_pagination"]
-
-THEME: str = turbopelican_config["theme"]
-
-ARTICLE_PATHS: list[str] = turbopelican_config["article_paths"]
-PAGE_PATHS: list[str] = turbopelican_config["page_paths"]
-PAGE_SAVE_AS: str = turbopelican_config["page_save_as"]
-
-STATIC_PATHS: list[str] = turbopelican_config["static_paths"]
+CATEGORY_FEED_ATOM: str | None = turbopelican_config.get(
+    "category_feed_atom", "feeds/{slug}.atom.xml"
+)
+DEFAULT_LANG: str = turbopelican_config.get("default_lang", "en")
+DEFAULT_PAGINATION: bool = turbopelican_config.get("default_pagination", False)
+DELETE_OUTPUT_DIRECTORY: bool = turbopelican_config.get(
+    "delete_output_directory", False
+)
 EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
     metadata["origin"]: {
         key: value for (key, value) in metadata.items() if key != "origin"
     }
-    for metadata in turbopelican_config["extra_path_metadata"]
+    for metadata in turbopelican_config.get("extra_path_metadata", {})
 }
-
-INDEX_SAVE_AS: str = turbopelican_config["index_save_as"]
+FEED_ALL_ATOM: str | None = turbopelican_config.get(
+    "feeds/all.atom.xml", "feeds/all.atom.xml"
+)
+INDEX_SAVE_AS: str = turbopelican_config.get("index_save_as", "index.html")
+LINKS: tuple[tuple[str, str], ...] = tuple(
+    map(tuple, turbopelican_config.get("links", []))
+)
+PAGE_PATHS: list[str] = turbopelican_config.get("page_paths", ["pages"])
+PAGE_SAVE_AS: str = turbopelican_config.get("page_save_as", "pages/{slug}.html")
+PATH: str = turbopelican_config.get("path", ".")
+RELATIVE_URLS: bool = turbopelican_config.get("relative_urls", False)
+SITENAME: str = turbopelican_config.get("sitename", "A Pelican Blog")
+SITEURL: str = turbopelican_config.get("site_url", "")
+SOCIAL: tuple[tuple[str, str], ...] = tuple(
+    map(tuple, turbopelican_config.get("social", []))
+)
+STATIC_PATHS: list[str] = turbopelican_config.get("static_paths", ["images"])
+THEME: str = turbopelican_config.get("theme", "notmyidea")
+TIMEZONE: str = turbopelican_config.get("timezone", "UTC")
+TRANSLATION_FEED_ATOM: str | None = turbopelican_config.get(
+    "translation_feed_atom", "feeds/all-{lang}.atom.xml"
+)
