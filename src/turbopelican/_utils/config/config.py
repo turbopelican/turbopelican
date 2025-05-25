@@ -82,25 +82,43 @@ class PelicanConfig(pydantic.BaseModel):
     author: str | None = None
     author_feed_atom: str | None = "feeds/{slug}.atom.xml"
     author_feed_rss: str | None = "feeds/{slug}.rss.xml"
+    cache_content: bool = False
     category_feed_atom: str | None = "feeds/{slug}.atom.xml"
     default_lang: str = "en"
     default_pagination: int | Literal[False] = False
     delete_output_directory: bool = False
+    display_categories_on_menu: bool = True
+    display_pages_on_menu: bool = True
     extra_path_metadata: _TwiceNestedDict = pydantic.Field(default_factory=dict)
     feed_all_atom: str | None = "feeds/all.atom.xml"
+    feed_append_ref: bool = False
+    gzip_cache: bool = True
     index_save_as: str = "index.html"
     links: _TupleOfTitleURLPairs = ()
+    load_content_cache: bool = False
+    newest_first_archives: bool = True
+    output_sources: bool = False
     page_paths: _ListOfStrings = pydantic.Field(default_factory=["pages"].copy)
     page_save_as: str = "pages/{slug}.html"
     path: str = "."
     relative_urls: bool = False
+    reverse_category_order: bool = False
+    rss_feed_summary_only: bool = True
     site_url: str = ""
     sitename: str = "A Pelican Blog"
+    slugify_preserve_case: bool = False
+    slugify_use_unicode: bool = False
     social: _TupleOfTitleURLPairs = ()
+    static_check_if_modified: bool = False
+    static_create_links: bool = False
+    static_exclude_sources: bool = True
     static_paths: _ListOfStrings = pydantic.Field(default_factory=["images"].copy)
     theme: str = "notmyidea"
     timezone: str = "UTC"
     translation_feed_atom: str | None = "feeds/all-{lang}.atom.xml"
+    typogrify: bool = False
+    use_folder_as_category: bool = True
+    with_future_dates: bool = True
 
     @pydantic.field_validator("links", mode="before")
     @classmethod
