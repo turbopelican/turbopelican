@@ -78,47 +78,96 @@ _TwiceNestedDict = Annotated[
 class PelicanConfig(pydantic.BaseModel):
     """The configuration passed to Turbopelican."""
 
+    archives_save_as: str = "archives.html"
+    article_lang_save_as: str = "{slug}-{lang}.html"
+    article_lang_url: str = "{slug}-{lang}.html"
+    article_order_by: str = "reversed-date"
     article_paths: _ListOfStrings = pydantic.Field(default_factory=[""].copy)
+    article_save_as: str = "{slug}.html"
+    article_url: str = "{slug}.html"
     author: str | None = None
+    authors_save_as: str = "authors.html"
     author_feed_atom: str | None = "feeds/{slug}.atom.xml"
     author_feed_rss: str | None = "feeds/{slug}.rss.xml"
+    author_save_as: str = "author/{slug}.html"
+    author_url: str = "author/{slug}.html"
+    bind: str = "127.0.0.1"
     cache_content: bool = False
+    cache_path: str = "cache"
+    categories_save_as: str = "categories.html"
     category_feed_atom: str | None = "feeds/{slug}.atom.xml"
+    category_save_as: str = "category/{slug}.html"
+    category_url: str = "category/{slug}.html"
+    check_modified_method: str = "mtime"
+    content_caching_layer: str = "reader"
+    css_file: str = "main.css"
+    day_archive_save_as: str = ""
+    day_archive_url: str = ""
+    default_category: str = "misc"
+    default_date_format: str = "%a %d %B %Y"
     default_lang: str = "en"
     default_pagination: int | Literal[False] = False
     delete_output_directory: bool = False
     display_categories_on_menu: bool = True
     display_pages_on_menu: bool = True
+    draft_lang_save_as: str = "drafts/{slug}-{lang}.html"
+    draft_lang_url: str = "drafts/{slug}-{lang}.html"
+    draft_page_lang_save_as: str = "drafts/pages/{slug}-{lang}.html"
+    draft_page_lang_url: str = "drafts/pages/{slug}-{lang}.html"
+    draft_page_save_as: str = "drafts/pages/{slug}.html"
+    draft_page_url: str = "drafts/pages/{slug}.html"
+    draft_save_as: str = "drafts/{slug}.html"
+    draft_url: str = "drafts/{slug}.html"
     extra_path_metadata: _TwiceNestedDict = pydantic.Field(default_factory=dict)
     feed_all_atom: str | None = "feeds/all.atom.xml"
     feed_append_ref: bool = False
+    filename_metadata: str = r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
     gzip_cache: bool = True
     index_save_as: str = "index.html"
+    intrasite_link_regex: str = "[{|](?P<what>.*?)[|}]"
     links: _TupleOfTitleURLPairs = ()
     load_content_cache: bool = False
+    month_archive_save_as: str = ""
+    month_archive_url: str = ""
     newest_first_archives: bool = True
+    output_path: str = "output"
     output_sources: bool = False
+    output_sources_extension: str = ".text"
+    page_lang_save_as: str = "pages/{slug}-{lang}.html"
+    page_lang_url: str = "pages/{slug}-{lang}.html"
+    page_order_by: str = "basename"
     page_paths: _ListOfStrings = pydantic.Field(default_factory=["pages"].copy)
     page_save_as: str = "pages/{slug}.html"
+    page_url: str = "pages/{slug}.html"
     path: str = "."
+    path_metadata: str = ""
     relative_urls: bool = False
     reverse_category_order: bool = False
     rss_feed_summary_only: bool = True
     site_url: str = ""
     sitename: str = "A Pelican Blog"
     slugify_preserve_case: bool = False
+    slugify_source: str = "title"
     slugify_use_unicode: bool = False
     social: _TupleOfTitleURLPairs = ()
     static_check_if_modified: bool = False
     static_create_links: bool = False
     static_exclude_sources: bool = True
     static_paths: _ListOfStrings = pydantic.Field(default_factory=["images"].copy)
+    summary_end_suffix: str = "…"
+    tags_save_as: str = "tags.html"
+    tag_save_as: str = "tag/{slug}.html"
+    tag_url: str = "tag/{slug}.html"
     theme: str = "notmyidea"
+    theme_static_dir: str = "theme"
     timezone: str = "UTC"
     translation_feed_atom: str | None = "feeds/all-{lang}.atom.xml"
     typogrify: bool = False
+    typogrify_dashes: str = "default"
     use_folder_as_category: bool = True
     with_future_dates: bool = True
+    year_archive_save_as: str = ""
+    year_archive_url: str = ""
 
     @pydantic.field_validator("links", mode="before")
     @classmethod
