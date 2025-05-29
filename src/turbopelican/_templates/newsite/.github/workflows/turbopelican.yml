@@ -15,7 +15,9 @@ jobs:
           version: "0.6.8"
       - run: uv sync
       - name: Generate content
-        run: .venv/bin/pelican content -s publishconf.py
+        env:
+          TURBOPELICAN_CONFIG_TYPE: PUBLISH
+        run: .venv/bin/pelican content
       - name: Upload the static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
