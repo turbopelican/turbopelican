@@ -4,47 +4,96 @@ Author: Elliot Simpson
 """
 
 __all__ = [
+    "ARCHIVES_SAVE_AS",
+    "ARTICLE_LANG_SAVE_AS",
+    "ARTICLE_LANG_URL",
+    "ARTICLE_ORDER_BY",
     "ARTICLE_PATHS",
+    "ARTICLE_SAVE_AS",
+    "ARTICLE_URL",
     "AUTHOR",
+    "AUTHORS_SAVE_AS",
     "AUTHOR_FEED_ATOM",
     "AUTHOR_FEED_RSS",
+    "AUTHOR_SAVE_AS",
+    "AUTHOR_URL",
+    "BIND",
     "CACHE_CONTENT",
+    "CACHE_PATH",
+    "CATEGORIES_SAVE_AS",
     "CATEGORY_FEED_ATOM",
+    "CATEGORY_SAVE_AS",
+    "CATEGORY_URL",
+    "CHECK_MODIFIED_METHOD",
+    "CONTENT_CACHING_LAYER",
+    "CSS_FILE",
+    "DAY_ARCHIVE_SAVE_AS",
+    "DAY_ARCHIVE_URL",
+    "DEFAULT_CATEGORY",
+    "DEFAULT_DATE_FORMAT",
     "DEFAULT_LANG",
     "DEFAULT_PAGINATION",
     "DELETE_OUTPUT_DIRECTORY",
     "DISPLAY_CATEGORIES_ON_MENU",
     "DISPLAY_PAGES_ON_MENU",
+    "DRAFT_LANG_SAVE_AS",
+    "DRAFT_LANG_URL",
+    "DRAFT_PAGE_LANG_SAVE_AS",
+    "DRAFT_PAGE_LANG_URL",
+    "DRAFT_PAGE_SAVE_AS",
+    "DRAFT_PAGE_URL",
+    "DRAFT_SAVE_AS",
+    "DRAFT_URL",
     "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
     "FEED_APPEND_REF",
+    "FILENAME_METADATA",
     "GZIP_CACHE",
     "INDEX_SAVE_AS",
+    "INTRASITE_LINK_REGEX",
     "LINKS",
     "LOAD_CONTENT_CACHE",
+    "MONTH_ARCHIVE_SAVE_AS",
+    "MONTH_ARCHIVE_URL",
     "NEWEST_FIRST_ARCHIVES",
+    "OUTPUT_PATH",
     "OUTPUT_SOURCES",
+    "OUTPUT_SOURCES_EXTENSION",
+    "PAGE_LANG_SAVE_AS",
+    "PAGE_LANG_URL",
+    "PAGE_ORDER_BY",
     "PAGE_PATHS",
     "PAGE_SAVE_AS",
+    "PAGE_URL",
     "PATH",
+    "PATH_METADATA",
     "RELATIVE_URLS",
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
     "SITENAME",
     "SITEURL",
     "SLUGIFY_PRESERVE_CASE",
+    "SLUGIFY_SOURCE",
     "SLUGIFY_USE_UNICODE",
     "SOCIAL",
     "STATIC_CHECK_IF_MODIFIED",
     "STATIC_CREATE_LINKS",
     "STATIC_EXCLUDE_SOURCES",
     "STATIC_PATHS",
+    "SUMMARY_END_SUFFIX",
+    "TAGS_SAVE_AS",
+    "TAG_SAVE_AS",
+    "TAG_URL",
     "THEME",
+    "THEME_STATIC_DIR",
     "TIMEZONE",
     "TRANSLATION_FEED_ATOM",
     "TYPOGRIFY",
+    "TYPOGRIFY_DASHES",
     "USE_FOLDER_AS_CATEGORY",
     "WITH_FUTURE_DATES",
+    "YEAR_ARCHIVE_SAVE_AS",
+    "YEAR_ARCHIVE_URL",
 ]
 
 import os
@@ -100,17 +149,50 @@ def _get(setting_name: str, fallback: object) -> _AnyJson:
     return _complete_config["pelican"].get(setting_name, fallback)
 
 
+ARCHIVES_SAVE_AS: str = _get("archives_save_as", "archives.html")
+ARTICLE_LANG_SAVE_AS: str = _get("article_lang_save_as", "{slug}-{lang}.html")
+ARTICLE_LANG_URL: str = _get("article_lang_url", "{slug}-{lang}.html")
+ARTICLE_ORDER_BY: str = _get("article_order_by", "reversed-date")
 ARTICLE_PATHS: list[str] = _get("article_paths", [""])
+ARTICLE_SAVE_AS: str = _get("article_save_as", "{slug}.html")
+ARTICLE_URL: str = _get("article_url", "{slug}.html")
 AUTHOR: str | None = _get("author", None)
+AUTHORS_SAVE_AS: str = _get("authors_save_as", "authors.html")
 AUTHOR_FEED_ATOM: str | None = _get("author_feed_atom", "feeds/{slug}.atom.xml")
 AUTHOR_FEED_RSS: str | None = _get("author_feed_rss", "feeds/{slug}.rss.xml")
+AUTHOR_SAVE_AS: str = _get("author_save_as", "author/{slug}.html")
+AUTHOR_URL: str = _get("author_url", "author/{slug}.html")
+BIND: str = _get("bind", "127.0.0.1")
 CACHE_CONTENT: bool = _get("cache_content", fallback=False)
+CACHE_PATH: str = _get("cache_path", "cache")
+CATEGORIES_SAVE_AS: str = _get("categories_save_as", "categories.html")
 CATEGORY_FEED_ATOM: str | None = _get("category_feed_atom", "feeds/{slug}.atom.xml")
+CATEGORY_SAVE_AS: str = _get("category_save_as", "category/{slug}.html")
+CATEGORY_URL: str = _get("category_url", "category/{slug}.html")
+CHECK_MODIFIED_METHOD: str = _get("check_modified_method", "mtime")
+CONTENT_CACHING_LAYER: str = _get("content_caching_layer", "reader")
+CSS_FILE: str = _get("css_file", "main.css")
+DAY_ARCHIVE_SAVE_AS: str = _get("day_archive_save_as", "")
+DAY_ARCHIVE_URL: str = _get("day_archive_url", "")
+DEFAULT_CATEGORY: str = _get("default_category", "misc")
+DEFAULT_DATE_FORMAT: str = _get("default_date_format", "%a %d %B %Y")
 DEFAULT_LANG: str = _get("default_lang", "en")
 DEFAULT_PAGINATION: bool = _get("default_pagination", fallback=False)
 DELETE_OUTPUT_DIRECTORY: bool = _get("delete_output_directory", fallback=False)
 DISPLAY_CATEGORIES_ON_MENU: bool = _get("display_categories_on_menu", fallback=True)
 DISPLAY_PAGES_ON_MENU: bool = _get("display_pages_on_menu", fallback=True)
+DRAFT_LANG_SAVE_AS: str = _get("draft_lang_save_as", "drafts/{slug}-{lang}.html")
+DRAFT_LANG_URL: str = _get("draft_lang_url", "drafts/{slug}-{lang}.html")
+DRAFT_PAGE_LANG_SAVE_AS: str = _get(
+    "draft_page_lang_save_as", "drafts/pages/{slug}-{lang}.html"
+)
+DRAFT_PAGE_LANG_URL: str = _get(
+    "draft_page_lang_url", "drafts/pages/{slug}-{lang}.html"
+)
+DRAFT_PAGE_SAVE_AS: str = _get("draft_page_save_as", "drafts/pages/{slug}.html")
+DRAFT_PAGE_URL: str = _get("draft_page_url", "drafts/pages/{slug}.html")
+DRAFT_SAVE_AS: str = _get("draft_save_as", "drafts/{slug}.html")
+DRAFT_URL: str = _get("draft_url", "drafts/{slug}.html")
 EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
     metadata["origin"]: {
         key: value for (key, value) in metadata.items() if key != "origin"
@@ -119,32 +201,54 @@ EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
 }
 FEED_ALL_ATOM: str | None = _get("feed_all_atom", "feeds/all.atom.xml")
 FEED_APPEND_REF: bool = _get("feed_append_ref", fallback=False)
+FILENAME_METADATA: str = _get(
+    "filename_metadata", r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
+)
 GZIP_CACHE: bool = _get("gzip_cache", fallback=True)
 INDEX_SAVE_AS: str = _get("index_save_as", "index.html")
+INTRASITE_LINK_REGEX: str = _get("intrasite_link_regex", "[{|](?P<what>.*?)[|}]")
 LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
 LOAD_CONTENT_CACHE: bool = _get("load_content_cache", fallback=False)
+MONTH_ARCHIVE_SAVE_AS: str = _get("month_archive_save_as", "")
+MONTH_ARCHIVE_URL: str = _get("month_archive_url", "")
 NEWEST_FIRST_ARCHIVES: bool = _get("newest_first_archives", fallback=True)
+OUTPUT_PATH: str = _get("output_path", "output")
 OUTPUT_SOURCES: bool = _get("output_sources", fallback=False)
+OUTPUT_SOURCES_EXTENSION: str = _get("output_sources_extension", ".text")
+PAGE_LANG_SAVE_AS: str = _get("page_lang_save_as", "pages/{slug}-{lang}.html")
+PAGE_LANG_URL: str = _get("page_lang_url", "pages/{slug}-{lang}.html")
+PAGE_ORDER_BY: str = _get("page_order_by", "basename")
 PAGE_PATHS: list[str] = _get("page_paths", ["pages"])
 PAGE_SAVE_AS: str = _get("page_save_as", "pages/{slug}.html")
+PAGE_URL: str = _get("page_url", "pages/{slug}.html")
 PATH: str = _get("path", ".")
+PATH_METADATA: str = _get("path_metadata", "")
 RELATIVE_URLS: bool = _get("relative_urls", fallback=False)
 REVERSE_CATEGORY_ORDER: bool = _get("reverse_category_order", fallback=False)
 RSS_FEED_SUMMARY_ONLY: bool = _get("rss_feed_summary_only", fallback=True)
 SITENAME: str = _get("sitename", "A Pelican Blog")
 SITEURL: str = _get("site_url", "")
 SLUGIFY_PRESERVE_CASE: bool = _get("slugify_preserve_case", fallback=False)
+SLUGIFY_SOURCE: str = _get("slugify_source", "title")
 SLUGIFY_USE_UNICODE: bool = _get("slugify_use_unicode", fallback=False)
 SOCIAL: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("social", [])))
 STATIC_CHECK_IF_MODIFIED: bool = _get("static_check_if_modified", fallback=False)
 STATIC_CREATE_LINKS: bool = _get("static_create_links", fallback=False)
 STATIC_EXCLUDE_SOURCES: bool = _get("static_exclude_sources", fallback=True)
 STATIC_PATHS: list[str] = _get("static_paths", ["images"])
+SUMMARY_END_SUFFIX: str = _get("summary_end_suffix", "…")
+TAGS_SAVE_AS: str = _get("tags_save_as", "tags.html")
+TAG_SAVE_AS: str = _get("tag_save_as", "tag/{slug}.html")
+TAG_URL: str = _get("tag_url", "tag/{slug}.html")
 THEME: str = _get("theme", "notmyidea")
+THEME_STATIC_DIR: str = _get("theme_static_dir", "theme")
 TIMEZONE: str = _get("timezone", "UTC")
 TRANSLATION_FEED_ATOM: str | None = _get(
     "translation_feed_atom", "feeds/all-{lang}.atom.xml"
 )
 TYPOGRIFY: bool = _get("typogrify", fallback=False)
+TYPOGRIFY_DASHES: str = _get("typogrify_dashes", "default")
 USE_FOLDER_AS_CATEGORY: bool = _get("use_folder_as_category", fallback=True)
 WITH_FUTURE_DATES: bool = _get("with_future_dates", fallback=True)
+YEAR_ARCHIVE_SAVE_AS: str = _get("year_archive_save_as", "")
+YEAR_ARCHIVE_URL: str = _get("year_archive_url", "")
