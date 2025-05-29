@@ -29,9 +29,16 @@ __all__ = [
     "TRANSLATION_FEED_ATOM",
 ]
 
+import os
+
 from turbopelican import config
 
-_config = config()
+if os.environ.get("TURBOPELICAN_CONFIG_TYPE", "DEV") == "PUBLISH":
+    _config_type = "PUBLISH"
+else:
+    _config_type = "DEV"
+
+_config = config(_config_type)
 
 ARTICLE_PATHS: list[str] = _config.article_paths
 AUTHOR: str | None = _config.author
