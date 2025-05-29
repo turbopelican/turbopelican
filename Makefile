@@ -3,6 +3,7 @@
 TEMP_DIR := $(shell mktemp -d -t tmp.turbopelican.XXXXXXXXXX)
 TARGET := $(TEMP_DIR)/mywebsite
 VENV := VIRTUAL_ENV="$(TARGET)/.venv"
+CONFIG_TYPE := TURBOPELICAN_CONFIG_TYPE=PUBLISH
 
 build:
 	uv sync
@@ -24,14 +25,14 @@ integration-test:
 	uv run turbopelican init --author "GNU make" "$(TARGET)" -nd
 	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
 	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
-	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican -s publishconf.py content
+	$(VENV) $(CONFIG_TYPE) uv run --directory "$(TARGET)" --no-sync pelican content
 
 	# Run with a minimal install.
 	@rm -rf "$(TARGET)"
 	uv run turbopelican init --author "GNU make" "$(TARGET)" -nd --minimal-install
 	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
 	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
-	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican -s publishconf.py content
+	$(VENV) $(CONFIG_TYPE) uv run --directory "$(TARGET)" --no-sync pelican content
 
 	# Clean up.
 	@rm -rf "$(TEMP_DIR)"

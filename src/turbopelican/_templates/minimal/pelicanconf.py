@@ -29,8 +29,12 @@ __all__ = [
     "TRANSLATION_FEED_ATOM",
 ]
 
+import os
 import tomllib
 from pathlib import Path
+from typing import Any
+
+_AnyJson = Any
 
 
 def _nullify_sentinels(data: dict) -> dict:
@@ -51,50 +55,60 @@ def _nullify_sentinels(data: dict) -> dict:
     return data
 
 
-with Path("turbopelican.toml").open("rb") as config:
-    turbopelican_config = _nullify_sentinels(tomllib.load(config)["pelican"])
+_turbopelican_config_type = os.environ.get("TURBOPELICAN_CONFIG_TYPE", "DEV")
 
-ARTICLE_PATHS: list[str] = turbopelican_config.get("article_paths", [""])
-AUTHOR: str | None = turbopelican_config.get("author", None)
-AUTHOR_FEED_ATOM: str | None = turbopelican_config.get(
-    "author_feed_atom", "feeds/{slug}.atom.xml"
-)
-AUTHOR_FEED_RSS: str | None = turbopelican_config.get(
-    "author_feed_rss", "feeds/{slug}.rss.xml"
-)
-CATEGORY_FEED_ATOM: str | None = turbopelican_config.get(
-    "category_feed_atom", "feeds/{slug}.atom.xml"
-)
-DEFAULT_LANG: str = turbopelican_config.get("default_lang", "en")
-DEFAULT_PAGINATION: bool = turbopelican_config.get("default_pagination", False)
-DELETE_OUTPUT_DIRECTORY: bool = turbopelican_config.get(
-    "delete_output_directory", False
-)
+with Path("turbopelican.toml").open("rb") as config:
+    _complete_config = tomllib.load(config)
+    _complete_config["pelican"] = _nullify_sentinels(_complete_config["pelican"])
+    if _turbopelican_config_type == "PUBLISH":
+        _complete_config["publish"] = _nullify_sentinels(_complete_config["publish"])
+
+
+def _get(setting_name: str, fallback: object) -> _AnyJson:
+    """Obtains the setting with the provided name.
+
+    Args:
+        setting_name: The key identifying the setting.
+        fallback: The default variable to return if key not found.
+
+    Returns:
+        The TOML object contained in the input configuration.
+    """
+    if (
+        _turbopelican_config_type == "PUBLISH"
+        and setting_name in _complete_config["publish"]
+    ):
+        return _complete_config["publish"][setting_name]
+    return _complete_config["pelican"].get(setting_name, fallback)
+
+
+ARTICLE_PATHS: list[str] = _get("article_paths", [""])
+AUTHOR: str | None = _get("author", None)
+AUTHOR_FEED_ATOM: str | None = _get("author_feed_atom", "feeds/{slug}.atom.xml")
+AUTHOR_FEED_RSS: str | None = _get("author_feed_rss", "feeds/{slug}.rss.xml")
+CATEGORY_FEED_ATOM: str | None = _get("category_feed_atom", "feeds/{slug}.atom.xml")
+DEFAULT_LANG: str = _get("default_lang", "en")
+DEFAULT_PAGINATION: bool = _get("default_pagination", fallback=False)
+DELETE_OUTPUT_DIRECTORY: bool = _get("delete_output_directory", fallback=False)
 EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
     metadata["origin"]: {
         key: value for (key, value) in metadata.items() if key != "origin"
     }
-    for metadata in turbopelican_config.get("extra_path_metadata", {})
+    for metadata in _get("extra_path_metadata", {})
 }
-FEED_ALL_ATOM: str | None = turbopelican_config.get(
-    "feeds/all.atom.xml", "feeds/all.atom.xml"
-)
-INDEX_SAVE_AS: str = turbopelican_config.get("index_save_as", "index.html")
-LINKS: tuple[tuple[str, str], ...] = tuple(
-    map(tuple, turbopelican_config.get("links", []))
-)
-PAGE_PATHS: list[str] = turbopelican_config.get("page_paths", ["pages"])
-PAGE_SAVE_AS: str = turbopelican_config.get("page_save_as", "pages/{slug}.html")
-PATH: str = turbopelican_config.get("path", ".")
-RELATIVE_URLS: bool = turbopelican_config.get("relative_urls", False)
-SITENAME: str = turbopelican_config.get("sitename", "A Pelican Blog")
-SITEURL: str = turbopelican_config.get("site_url", "")
-SOCIAL: tuple[tuple[str, str], ...] = tuple(
-    map(tuple, turbopelican_config.get("social", []))
-)
-STATIC_PATHS: list[str] = turbopelican_config.get("static_paths", ["images"])
-THEME: str = turbopelican_config.get("theme", "notmyidea")
-TIMEZONE: str = turbopelican_config.get("timezone", "UTC")
-TRANSLATION_FEED_ATOM: str | None = turbopelican_config.get(
+FEED_ALL_ATOM: str | None = _get("feed_all_atom", "feeds/all.atom.xml")
+INDEX_SAVE_AS: str = _get("index_save_as", "index.html")
+LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
+PAGE_PATHS: list[str] = _get("page_paths", ["pages"])
+PAGE_SAVE_AS: str = _get("page_save_as", "pages/{slug}.html")
+PATH: str = _get("path", ".")
+RELATIVE_URLS: bool = _get("relative_urls", fallback=False)
+SITENAME: str = _get("sitename", "A Pelican Blog")
+SITEURL: str = _get("site_url", "")
+SOCIAL: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("social", [])))
+STATIC_PATHS: list[str] = _get("static_paths", ["images"])
+THEME: str = _get("theme", "notmyidea")
+TIMEZONE: str = _get("timezone", "UTC")
+TRANSLATION_FEED_ATOM: str | None = _get(
     "translation_feed_atom", "feeds/all-{lang}.atom.xml"
 )
