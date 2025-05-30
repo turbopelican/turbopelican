@@ -61,6 +61,7 @@ __all__ = [
     "FEED_APPEND_REF",
     "FEED_ATOM",
     "FEED_ATOM_URL",
+    "FEED_MAX_ITEMS",
     "FEED_RSS",
     "FEED_RSS_URL",
     "FILENAME_METADATA",
@@ -108,6 +109,8 @@ __all__ = [
     "STATIC_PATHS",
     "STYLESHEET_URL",
     "SUMMARY_END_SUFFIX",
+    "SUMMARY_MAX_LENGTH",
+    "SUMMARY_MAX_PARAGRAPHS",
     "TAGS_SAVE_AS",
     "TAG_FEED_ATOM",
     "TAG_FEED_ATOM_URL",
@@ -256,6 +259,7 @@ FEED_ALL_RSS_URL: str | None = _get("feed_all_rss_url", None)
 FEED_APPEND_REF: bool = _get("feed_append_ref", fallback=False)
 FEED_ATOM: str | None = _get("feed_atom", None)
 FEED_ATOM_URL: str | None = _get("feed_atom_url", None)
+FEED_MAX_ITEMS: int | None = _get("feed_max_items", 100)
 FEED_RSS: str | None = _get("feed_rss", None)
 FEED_RSS_URL: str | None = _get("feed_rss_url", None)
 FILENAME_METADATA: str = _get(
@@ -305,6 +309,8 @@ STATIC_EXCLUDE_SOURCES: bool = _get("static_exclude_sources", fallback=True)
 STATIC_PATHS: list[str] = _get("static_paths", ["images"])
 STYLESHEET_URL: str | None = _get("stylesheet_url", None)
 SUMMARY_END_SUFFIX: str = _get("summary_end_suffix", "…")
+SUMMARY_MAX_LENGTH: int | None = _get("summary_end_suffix", 50)
+SUMMARY_MAX_PARAGRAPHS: int | None = _get("summary_max_paragraphs", None)
 TAGS_SAVE_AS: str = _get("tags_save_as", "tags.html")
 TAG_FEED_ATOM: str | None = _get("tag_feed_atom", None)
 TAG_FEED_ATOM_URL: str | None = _get("tag_feed_atom_url", None)

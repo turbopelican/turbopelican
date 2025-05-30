@@ -61,6 +61,7 @@ __all__ = [
     "FEED_APPEND_REF",
     "FEED_ATOM",
     "FEED_ATOM_URL",
+    "FEED_MAX_ITEMS",
     "FEED_RSS",
     "FEED_RSS_URL",
     "FILENAME_METADATA",
@@ -108,6 +109,8 @@ __all__ = [
     "STATIC_PATHS",
     "STYLESHEET_URL",
     "SUMMARY_END_SUFFIX",
+    "SUMMARY_MAX_LENGTH",
+    "SUMMARY_MAX_PARAGRAPHS",
     "TAGS_SAVE_AS",
     "TAG_FEED_ATOM",
     "TAG_FEED_ATOM_URL",
@@ -203,6 +206,7 @@ FEED_ALL_RSS_URL: str | None = _config.feed_all_rss_url
 FEED_APPEND_REF: bool = _config.feed_append_ref
 FEED_ATOM: str | None = _config.feed_atom
 FEED_ATOM_URL: str | None = _config.feed_atom_url
+FEED_MAX_ITEMS: int | None = _config.feed_max_items
 FEED_RSS: str | None = _config.feed_rss
 FEED_RSS_URL: str | None = _config.feed_rss_url
 FILENAME_METADATA: str = _config.filename_metadata
@@ -250,6 +254,8 @@ STATIC_EXCLUDE_SOURCES: bool = _config.static_exclude_sources
 STATIC_PATHS: list[str] = _config.static_paths
 STYLESHEET_URL: str | None = _config.stylesheet_url
 SUMMARY_END_SUFFIX: str = _config.summary_end_suffix
+SUMMARY_MAX_LENGTH: int | None = _config.summary_max_length
+SUMMARY_MAX_PARAGRAPHS: int | None = _config.summary_max_paragraphs
 TAGS_SAVE_AS: str = _config.tags_save_as
 TAG_FEED_ATOM: str | None = _config.tag_feed_atom
 TAG_FEED_ATOM_URL: str | None = _config.tag_feed_atom_url
