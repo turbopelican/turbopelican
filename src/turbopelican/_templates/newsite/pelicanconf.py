@@ -4,6 +4,7 @@ Author: Elliot Simpson
 """
 
 __all__ = [
+    "ANALYTICS",
     "ARCHIVES_SAVE_AS",
     "ARTICLE_LANG_SAVE_AS",
     "ARTICLE_LANG_URL",
@@ -14,7 +15,9 @@ __all__ = [
     "AUTHOR",
     "AUTHORS_SAVE_AS",
     "AUTHOR_FEED_ATOM",
+    "AUTHOR_FEED_ATOM_URL",
     "AUTHOR_FEED_RSS",
+    "AUTHOR_FEED_RSS_URL",
     "AUTHOR_SAVE_AS",
     "AUTHOR_URL",
     "BIND",
@@ -22,6 +25,9 @@ __all__ = [
     "CACHE_PATH",
     "CATEGORIES_SAVE_AS",
     "CATEGORY_FEED_ATOM",
+    "CATEGORY_FEED_ATOM_URL",
+    "CATEGORY_FEED_RSS",
+    "CATEGORY_FEED_RSS_URL",
     "CATEGORY_SAVE_AS",
     "CATEGORY_URL",
     "CHECK_MODIFIED_METHOD",
@@ -36,6 +42,7 @@ __all__ = [
     "DELETE_OUTPUT_DIRECTORY",
     "DISPLAY_CATEGORIES_ON_MENU",
     "DISPLAY_PAGES_ON_MENU",
+    "DISQUS_SITENAME",
     "DRAFT_LANG_SAVE_AS",
     "DRAFT_LANG_URL",
     "DRAFT_PAGE_LANG_SAVE_AS",
@@ -46,12 +53,21 @@ __all__ = [
     "DRAFT_URL",
     "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
+    "FEED_ALL_ATOM_URL",
+    "FEED_ALL_RSS",
+    "FEED_ALL_RSS_URL",
     "FEED_APPEND_REF",
+    "FEED_ATOM",
+    "FEED_ATOM_URL",
+    "FEED_RSS",
+    "FEED_RSS_URL",
     "FILENAME_METADATA",
+    "GITHUB_URL",
     "GZIP_CACHE",
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
     "LINKS",
+    "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
     "MONTH_ARCHIVE_SAVE_AS",
     "MONTH_ARCHIVE_URL",
@@ -71,23 +87,33 @@ __all__ = [
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
     "SITENAME",
+    "SITESUBTITLE",
     "SITEURL",
     "SLUGIFY_PRESERVE_CASE",
     "SLUGIFY_SOURCE",
     "SLUGIFY_USE_UNICODE",
     "SOCIAL",
+    "SOCIAL_WIDGET_NAME",
     "STATIC_CHECK_IF_MODIFIED",
     "STATIC_CREATE_LINKS",
     "STATIC_EXCLUDE_SOURCES",
     "STATIC_PATHS",
+    "STYLESHEET_URL",
     "SUMMARY_END_SUFFIX",
     "TAGS_SAVE_AS",
+    "TAG_FEED_ATOM",
+    "TAG_FEED_ATOM_URL",
+    "TAG_FEED_RSS",
     "TAG_SAVE_AS",
     "TAG_URL",
     "THEME",
     "THEME_STATIC_DIR",
     "TIMEZONE",
     "TRANSLATION_FEED_ATOM",
+    "TRANSLATION_FEED_ATOM_URL",
+    "TRANSLATION_FEED_RSS",
+    "TRANSLATION_FEED_RSS_URL",
+    "TWITTER_USERNAME",
     "TYPOGRIFY",
     "TYPOGRIFY_DASHES",
     "USE_FOLDER_AS_CATEGORY",
@@ -107,6 +133,7 @@ else:
 
 _config = config(_config_type)
 
+ANALYTICS: str | None = _config.analytics
 ARCHIVES_SAVE_AS: str = _config.archives_save_as
 ARTICLE_LANG_SAVE_AS: str = _config.article_lang_save_as
 ARTICLE_LANG_URL: str = _config.article_lang_url
@@ -117,7 +144,9 @@ ARTICLE_URL: str = _config.article_url
 AUTHOR: str | None = _config.author
 AUTHORS_SAVE_AS: str = _config.authors_save_as
 AUTHOR_FEED_ATOM: str | None = _config.author_feed_atom
+AUTHOR_FEED_ATOM_URL: str | None = _config.author_feed_atom_url
 AUTHOR_FEED_RSS: str | None = _config.author_feed_rss
+AUTHOR_FEED_RSS_URL: str | None = _config.author_feed_rss_url
 AUTHOR_SAVE_AS: str = _config.author_save_as
 AUTHOR_URL: str = _config.author_url
 BIND: str = _config.bind
@@ -125,6 +154,9 @@ CACHE_CONTENT: bool = _config.cache_content
 CACHE_PATH: str = _config.cache_path
 CATEGORIES_SAVE_AS: str = _config.categories_save_as
 CATEGORY_FEED_ATOM: str | None = _config.category_feed_atom
+CATEGORY_FEED_ATOM_URL: str | None = _config.category_feed_atom_url
+CATEGORY_FEED_RSS: str | None = _config.category_feed_rss
+CATEGORY_FEED_RSS_URL: str | None = _config.category_feed_rss_url
 CATEGORY_SAVE_AS: str = _config.category_save_as
 CATEGORY_URL: str = _config.category_url
 CHECK_MODIFIED_METHOD: str = _config.check_modified_method
@@ -139,6 +171,7 @@ DEFAULT_PAGINATION: int | bool = _config.default_pagination
 DELETE_OUTPUT_DIRECTORY: bool = _config.delete_output_directory
 DISPLAY_CATEGORIES_ON_MENU: bool = _config.display_categories_on_menu
 DISPLAY_PAGES_ON_MENU: bool = _config.display_pages_on_menu
+DISQUS_SITENAME: str | None = _config.disqus_sitename
 DRAFT_LANG_SAVE_AS: str = _config.draft_lang_save_as
 DRAFT_LANG_URL: str = _config.draft_lang_url
 DRAFT_PAGE_LANG_SAVE_AS: str = _config.draft_page_lang_save_as
@@ -149,12 +182,21 @@ DRAFT_SAVE_AS: str = _config.draft_save_as
 DRAFT_URL: str = _config.draft_url
 EXTRA_PATH_METADATA: dict[str, dict[str, str]] = _config.extra_path_metadata
 FEED_ALL_ATOM: str | None = _config.feed_all_atom
+FEED_ALL_ATOM_URL: str | None = _config.feed_all_atom_url
+FEED_ALL_RSS: str | None = _config.feed_all_rss
+FEED_ALL_RSS_URL: str | None = _config.feed_all_rss_url
 FEED_APPEND_REF: bool = _config.feed_append_ref
+FEED_ATOM: str | None = _config.feed_atom
+FEED_ATOM_URL: str | None = _config.feed_atom_url
+FEED_RSS: str | None = _config.feed_rss
+FEED_RSS_URL: str | None = _config.feed_rss_url
 FILENAME_METADATA: str = _config.filename_metadata
+GITHUB_URL: str | None = _config.github_url
 GZIP_CACHE: bool = _config.gzip_cache
 INDEX_SAVE_AS: str = _config.index_save_as
 INTRASITE_LINK_REGEX: str = _config.intrasite_link_regex
 LINKS: tuple[tuple[str, str], ...] = _config.links
+LINKS_WIDGET_NAME: str | None = _config.links_widget_name
 LOAD_CONTENT_CACHE: bool = _config.load_content_cache
 MONTH_ARCHIVE_SAVE_AS: str = _config.month_archive_save_as
 MONTH_ARCHIVE_URL: str = _config.month_archive_url
@@ -174,23 +216,33 @@ RELATIVE_URLS: bool = _config.relative_urls
 REVERSE_CATEGORY_ORDER: bool = _config.reverse_category_order
 RSS_FEED_SUMMARY_ONLY: bool = _config.rss_feed_summary_only
 SITENAME: str = _config.sitename
+SITESUBTITLE: str | None = _config.sitesubtitle
 SITEURL: str = _config.site_url
 SLUGIFY_PRESERVE_CASE: bool = _config.slugify_preserve_case
 SLUGIFY_SOURCE: str = _config.slugify_source
 SLUGIFY_USE_UNICODE: bool = _config.slugify_use_unicode
 SOCIAL: tuple[tuple[str, str], ...] = _config.social
+SOCIAL_WIDGET_NAME: str | None = _config.social_widget_name
 STATIC_CHECK_IF_MODIFIED: bool = _config.static_check_if_modified
 STATIC_CREATE_LINKS: bool = _config.static_create_links
 STATIC_EXCLUDE_SOURCES: bool = _config.static_exclude_sources
 STATIC_PATHS: list[str] = _config.static_paths
+STYLESHEET_URL: str | None = _config.stylesheet_url
 SUMMARY_END_SUFFIX: str = _config.summary_end_suffix
 TAGS_SAVE_AS: str = _config.tags_save_as
+TAG_FEED_ATOM: str | None = _config.tag_feed_atom
+TAG_FEED_ATOM_URL: str | None = _config.tag_feed_atom_url
+TAG_FEED_RSS: str | None = _config.tag_feed_rss
 TAG_SAVE_AS: str = _config.tag_save_as
 TAG_URL: str = _config.tag_url
 THEME: str = _config.theme
 THEME_STATIC_DIR: str = _config.theme_static_dir
 TIMEZONE: str = _config.timezone
 TRANSLATION_FEED_ATOM: str | None = _config.translation_feed_atom
+TRANSLATION_FEED_ATOM_URL: str | None = _config.translation_feed_atom_url
+TRANSLATION_FEED_RSS: str | None = _config.translation_feed_rss
+TRANSLATION_FEED_RSS_URL: str | None = _config.translation_feed_rss_url
+TWITTER_USERNAME: str | None = _config.twitter_username
 TYPOGRIFY: bool = _config.typogrify
 TYPOGRIFY_DASHES: str = _config.typogrify_dashes
 USE_FOLDER_AS_CATEGORY: bool = _config.use_folder_as_category
