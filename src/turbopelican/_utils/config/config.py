@@ -78,6 +78,7 @@ _TwiceNestedDict = Annotated[
 class PelicanConfig(pydantic.BaseModel):
     """The configuration passed to Turbopelican."""
 
+    analytics: str | None = None
     archives_save_as: str = "archives.html"
     article_lang_save_as: str = "{slug}-{lang}.html"
     article_lang_url: str = "{slug}-{lang}.html"
@@ -88,7 +89,9 @@ class PelicanConfig(pydantic.BaseModel):
     author: str | None = None
     authors_save_as: str = "authors.html"
     author_feed_atom: str | None = "feeds/{slug}.atom.xml"
+    author_feed_atom_url: str | None = None
     author_feed_rss: str | None = "feeds/{slug}.rss.xml"
+    author_feed_rss_url: str | None = None
     author_save_as: str = "author/{slug}.html"
     author_url: str = "author/{slug}.html"
     bind: str = "127.0.0.1"
@@ -96,6 +99,9 @@ class PelicanConfig(pydantic.BaseModel):
     cache_path: str = "cache"
     categories_save_as: str = "categories.html"
     category_feed_atom: str | None = "feeds/{slug}.atom.xml"
+    category_feed_atom_url: str | None = None
+    category_feed_rss: str | None = None
+    category_feed_rss_url: str | None = None
     category_save_as: str = "category/{slug}.html"
     category_url: str = "category/{slug}.html"
     check_modified_method: str = "mtime"
@@ -110,6 +116,7 @@ class PelicanConfig(pydantic.BaseModel):
     delete_output_directory: bool = False
     display_categories_on_menu: bool = True
     display_pages_on_menu: bool = True
+    disqus_sitename: str | None = None
     draft_lang_save_as: str = "drafts/{slug}-{lang}.html"
     draft_lang_url: str = "drafts/{slug}-{lang}.html"
     draft_page_lang_save_as: str = "drafts/pages/{slug}-{lang}.html"
@@ -120,12 +127,21 @@ class PelicanConfig(pydantic.BaseModel):
     draft_url: str = "drafts/{slug}.html"
     extra_path_metadata: _TwiceNestedDict = pydantic.Field(default_factory=dict)
     feed_all_atom: str | None = "feeds/all.atom.xml"
+    feed_all_atom_url: str | None = None
+    feed_all_rss: str | None = None
+    feed_all_rss_url: str | None = None
     feed_append_ref: bool = False
+    feed_atom: str | None = None
+    feed_atom_url: str | None = None
+    feed_rss: str | None = None
+    feed_rss_url: str | None = None
     filename_metadata: str = r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
+    github_url: str | None = None
     gzip_cache: bool = True
     index_save_as: str = "index.html"
     intrasite_link_regex: str = "[{|](?P<what>.*?)[|}]"
     links: _TupleOfTitleURLPairs = ()
+    links_widget_name: str | None = None
     load_content_cache: bool = False
     month_archive_save_as: str = ""
     month_archive_url: str = ""
@@ -146,22 +162,32 @@ class PelicanConfig(pydantic.BaseModel):
     rss_feed_summary_only: bool = True
     site_url: str = ""
     sitename: str = "A Pelican Blog"
+    sitesubtitle: str | None = None
     slugify_preserve_case: bool = False
     slugify_source: str = "title"
     slugify_use_unicode: bool = False
     social: _TupleOfTitleURLPairs = ()
+    social_widget_name: str | None = None
     static_check_if_modified: bool = False
     static_create_links: bool = False
     static_exclude_sources: bool = True
     static_paths: _ListOfStrings = pydantic.Field(default_factory=["images"].copy)
+    stylesheet_url: str | None = None
     summary_end_suffix: str = "…"
     tags_save_as: str = "tags.html"
+    tag_feed_atom: str | None = None
+    tag_feed_atom_url: str | None = None
+    tag_feed_rss: str | None = None
     tag_save_as: str = "tag/{slug}.html"
     tag_url: str = "tag/{slug}.html"
     theme: str = "notmyidea"
     theme_static_dir: str = "theme"
     timezone: str = "UTC"
     translation_feed_atom: str | None = "feeds/all-{lang}.atom.xml"
+    translation_feed_atom_url: str | None = None
+    translation_feed_rss: str | None = None
+    translation_feed_rss_url: str | None = None
+    twitter_username: str | None = None
     typogrify: bool = False
     typogrify_dashes: str = "default"
     use_folder_as_category: bool = True
