@@ -39,6 +39,7 @@ __all__ = [
     "DEFAULT_CATEGORY",
     "DEFAULT_DATE_FORMAT",
     "DEFAULT_LANG",
+    "DEFAULT_ORPHANS",
     "DEFAULT_PAGINATION",
     "DELETE_OUTPUT_DIRECTORY",
     "DIRECT_TEMPLATES",
@@ -91,6 +92,7 @@ __all__ = [
     "PATH",
     "PATH_METADATA",
     "PLUGIN_PATHS",
+    "PORT",
     "RELATIVE_URLS",
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
@@ -184,6 +186,7 @@ DAY_ARCHIVE_URL: str = _config.day_archive_url
 DEFAULT_CATEGORY: str = _config.default_category
 DEFAULT_DATE_FORMAT: str = _config.default_date_format
 DEFAULT_LANG: str = _config.default_lang
+DEFAULT_ORPHANS: int = _config.default_orphans
 DEFAULT_PAGINATION: int | bool = _config.default_pagination
 DELETE_OUTPUT_DIRECTORY: bool = _config.delete_output_directory
 DIRECT_TEMPLATES: list[str] = _config.direct_templates
@@ -236,6 +239,7 @@ PAGE_URL: str = _config.page_url
 PATH: str = _config.path
 PATH_METADATA: str = _config.path_metadata
 PLUGIN_PATHS: list[str] = _config.plugin_paths
+PORT: int = _config.port
 RELATIVE_URLS: bool = _config.relative_urls
 REVERSE_CATEGORY_ORDER: bool = _config.reverse_category_order
 RSS_FEED_SUMMARY_ONLY: bool = _config.rss_feed_summary_only

@@ -113,6 +113,7 @@ class PelicanConfig(pydantic.BaseModel):
     default_category: str = "misc"
     default_date_format: str = "%a %d %B %Y"
     default_lang: str = "en"
+    default_orphans: int = 0
     default_pagination: int | Literal[False] = False
     delete_output_directory: bool = False
     direct_templates: _ListOfStrings = pydantic.Field(
@@ -167,6 +168,7 @@ class PelicanConfig(pydantic.BaseModel):
     path: str = "."
     path_metadata: str = ""
     plugin_paths: _ListOfStrings = pydantic.Field(default_factory=list)
+    port: int = 8000
     relative_urls: bool = False
     reverse_category_order: bool = False
     rss_feed_summary_only: bool = True
