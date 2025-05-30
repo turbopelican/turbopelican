@@ -137,6 +137,7 @@ class PelicanConfig(pydantic.BaseModel):
     feed_append_ref: bool = False
     feed_atom: str | None = None
     feed_atom_url: str | None = None
+    feed_max_items: int | None = 100
     feed_rss: str | None = None
     feed_rss_url: str | None = None
     filename_metadata: str = r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
@@ -184,6 +185,8 @@ class PelicanConfig(pydantic.BaseModel):
     static_paths: _ListOfStrings = pydantic.Field(default_factory=["images"].copy)
     stylesheet_url: str | None = None
     summary_end_suffix: str = "…"
+    summary_max_length: int | None = 50
+    summary_max_paragraphs: int | None = None
     tags_save_as: str = "tags.html"
     tag_feed_atom: str | None = None
     tag_feed_atom_url: str | None = None
