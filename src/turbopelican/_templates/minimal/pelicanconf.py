@@ -4,6 +4,7 @@ Author: Elliot Simpson
 """
 
 __all__ = [
+    "ANALYTICS",
     "ARCHIVES_SAVE_AS",
     "ARTICLE_LANG_SAVE_AS",
     "ARTICLE_LANG_URL",
@@ -14,7 +15,9 @@ __all__ = [
     "AUTHOR",
     "AUTHORS_SAVE_AS",
     "AUTHOR_FEED_ATOM",
+    "AUTHOR_FEED_ATOM_URL",
     "AUTHOR_FEED_RSS",
+    "AUTHOR_FEED_RSS_URL",
     "AUTHOR_SAVE_AS",
     "AUTHOR_URL",
     "BIND",
@@ -22,6 +25,9 @@ __all__ = [
     "CACHE_PATH",
     "CATEGORIES_SAVE_AS",
     "CATEGORY_FEED_ATOM",
+    "CATEGORY_FEED_ATOM_URL",
+    "CATEGORY_FEED_RSS",
+    "CATEGORY_FEED_RSS_URL",
     "CATEGORY_SAVE_AS",
     "CATEGORY_URL",
     "CHECK_MODIFIED_METHOD",
@@ -36,6 +42,7 @@ __all__ = [
     "DELETE_OUTPUT_DIRECTORY",
     "DISPLAY_CATEGORIES_ON_MENU",
     "DISPLAY_PAGES_ON_MENU",
+    "DISQUS_SITENAME",
     "DRAFT_LANG_SAVE_AS",
     "DRAFT_LANG_URL",
     "DRAFT_PAGE_LANG_SAVE_AS",
@@ -46,8 +53,16 @@ __all__ = [
     "DRAFT_URL",
     "EXTRA_PATH_METADATA",
     "FEED_ALL_ATOM",
+    "FEED_ALL_ATOM_URL",
+    "FEED_ALL_RSS",
+    "FEED_ALL_RSS_URL",
     "FEED_APPEND_REF",
+    "FEED_ATOM",
+    "FEED_ATOM_URL",
+    "FEED_RSS",
+    "FEED_RSS_URL",
     "FILENAME_METADATA",
+    "GITHUB_URL",
     "GZIP_CACHE",
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
@@ -71,23 +86,33 @@ __all__ = [
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
     "SITENAME",
+    "SITESUBTITLE",
     "SITEURL",
     "SLUGIFY_PRESERVE_CASE",
     "SLUGIFY_SOURCE",
     "SLUGIFY_USE_UNICODE",
     "SOCIAL",
+    "SOCIAL_WIDGET_NAME",
     "STATIC_CHECK_IF_MODIFIED",
     "STATIC_CREATE_LINKS",
     "STATIC_EXCLUDE_SOURCES",
     "STATIC_PATHS",
+    "STYLESHEET_URL",
     "SUMMARY_END_SUFFIX",
     "TAGS_SAVE_AS",
+    "TAG_FEED_ATOM",
+    "TAG_FEED_ATOM_URL",
+    "TAG_FEED_RSS",
     "TAG_SAVE_AS",
     "TAG_URL",
     "THEME",
     "THEME_STATIC_DIR",
     "TIMEZONE",
     "TRANSLATION_FEED_ATOM",
+    "TRANSLATION_FEED_ATOM_URL",
+    "TRANSLATION_FEED_RSS",
+    "TRANSLATION_FEED_RSS_URL",
+    "TWITTER_USERNAME",
     "TYPOGRIFY",
     "TYPOGRIFY_DASHES",
     "USE_FOLDER_AS_CATEGORY",
@@ -149,6 +174,7 @@ def _get(setting_name: str, fallback: object) -> _AnyJson:
     return _complete_config["pelican"].get(setting_name, fallback)
 
 
+ANALYTICS: str | None = _get("analytics", None)
 ARCHIVES_SAVE_AS: str = _get("archives_save_as", "archives.html")
 ARTICLE_LANG_SAVE_AS: str = _get("article_lang_save_as", "{slug}-{lang}.html")
 ARTICLE_LANG_URL: str = _get("article_lang_url", "{slug}-{lang}.html")
@@ -159,7 +185,9 @@ ARTICLE_URL: str = _get("article_url", "{slug}.html")
 AUTHOR: str | None = _get("author", None)
 AUTHORS_SAVE_AS: str = _get("authors_save_as", "authors.html")
 AUTHOR_FEED_ATOM: str | None = _get("author_feed_atom", "feeds/{slug}.atom.xml")
+AUTHOR_FEED_ATOM_URL: str | None = _get("author_feed_atom_url", None)
 AUTHOR_FEED_RSS: str | None = _get("author_feed_rss", "feeds/{slug}.rss.xml")
+AUTHOR_FEED_RSS_URL: str | None = _get("author_feed_rss_url", None)
 AUTHOR_SAVE_AS: str = _get("author_save_as", "author/{slug}.html")
 AUTHOR_URL: str = _get("author_url", "author/{slug}.html")
 BIND: str = _get("bind", "127.0.0.1")
@@ -167,6 +195,9 @@ CACHE_CONTENT: bool = _get("cache_content", fallback=False)
 CACHE_PATH: str = _get("cache_path", "cache")
 CATEGORIES_SAVE_AS: str = _get("categories_save_as", "categories.html")
 CATEGORY_FEED_ATOM: str | None = _get("category_feed_atom", "feeds/{slug}.atom.xml")
+CATEGORY_FEED_ATOM_URL: str | None = _get("category_feed_atom_url", None)
+CATEGORY_FEED_RSS: str | None = _get("category_feed_rss", None)
+CATEGORY_FEED_RSS_URL: str | None = _get("category_feed_rss_url", None)
 CATEGORY_SAVE_AS: str = _get("category_save_as", "category/{slug}.html")
 CATEGORY_URL: str = _get("category_url", "category/{slug}.html")
 CHECK_MODIFIED_METHOD: str = _get("check_modified_method", "mtime")
@@ -181,6 +212,7 @@ DEFAULT_PAGINATION: bool = _get("default_pagination", fallback=False)
 DELETE_OUTPUT_DIRECTORY: bool = _get("delete_output_directory", fallback=False)
 DISPLAY_CATEGORIES_ON_MENU: bool = _get("display_categories_on_menu", fallback=True)
 DISPLAY_PAGES_ON_MENU: bool = _get("display_pages_on_menu", fallback=True)
+DISQUS_SITENAME: str | None = _get("disqus_sitename", None)
 DRAFT_LANG_SAVE_AS: str = _get("draft_lang_save_as", "drafts/{slug}-{lang}.html")
 DRAFT_LANG_URL: str = _get("draft_lang_url", "drafts/{slug}-{lang}.html")
 DRAFT_PAGE_LANG_SAVE_AS: str = _get(
@@ -200,14 +232,24 @@ EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
     for metadata in _get("extra_path_metadata", {})
 }
 FEED_ALL_ATOM: str | None = _get("feed_all_atom", "feeds/all.atom.xml")
+FEED_ALL_ATOM_URL: str | None = _get("feed_all_atom_url", None)
+FEED_ALL_RSS: str | None = _get("feed_all_rss", None)
 FEED_APPEND_REF: bool = _get("feed_append_ref", fallback=False)
+FEED_ATOM: str | None = _get("feed_atom", None)
+FEED_ATOM_URL: str | None = _get("feed_atom_url", None)
+FEED_RSS: str | None = _get("feed_rss", None)
+FEED_RSS_URL: str | None = _get("feed_rss_url", None)
+FEED_ALL_RSS_URL: str | None = _get("feed_all_rss_url", None)
+FEED_RSS: str | None = _get("feed_rss", None)
 FILENAME_METADATA: str = _get(
     "filename_metadata", r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
 )
+GITHUB_URL: str | None = _get("github_url", None)
 GZIP_CACHE: bool = _get("gzip_cache", fallback=True)
 INDEX_SAVE_AS: str = _get("index_save_as", "index.html")
 INTRASITE_LINK_REGEX: str = _get("intrasite_link_regex", "[{|](?P<what>.*?)[|}]")
 LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
+LINKS_WIDGET_NAME: str | None = _get("links_widget_name", None)
 LOAD_CONTENT_CACHE: bool = _get("load_content_cache", fallback=False)
 MONTH_ARCHIVE_SAVE_AS: str = _get("month_archive_save_as", "")
 MONTH_ARCHIVE_URL: str = _get("month_archive_url", "")
@@ -227,17 +269,23 @@ RELATIVE_URLS: bool = _get("relative_urls", fallback=False)
 REVERSE_CATEGORY_ORDER: bool = _get("reverse_category_order", fallback=False)
 RSS_FEED_SUMMARY_ONLY: bool = _get("rss_feed_summary_only", fallback=True)
 SITENAME: str = _get("sitename", "A Pelican Blog")
+SITESUBTITLE: str | None = _get("sitesubtitle", None)
 SITEURL: str = _get("site_url", "")
 SLUGIFY_PRESERVE_CASE: bool = _get("slugify_preserve_case", fallback=False)
 SLUGIFY_SOURCE: str = _get("slugify_source", "title")
 SLUGIFY_USE_UNICODE: bool = _get("slugify_use_unicode", fallback=False)
 SOCIAL: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("social", [])))
+SOCIAL_WIDGET_NAME: str | None = _get("social_widget_name", None)
 STATIC_CHECK_IF_MODIFIED: bool = _get("static_check_if_modified", fallback=False)
 STATIC_CREATE_LINKS: bool = _get("static_create_links", fallback=False)
 STATIC_EXCLUDE_SOURCES: bool = _get("static_exclude_sources", fallback=True)
 STATIC_PATHS: list[str] = _get("static_paths", ["images"])
+STYLESHEET_URL: str | None = _get("stylesheet_url", None)
 SUMMARY_END_SUFFIX: str = _get("summary_end_suffix", "…")
 TAGS_SAVE_AS: str = _get("tags_save_as", "tags.html")
+TAG_FEED_ATOM: str | None = _get("tag_feed_atom", None)
+TAG_FEED_ATOM_URL: str | None = _get("tag_feed_atom_url", None)
+TAG_FEED_RSS: str | None = _get("tag_feed_rss", None)
 TAG_SAVE_AS: str = _get("tag_save_as", "tag/{slug}.html")
 TAG_URL: str = _get("tag_url", "tag/{slug}.html")
 THEME: str = _get("theme", "notmyidea")
@@ -246,6 +294,10 @@ TIMEZONE: str = _get("timezone", "UTC")
 TRANSLATION_FEED_ATOM: str | None = _get(
     "translation_feed_atom", "feeds/all-{lang}.atom.xml"
 )
+TRANSLATION_FEED_ATOM_URL: str | None = _get("translation_feed_atom_url", None)
+TRANSLATION_FEED_RSS: str | None = _get("translation_feed_rss", None)
+TRANSLATION_FEED_RSS_URL: str | None = _get("translation_feed_rss_url", None)
+TWITTER_USERNAME: str | None = _get("twitter_username", None)
 TYPOGRIFY: bool = _get("typogrify", fallback=False)
 TYPOGRIFY_DASHES: str = _get("typogrify_dashes", "default")
 USE_FOLDER_AS_CATEGORY: bool = _get("use_folder_as_category", fallback=True)
