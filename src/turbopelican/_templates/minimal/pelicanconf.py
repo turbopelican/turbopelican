@@ -6,6 +6,7 @@ Author: Elliot Simpson
 __all__ = [
     "ANALYTICS",
     "ARCHIVES_SAVE_AS",
+    "ARTICLE_EXCLUDES",
     "ARTICLE_LANG_SAVE_AS",
     "ARTICLE_LANG_URL",
     "ARTICLE_ORDER_BY",
@@ -40,6 +41,7 @@ __all__ = [
     "DEFAULT_LANG",
     "DEFAULT_PAGINATION",
     "DELETE_OUTPUT_DIRECTORY",
+    "DIRECT_TEMPLATES",
     "DISPLAY_CATEGORIES_ON_MENU",
     "DISPLAY_PAGES_ON_MENU",
     "DISQUS_SITENAME",
@@ -62,8 +64,10 @@ __all__ = [
     "FEED_RSS",
     "FEED_RSS_URL",
     "FILENAME_METADATA",
+    "FORMATTED_FIELDS",
     "GITHUB_URL",
     "GZIP_CACHE",
+    "IGNORE_FILES",
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
     "LINKS",
@@ -73,8 +77,10 @@ __all__ = [
     "MONTH_ARCHIVE_URL",
     "NEWEST_FIRST_ARCHIVES",
     "OUTPUT_PATH",
+    "OUTPUT_RETENTION",
     "OUTPUT_SOURCES",
     "OUTPUT_SOURCES_EXTENSION",
+    "PAGE_EXCLUDES",
     "PAGE_LANG_SAVE_AS",
     "PAGE_LANG_URL",
     "PAGE_ORDER_BY",
@@ -83,6 +89,7 @@ __all__ = [
     "PAGE_URL",
     "PATH",
     "PATH_METADATA",
+    "PLUGIN_PATHS",
     "RELATIVE_URLS",
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
@@ -96,6 +103,7 @@ __all__ = [
     "SOCIAL_WIDGET_NAME",
     "STATIC_CHECK_IF_MODIFIED",
     "STATIC_CREATE_LINKS",
+    "STATIC_EXCLUDES",
     "STATIC_EXCLUDE_SOURCES",
     "STATIC_PATHS",
     "STYLESHEET_URL",
@@ -106,8 +114,11 @@ __all__ = [
     "TAG_FEED_RSS",
     "TAG_SAVE_AS",
     "TAG_URL",
+    "TEMPLATE_EXTENSIONS",
     "THEME",
     "THEME_STATIC_DIR",
+    "THEME_STATIC_PATHS",
+    "THEME_TEMPLATES_OVERRIDES",
     "TIMEZONE",
     "TRANSLATION_FEED_ATOM",
     "TRANSLATION_FEED_ATOM_URL",
@@ -116,6 +127,8 @@ __all__ = [
     "TWITTER_USERNAME",
     "TYPOGRIFY",
     "TYPOGRIFY_DASHES",
+    "TYPOGRIFY_IGNORE_TAGS",
+    "TYPOGRIFY_OMIT_FILTERS",
     "USE_FOLDER_AS_CATEGORY",
     "WITH_FUTURE_DATES",
     "YEAR_ARCHIVE_SAVE_AS",
@@ -177,6 +190,7 @@ def _get(setting_name: str, fallback: object) -> _AnyJson:
 
 ANALYTICS: str | None = _get("analytics", None)
 ARCHIVES_SAVE_AS: str = _get("archives_save_as", "archives.html")
+ARTICLE_EXCLUDES: list[str] = _get("article_excludes", [])
 ARTICLE_LANG_SAVE_AS: str = _get("article_lang_save_as", "{slug}-{lang}.html")
 ARTICLE_LANG_URL: str = _get("article_lang_url", "{slug}-{lang}.html")
 ARTICLE_ORDER_BY: str = _get("article_order_by", "reversed-date")
@@ -211,6 +225,9 @@ DEFAULT_DATE_FORMAT: str = _get("default_date_format", "%a %d %B %Y")
 DEFAULT_LANG: str = _get("default_lang", "en")
 DEFAULT_PAGINATION: bool = _get("default_pagination", fallback=False)
 DELETE_OUTPUT_DIRECTORY: bool = _get("delete_output_directory", fallback=False)
+DIRECT_TEMPLATES: list[str] = _get(
+    "direct_templates", ["index", "tags", "categories", "authors", "archives"]
+)
 DISPLAY_CATEGORIES_ON_MENU: bool = _get("display_categories_on_menu", fallback=True)
 DISPLAY_PAGES_ON_MENU: bool = _get("display_pages_on_menu", fallback=True)
 DISQUS_SITENAME: str | None = _get("disqus_sitename", None)
@@ -244,8 +261,10 @@ FEED_RSS_URL: str | None = _get("feed_rss_url", None)
 FILENAME_METADATA: str = _get(
     "filename_metadata", r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
 )
+FORMATTED_FIELDS: list[str] = _get("formatted_fields", ["summary"])
 GITHUB_URL: str | None = _get("github_url", None)
 GZIP_CACHE: bool = _get("gzip_cache", fallback=True)
+IGNORE_FILES: list[str] = _get("ignore_files", ["**/.*"])
 INDEX_SAVE_AS: str = _get("index_save_as", "index.html")
 INTRASITE_LINK_REGEX: str = _get("intrasite_link_regex", "[{|](?P<what>.*?)[|}]")
 LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
@@ -255,8 +274,10 @@ MONTH_ARCHIVE_SAVE_AS: str = _get("month_archive_save_as", "")
 MONTH_ARCHIVE_URL: str = _get("month_archive_url", "")
 NEWEST_FIRST_ARCHIVES: bool = _get("newest_first_archives", fallback=True)
 OUTPUT_PATH: str = _get("output_path", "output")
+OUTPUT_RETENTION: list[str] = _get("output_retention", [])
 OUTPUT_SOURCES: bool = _get("output_sources", fallback=False)
 OUTPUT_SOURCES_EXTENSION: str = _get("output_sources_extension", ".text")
+PAGE_EXCLUDES: list[str] = _get("page_excludes", [])
 PAGE_LANG_SAVE_AS: str = _get("page_lang_save_as", "pages/{slug}-{lang}.html")
 PAGE_LANG_URL: str = _get("page_lang_url", "pages/{slug}-{lang}.html")
 PAGE_ORDER_BY: str = _get("page_order_by", "basename")
@@ -265,6 +286,7 @@ PAGE_SAVE_AS: str = _get("page_save_as", "pages/{slug}.html")
 PAGE_URL: str = _get("page_url", "pages/{slug}.html")
 PATH: str = _get("path", ".")
 PATH_METADATA: str = _get("path_metadata", "")
+PLUGIN_PATHS: list[str] = _get("plugin_paths", [])
 RELATIVE_URLS: bool = _get("relative_urls", fallback=False)
 REVERSE_CATEGORY_ORDER: bool = _get("reverse_category_order", fallback=False)
 RSS_FEED_SUMMARY_ONLY: bool = _get("rss_feed_summary_only", fallback=True)
@@ -278,6 +300,7 @@ SOCIAL: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("social", [])))
 SOCIAL_WIDGET_NAME: str | None = _get("social_widget_name", None)
 STATIC_CHECK_IF_MODIFIED: bool = _get("static_check_if_modified", fallback=False)
 STATIC_CREATE_LINKS: bool = _get("static_create_links", fallback=False)
+STATIC_EXCLUDES: list[str] = _get("static_excludes", [])
 STATIC_EXCLUDE_SOURCES: bool = _get("static_exclude_sources", fallback=True)
 STATIC_PATHS: list[str] = _get("static_paths", ["images"])
 STYLESHEET_URL: str | None = _get("stylesheet_url", None)
@@ -288,8 +311,11 @@ TAG_FEED_ATOM_URL: str | None = _get("tag_feed_atom_url", None)
 TAG_FEED_RSS: str | None = _get("tag_feed_rss", None)
 TAG_SAVE_AS: str = _get("tag_save_as", "tag/{slug}.html")
 TAG_URL: str = _get("tag_url", "tag/{slug}.html")
+TEMPLATE_EXTENSIONS: list[str] = _get("template_extensions", [".html"])
 THEME: str = _get("theme", "notmyidea")
 THEME_STATIC_DIR: str = _get("theme_static_dir", "theme")
+THEME_STATIC_PATHS: list[str] = _get("theme_static_paths", ["static"])
+THEME_TEMPLATES_OVERRIDES: list[str] = _get("theme_templates_overrides", [])
 TIMEZONE: str = _get("timezone", "UTC")
 TRANSLATION_FEED_ATOM: str | None = _get(
     "translation_feed_atom", "feeds/all-{lang}.atom.xml"
@@ -300,6 +326,8 @@ TRANSLATION_FEED_RSS_URL: str | None = _get("translation_feed_rss_url", None)
 TWITTER_USERNAME: str | None = _get("twitter_username", None)
 TYPOGRIFY: bool = _get("typogrify", fallback=False)
 TYPOGRIFY_DASHES: str = _get("typogrify_dashes", "default")
+TYPOGRIFY_IGNORE_TAGS: list[str] = _get("typogrify_ignore_tags", [])
+TYPOGRIFY_OMIT_FILTERS: list[str] = _get("typogrify_omit_filters", [])
 USE_FOLDER_AS_CATEGORY: bool = _get("use_folder_as_category", fallback=True)
 WITH_FUTURE_DATES: bool = _get("with_future_dates", fallback=True)
 YEAR_ARCHIVE_SAVE_AS: str = _get("year_archive_save_as", "")

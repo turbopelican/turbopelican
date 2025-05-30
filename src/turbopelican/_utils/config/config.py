@@ -80,6 +80,7 @@ class PelicanConfig(pydantic.BaseModel):
 
     analytics: str | None = None
     archives_save_as: str = "archives.html"
+    article_excludes: _ListOfStrings = pydantic.Field(default_factory=list)
     article_lang_save_as: str = "{slug}-{lang}.html"
     article_lang_url: str = "{slug}-{lang}.html"
     article_order_by: str = "reversed-date"
@@ -114,6 +115,9 @@ class PelicanConfig(pydantic.BaseModel):
     default_lang: str = "en"
     default_pagination: int | Literal[False] = False
     delete_output_directory: bool = False
+    direct_templates: _ListOfStrings = pydantic.Field(
+        default_factory=["index", "tags", "categories", "authors", "archives"].copy
+    )
     display_categories_on_menu: bool = True
     display_pages_on_menu: bool = True
     disqus_sitename: str | None = None
@@ -136,8 +140,10 @@ class PelicanConfig(pydantic.BaseModel):
     feed_rss: str | None = None
     feed_rss_url: str | None = None
     filename_metadata: str = r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
+    formatted_fields: _ListOfStrings = pydantic.Field(default_factory=["summary"].copy)
     github_url: str | None = None
     gzip_cache: bool = True
+    ignore_files: _ListOfStrings = pydantic.Field(default_factory=["**/.*"].copy)
     index_save_as: str = "index.html"
     intrasite_link_regex: str = "[{|](?P<what>.*?)[|}]"
     links: _TupleOfTitleURLPairs = ()
@@ -147,8 +153,10 @@ class PelicanConfig(pydantic.BaseModel):
     month_archive_url: str = ""
     newest_first_archives: bool = True
     output_path: str = "output"
+    output_retention: _ListOfStrings = pydantic.Field(default_factory=list)
     output_sources: bool = False
     output_sources_extension: str = ".text"
+    page_excludes: _ListOfStrings = pydantic.Field(default_factory=list)
     page_lang_save_as: str = "pages/{slug}-{lang}.html"
     page_lang_url: str = "pages/{slug}-{lang}.html"
     page_order_by: str = "basename"
@@ -157,6 +165,7 @@ class PelicanConfig(pydantic.BaseModel):
     page_url: str = "pages/{slug}.html"
     path: str = "."
     path_metadata: str = ""
+    plugin_paths: _ListOfStrings = pydantic.Field(default_factory=list)
     relative_urls: bool = False
     reverse_category_order: bool = False
     rss_feed_summary_only: bool = True
@@ -170,6 +179,7 @@ class PelicanConfig(pydantic.BaseModel):
     social_widget_name: str | None = None
     static_check_if_modified: bool = False
     static_create_links: bool = False
+    static_excludes: _ListOfStrings = pydantic.Field(default_factory=list)
     static_exclude_sources: bool = True
     static_paths: _ListOfStrings = pydantic.Field(default_factory=["images"].copy)
     stylesheet_url: str | None = None
@@ -180,8 +190,11 @@ class PelicanConfig(pydantic.BaseModel):
     tag_feed_rss: str | None = None
     tag_save_as: str = "tag/{slug}.html"
     tag_url: str = "tag/{slug}.html"
+    template_extensions: _ListOfStrings = pydantic.Field(default_factory=[".html"].copy)
     theme: str = "notmyidea"
     theme_static_dir: str = "theme"
+    theme_static_paths: _ListOfStrings = pydantic.Field(default_factory=["static"].copy)
+    theme_templates_overrides: _ListOfStrings = pydantic.Field(default_factory=list)
     timezone: str = "UTC"
     translation_feed_atom: str | None = "feeds/all-{lang}.atom.xml"
     translation_feed_atom_url: str | None = None
@@ -190,6 +203,8 @@ class PelicanConfig(pydantic.BaseModel):
     twitter_username: str | None = None
     typogrify: bool = False
     typogrify_dashes: str = "default"
+    typogrify_ignore_tags: _ListOfStrings = pydantic.Field(default_factory=list)
+    typogrify_omit_filters: _ListOfStrings = pydantic.Field(default_factory=list)
     use_folder_as_category: bool = True
     with_future_dates: bool = True
     year_archive_save_as: str = ""
