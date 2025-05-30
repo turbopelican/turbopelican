@@ -67,6 +67,7 @@ __all__ = [
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
     "LINKS",
+    "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
     "MONTH_ARCHIVE_SAVE_AS",
     "MONTH_ARCHIVE_URL",
@@ -234,13 +235,12 @@ EXTRA_PATH_METADATA: dict[str, dict[str, str]] = {
 FEED_ALL_ATOM: str | None = _get("feed_all_atom", "feeds/all.atom.xml")
 FEED_ALL_ATOM_URL: str | None = _get("feed_all_atom_url", None)
 FEED_ALL_RSS: str | None = _get("feed_all_rss", None)
+FEED_ALL_RSS_URL: str | None = _get("feed_all_rss_url", None)
 FEED_APPEND_REF: bool = _get("feed_append_ref", fallback=False)
 FEED_ATOM: str | None = _get("feed_atom", None)
 FEED_ATOM_URL: str | None = _get("feed_atom_url", None)
 FEED_RSS: str | None = _get("feed_rss", None)
 FEED_RSS_URL: str | None = _get("feed_rss_url", None)
-FEED_ALL_RSS_URL: str | None = _get("feed_all_rss_url", None)
-FEED_RSS: str | None = _get("feed_rss", None)
 FILENAME_METADATA: str = _get(
     "filename_metadata", r"(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>.*)"
 )
