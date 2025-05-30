@@ -39,6 +39,7 @@ __all__ = [
     "DEFAULT_CATEGORY",
     "DEFAULT_DATE_FORMAT",
     "DEFAULT_LANG",
+    "DEFAULT_ORPHANS",
     "DEFAULT_PAGINATION",
     "DELETE_OUTPUT_DIRECTORY",
     "DIRECT_TEMPLATES",
@@ -91,6 +92,7 @@ __all__ = [
     "PATH",
     "PATH_METADATA",
     "PLUGIN_PATHS",
+    "PORT",
     "RELATIVE_URLS",
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
@@ -226,6 +228,7 @@ DAY_ARCHIVE_URL: str = _get("day_archive_url", "")
 DEFAULT_CATEGORY: str = _get("default_category", "misc")
 DEFAULT_DATE_FORMAT: str = _get("default_date_format", "%a %d %B %Y")
 DEFAULT_LANG: str = _get("default_lang", "en")
+DEFAULT_ORPHANS: int = _get("default_orphans", 0)
 DEFAULT_PAGINATION: bool = _get("default_pagination", fallback=False)
 DELETE_OUTPUT_DIRECTORY: bool = _get("delete_output_directory", fallback=False)
 DIRECT_TEMPLATES: list[str] = _get(
@@ -291,6 +294,7 @@ PAGE_URL: str = _get("page_url", "pages/{slug}.html")
 PATH: str = _get("path", ".")
 PATH_METADATA: str = _get("path_metadata", "")
 PLUGIN_PATHS: list[str] = _get("plugin_paths", [])
+PORT: int = _get("port", 8000)
 RELATIVE_URLS: bool = _get("relative_urls", fallback=False)
 REVERSE_CATEGORY_ORDER: bool = _get("reverse_category_order", fallback=False)
 RSS_FEED_SUMMARY_ONLY: bool = _get("rss_feed_summary_only", fallback=True)
