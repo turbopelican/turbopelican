@@ -24,6 +24,17 @@ if TYPE_CHECKING:
 T = TypeVar("T", bound=Toml)
 
 
+def _default_markdown() -> dict:
+    return {
+        "extension_configs": {
+            "markdown.extensions.codehilite": {"css_class": "highlight"},
+            "markdown.extensions.extra": {},
+            "markdown.extensions.meta": {},
+        },
+        "output_format": "html5",
+    }
+
+
 def _validate_tuple_of_title_url_pairs(value: tuple) -> tuple[tuple[str, str]]:
     """Raises an error if field is not a tuple with any number of title/URL pairs.
 
@@ -113,6 +124,7 @@ class PelicanConfig(pydantic.BaseModel):
     default_category: str = "misc"
     default_date_format: str = "%a %d %B %Y"
     default_lang: str = "en"
+    default_metadata: dict = pydantic.Field(default_factory=dict)
     default_orphans: int = 0
     default_pagination: int | Literal[False] = False
     delete_output_directory: bool = False
@@ -122,6 +134,7 @@ class PelicanConfig(pydantic.BaseModel):
     display_categories_on_menu: bool = True
     display_pages_on_menu: bool = True
     disqus_sitename: str | None = None
+    docutils_settings: dict = pydantic.Field(default_factory=dict)
     draft_lang_save_as: str = "drafts/{slug}-{lang}.html"
     draft_lang_url: str = "drafts/{slug}-{lang}.html"
     draft_page_lang_save_as: str = "drafts/pages/{slug}-{lang}.html"
@@ -148,9 +161,17 @@ class PelicanConfig(pydantic.BaseModel):
     ignore_files: _ListOfStrings = pydantic.Field(default_factory=["**/.*"].copy)
     index_save_as: str = "index.html"
     intrasite_link_regex: str = "[{|](?P<what>.*?)[|}]"
+    jinja_environment: dict = pydantic.Field(
+        default_factory={
+            "extensions": [],
+            "trim_blocks": True,
+            "lstrip_blocks": True,
+        }.copy
+    )
     links: _TupleOfTitleURLPairs = ()
     links_widget_name: str | None = None
     load_content_cache: bool = False
+    markdown: dict = pydantic.Field(default_factory=_default_markdown)
     month_archive_save_as: str = ""
     month_archive_url: str = ""
     newest_first_archives: bool = True
@@ -169,6 +190,7 @@ class PelicanConfig(pydantic.BaseModel):
     path_metadata: str = ""
     plugin_paths: _ListOfStrings = pydantic.Field(default_factory=list)
     port: int = 8000
+    pygments_rst_options: dict = pydantic.Field(default_factory=dict)
     relative_urls: bool = False
     reverse_category_order: bool = False
     rss_feed_summary_only: bool = True
