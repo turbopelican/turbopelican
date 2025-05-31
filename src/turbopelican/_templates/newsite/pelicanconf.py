@@ -39,6 +39,7 @@ __all__ = [
     "DEFAULT_CATEGORY",
     "DEFAULT_DATE_FORMAT",
     "DEFAULT_LANG",
+    "DEFAULT_METADATA",
     "DEFAULT_ORPHANS",
     "DEFAULT_PAGINATION",
     "DELETE_OUTPUT_DIRECTORY",
@@ -46,6 +47,7 @@ __all__ = [
     "DISPLAY_CATEGORIES_ON_MENU",
     "DISPLAY_PAGES_ON_MENU",
     "DISQUS_SITENAME",
+    "DOCUTILS_SETTINGS",
     "DRAFT_LANG_SAVE_AS",
     "DRAFT_LANG_URL",
     "DRAFT_PAGE_LANG_SAVE_AS",
@@ -72,9 +74,11 @@ __all__ = [
     "IGNORE_FILES",
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
+    "JINJA_ENVIRONMENT",
     "LINKS",
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
+    "MARKDOWN",
     "MONTH_ARCHIVE_SAVE_AS",
     "MONTH_ARCHIVE_URL",
     "NEWEST_FIRST_ARCHIVES",
@@ -93,6 +97,7 @@ __all__ = [
     "PATH_METADATA",
     "PLUGIN_PATHS",
     "PORT",
+    "PYGMENTS_RST_OPTIONS",
     "RELATIVE_URLS",
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
@@ -186,6 +191,7 @@ DAY_ARCHIVE_URL: str = _config.day_archive_url
 DEFAULT_CATEGORY: str = _config.default_category
 DEFAULT_DATE_FORMAT: str = _config.default_date_format
 DEFAULT_LANG: str = _config.default_lang
+DEFAULT_METADATA: dict = _config.default_metadata
 DEFAULT_ORPHANS: int = _config.default_orphans
 DEFAULT_PAGINATION: int | bool = _config.default_pagination
 DELETE_OUTPUT_DIRECTORY: bool = _config.delete_output_directory
@@ -193,6 +199,7 @@ DIRECT_TEMPLATES: list[str] = _config.direct_templates
 DISPLAY_CATEGORIES_ON_MENU: bool = _config.display_categories_on_menu
 DISPLAY_PAGES_ON_MENU: bool = _config.display_pages_on_menu
 DISQUS_SITENAME: str | None = _config.disqus_sitename
+DOCUTILS_SETTINGS: dict = _config.docutils_settings
 DRAFT_LANG_SAVE_AS: str = _config.draft_lang_save_as
 DRAFT_LANG_URL: str = _config.draft_lang_url
 DRAFT_PAGE_LANG_SAVE_AS: str = _config.draft_page_lang_save_as
@@ -219,9 +226,11 @@ GZIP_CACHE: bool = _config.gzip_cache
 IGNORE_FILES: list[str] = _config.ignore_files
 INDEX_SAVE_AS: str = _config.index_save_as
 INTRASITE_LINK_REGEX: str = _config.intrasite_link_regex
+JINJA_ENVIRONMENT: dict = _config.jinja_environment
 LINKS: tuple[tuple[str, str], ...] = _config.links
 LINKS_WIDGET_NAME: str | None = _config.links_widget_name
 LOAD_CONTENT_CACHE: bool = _config.load_content_cache
+MARKDOWN: dict = _config.markdown
 MONTH_ARCHIVE_SAVE_AS: str = _config.month_archive_save_as
 MONTH_ARCHIVE_URL: str = _config.month_archive_url
 NEWEST_FIRST_ARCHIVES: bool = _config.newest_first_archives
@@ -240,6 +249,7 @@ PATH: str = _config.path
 PATH_METADATA: str = _config.path_metadata
 PLUGIN_PATHS: list[str] = _config.plugin_paths
 PORT: int = _config.port
+PYGMENTS_RST_OPTIONS: dict = _config.pygments_rst_options
 RELATIVE_URLS: bool = _config.relative_urls
 REVERSE_CATEGORY_ORDER: bool = _config.reverse_category_order
 RSS_FEED_SUMMARY_ONLY: bool = _config.rss_feed_summary_only
