@@ -39,6 +39,7 @@ __all__ = [
     "DEFAULT_CATEGORY",
     "DEFAULT_DATE_FORMAT",
     "DEFAULT_LANG",
+    "DEFAULT_METADATA",
     "DEFAULT_ORPHANS",
     "DEFAULT_PAGINATION",
     "DELETE_OUTPUT_DIRECTORY",
@@ -46,6 +47,7 @@ __all__ = [
     "DISPLAY_CATEGORIES_ON_MENU",
     "DISPLAY_PAGES_ON_MENU",
     "DISQUS_SITENAME",
+    "DOCUTILS_SETTINGS",
     "DRAFT_LANG_SAVE_AS",
     "DRAFT_LANG_URL",
     "DRAFT_PAGE_LANG_SAVE_AS",
@@ -72,9 +74,11 @@ __all__ = [
     "IGNORE_FILES",
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
+    "JINJA_ENVIRONMENT",
     "LINKS",
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
+    "MARKDOWN",
     "MONTH_ARCHIVE_SAVE_AS",
     "MONTH_ARCHIVE_URL",
     "NEWEST_FIRST_ARCHIVES",
@@ -93,6 +97,7 @@ __all__ = [
     "PATH_METADATA",
     "PLUGIN_PATHS",
     "PORT",
+    "PYGMENTS_RST_OPTIONS",
     "RELATIVE_URLS",
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
@@ -228,6 +233,7 @@ DAY_ARCHIVE_URL: str = _get("day_archive_url", "")
 DEFAULT_CATEGORY: str = _get("default_category", "misc")
 DEFAULT_DATE_FORMAT: str = _get("default_date_format", "%a %d %B %Y")
 DEFAULT_LANG: str = _get("default_lang", "en")
+DEFAULT_METADATA: str = _get("default_metadata", {})
 DEFAULT_ORPHANS: int = _get("default_orphans", 0)
 DEFAULT_PAGINATION: bool = _get("default_pagination", fallback=False)
 DELETE_OUTPUT_DIRECTORY: bool = _get("delete_output_directory", fallback=False)
@@ -237,6 +243,7 @@ DIRECT_TEMPLATES: list[str] = _get(
 DISPLAY_CATEGORIES_ON_MENU: bool = _get("display_categories_on_menu", fallback=True)
 DISPLAY_PAGES_ON_MENU: bool = _get("display_pages_on_menu", fallback=True)
 DISQUS_SITENAME: str | None = _get("disqus_sitename", None)
+DOCUTILS_SETTINGS: dict = _get("docutils_settings", {})
 DRAFT_LANG_SAVE_AS: str = _get("draft_lang_save_as", "drafts/{slug}-{lang}.html")
 DRAFT_LANG_URL: str = _get("draft_lang_url", "drafts/{slug}-{lang}.html")
 DRAFT_PAGE_LANG_SAVE_AS: str = _get(
@@ -274,9 +281,23 @@ GZIP_CACHE: bool = _get("gzip_cache", fallback=True)
 IGNORE_FILES: list[str] = _get("ignore_files", ["**/.*"])
 INDEX_SAVE_AS: str = _get("index_save_as", "index.html")
 INTRASITE_LINK_REGEX: str = _get("intrasite_link_regex", "[{|](?P<what>.*?)[|}]")
+JINJA_ENVIRONMENT: dict = _get(
+    "jinja_environment", {"extensions": [], "trim_blocks": True, "lstrip_blocks": True}
+)
 LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
 LINKS_WIDGET_NAME: str | None = _get("links_widget_name", None)
 LOAD_CONTENT_CACHE: bool = _get("load_content_cache", fallback=False)
+MARKDOWN: dict = _get(
+    "markdown",
+    {
+        "extension_configs": {
+            "markdown.extensions.codehilite": {"css_class": "highlight"},
+            "markdown.extensions.extra": {},
+            "markdown.extensions.meta": {},
+        },
+        "output_format": "html5",
+    },
+)
 MONTH_ARCHIVE_SAVE_AS: str = _get("month_archive_save_as", "")
 MONTH_ARCHIVE_URL: str = _get("month_archive_url", "")
 NEWEST_FIRST_ARCHIVES: bool = _get("newest_first_archives", fallback=True)
@@ -295,6 +316,7 @@ PATH: str = _get("path", ".")
 PATH_METADATA: str = _get("path_metadata", "")
 PLUGIN_PATHS: list[str] = _get("plugin_paths", [])
 PORT: int = _get("port", 8000)
+PYGMENTS_RST_OPTIONS: dict = _get("pygments_rst_options", {})
 RELATIVE_URLS: bool = _get("relative_urls", fallback=False)
 REVERSE_CATEGORY_ORDER: bool = _get("reverse_category_order", fallback=False)
 RSS_FEED_SUMMARY_ONLY: bool = _get("rss_feed_summary_only", fallback=True)
