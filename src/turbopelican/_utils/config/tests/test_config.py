@@ -7,6 +7,7 @@ from turbopelican import PelicanConfig, TurbopelicanError, config
 from turbopelican._utils.config.config import (
     _CombinedConfig,
     _handle_validation_error,
+    _validate_date_formats,
     _validate_datetime,
     _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
@@ -56,6 +57,15 @@ def test_pelicanconfig_validate_datetime() -> None:
     ):
         _validate_datetime((1, 2, 3.1))
     _validate_datetime((1, 2, 3))
+
+
+def test_pelicanconfig_validate_date_formats() -> None:
+    """Tests the validator for date format dictionaries."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid string"
+    ):
+        _validate_date_formats({"jp": ("a", 1)})
+    _validate_date_formats({"jp": ("a", "b")})
 
 
 def test_pelicanconfig_default_regex_substitutions() -> None:
