@@ -39,6 +39,7 @@ __all__ = [
     "DAY_ARCHIVE_SAVE_AS",
     "DAY_ARCHIVE_URL",
     "DEFAULT_CATEGORY",
+    "DEFAULT_DATE",
     "DEFAULT_DATE_FORMAT",
     "DEFAULT_LANG",
     "DEFAULT_METADATA",
@@ -252,6 +253,7 @@ CSS_FILE: str = _get("css_file", "main.css")
 DAY_ARCHIVE_SAVE_AS: str = _get("day_archive_save_as", "")
 DAY_ARCHIVE_URL: str = _get("day_archive_url", "")
 DEFAULT_CATEGORY: str = _get("default_category", "misc")
+DEFAULT_DATE: str | tuple[int, ...] | None = _get("default_date", None)
 DEFAULT_DATE_FORMAT: str = _get("default_date_format", "%a %d %B %Y")
 DEFAULT_LANG: str = _get("default_lang", "en")
 DEFAULT_METADATA: str = _get("default_metadata", {})
