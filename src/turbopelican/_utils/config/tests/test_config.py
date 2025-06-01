@@ -7,6 +7,7 @@ from turbopelican import PelicanConfig, TurbopelicanError, config
 from turbopelican._utils.config.config import (
     _CombinedConfig,
     _handle_validation_error,
+    _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
     _validate_tuple_of_title_url_pairs,
     _validate_twice_nested_dict,
@@ -38,6 +39,26 @@ def test_pelicanconfig_validate_twice_nested_dict() -> None:
     ):
         _validate_twice_nested_dict({1.2: {"a": "b"}})
     _validate_twice_nested_dict({"1": {"a": "b"}})
+
+
+def test_pelicanconfig_validate_list_of_regex_substitutions() -> None:
+    """Tests the validator for lists of regular expression substitutions."""
+    with pytest.raises(pydantic.ValidationError, match="Input should be a valid tuple"):
+        _validate_list_of_regex_substitutions([("a", "b"), "c"])
+    _validate_list_of_regex_substitutions([("a", "b"), ("c", "d")])
+
+
+def test_pelicanconfig_default_regex_substitutions() -> None:
+    """Tests that regular expression substitutions are defaulted correctly."""
+    assert PelicanConfig._default_regex_substitutions({}) == {}
+    assert PelicanConfig._default_regex_substitutions(
+        {"SLUG_REGEX_SUBSTITUTIONS": [("a", "b")], "TAG_REGEX_SUBSTITUTIONS": []}
+    ) == {
+        "AUTHOR_REGEX_SUBSTITUTIONS": [("a", "b")],
+        "CATEGORY_REGEX_SUBSTITUTIONS": [("a", "b")],
+        "SLUG_REGEX_SUBSTITUTIONS": [("a", "b")],
+        "TAG_REGEX_SUBSTITUTIONS": [],
+    }
 
 
 def test_pelicanconfig() -> None:

@@ -74,6 +74,19 @@ def _validate_twice_nested_dict(value: dict) -> dict[str, dict[str, str]]:
     return value
 
 
+def _validate_list_of_regex_substitutions(value: list) -> list[tuple[str, str]]:
+    """Raises an error if field is not a list of tuples, each containing two strings.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[list[tuple[str, str]]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -83,6 +96,10 @@ _ListOfStrings = Annotated[
 ]
 _TwiceNestedDict = Annotated[
     dict[str, dict[str, str]], pydantic.AfterValidator(_validate_twice_nested_dict)
+]
+_ListOfRegexSubstitutions = Annotated[
+    list[tuple[str, str]],
+    pydantic.AfterValidator(_validate_list_of_regex_substitutions),
 ]
 
 
@@ -104,6 +121,14 @@ class PelicanConfig(pydantic.BaseModel):
     author_feed_atom_url: str | None = None
     author_feed_rss: str | None = "feeds/{slug}.rss.xml"
     author_feed_rss_url: str | None = None
+    author_regex_substitutions: _ListOfRegexSubstitutions = pydantic.Field(
+        default_factory=[
+            (r"[^\\w\\s-]", ""),
+            (r"(?u)\\A\\s*", ""),
+            (r"(?u)\\s*\\Z", ""),
+            (r"[-\\s]+", "-"),
+        ].copy
+    )
     author_save_as: str = "author/{slug}.html"
     author_url: str = "author/{slug}.html"
     bind: str = "127.0.0.1"
@@ -114,6 +139,14 @@ class PelicanConfig(pydantic.BaseModel):
     category_feed_atom_url: str | None = None
     category_feed_rss: str | None = None
     category_feed_rss_url: str | None = None
+    category_regex_substitutions: _ListOfRegexSubstitutions = pydantic.Field(
+        default_factory=[
+            (r"[^\\w\\s-]", ""),
+            (r"(?u)\\A\\s*", ""),
+            (r"(?u)\\s*\\Z", ""),
+            (r"[-\\s]+", "-"),
+        ].copy
+    )
     category_save_as: str = "category/{slug}.html"
     category_url: str = "category/{slug}.html"
     check_modified_method: str = "mtime"
@@ -200,6 +233,14 @@ class PelicanConfig(pydantic.BaseModel):
     slugify_preserve_case: bool = False
     slugify_source: str = "title"
     slugify_use_unicode: bool = False
+    slug_regex_substitutions: _ListOfRegexSubstitutions = pydantic.Field(
+        default_factory=[
+            (r"[^\\w\\s-]", ""),
+            (r"(?u)\\A\\s*", ""),
+            (r"(?u)\\s*\\Z", ""),
+            (r"[-\\s]+", "-"),
+        ].copy
+    )
     social: _TupleOfTitleURLPairs = ()
     social_widget_name: str | None = None
     static_check_if_modified: bool = False
@@ -215,6 +256,14 @@ class PelicanConfig(pydantic.BaseModel):
     tag_feed_atom: str | None = None
     tag_feed_atom_url: str | None = None
     tag_feed_rss: str | None = None
+    tag_regex_substitutions: _ListOfRegexSubstitutions = pydantic.Field(
+        default_factory=[
+            (r"[^\\w\\s-]", ""),
+            (r"(?u)\\A\\s*", ""),
+            (r"(?u)\\s*\\Z", ""),
+            (r"[-\\s]+", "-"),
+        ].copy
+    )
     tag_save_as: str = "tag/{slug}.html"
     tag_url: str = "tag/{slug}.html"
     template_extensions: _ListOfStrings = pydantic.Field(default_factory=[".html"].copy)
@@ -311,6 +360,49 @@ class PelicanConfig(pydantic.BaseModel):
             raise TurbopelicanError("Repeated `origin` field in `extra_path_metadata`.")
 
         return transformed
+
+    @classmethod
+    def _default_regex_substitutions(cls, data: object) -> object:
+        """Enforces correct defaults for regular expression substitutions.
+
+        Args:
+            data: The complete unvalidated data.
+
+        Returns:
+            The data, such that if `SLUG_REGEX_SUBSTITUTIONS` was provided, defaults
+            `AUTHOR_REGEX_SUBSTITUTIONS`, `CATEGORY_REGEX_SUBSTITIONS` and
+            `TAG_REGEX_SUBSTITUTIONS` to `SLUG_REGEX_SUBSTITUTIONS`.
+        """
+        if not isinstance(data, dict):
+            return data
+
+        if "SLUG_REGEX_SUBSTITUTIONS" not in data:
+            return data
+
+        for field in [
+            "AUTHOR_REGEX_SUBSTITUTIONS",
+            "CATEGORY_REGEX_SUBSTITUTIONS",
+            "TAG_REGEX_SUBSTITUTIONS",
+        ]:
+            data.setdefault(field, data["SLUG_REGEX_SUBSTITUTIONS"])
+
+        return data
+
+    @pydantic.model_validator(mode="before")
+    @classmethod
+    def _regex_substitutions(cls, data: object) -> object:
+        """Enforces correct defaults for regular expression substitutions.
+
+        Args:
+            data: The complete unvalidated data.
+
+        Returns:
+            The data with any modifications necessary. If `SLUG_REGEX_SUBSTITUTIONS` was
+            provided, defaults `AUTHOR_REGEX_SUBSTITUTIONS`,
+            `CATEGORY_REGEX_SUBSTITIONS` and `TAG_REGEX_SUBSTITUTIONS` to
+            `SLUG_REGEX_SUBSTITUTIONS`.
+        """
+        return cls._default_regex_substitutions(data)
 
 
 class _CombinedConfig(pydantic.BaseModel):
