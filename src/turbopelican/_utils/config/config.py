@@ -87,6 +87,19 @@ def _validate_list_of_regex_substitutions(value: list) -> list[tuple[str, str]]:
     return value
 
 
+def _validate_datetime(value: str | tuple | None) -> str | tuple[int, ...] | None:
+    """Raises an error if field is not a string, tuple of integers, or None.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[str | tuple[int, ...] | None].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -100,6 +113,9 @@ _TwiceNestedDict = Annotated[
 _ListOfRegexSubstitutions = Annotated[
     list[tuple[str, str]],
     pydantic.AfterValidator(_validate_list_of_regex_substitutions),
+]
+_Datetime = Annotated[
+    str | tuple[int, ...] | None, pydantic.AfterValidator(_validate_datetime)
 ]
 
 
@@ -155,6 +171,7 @@ class PelicanConfig(pydantic.BaseModel):
     day_archive_save_as: str = ""
     day_archive_url: str = ""
     default_category: str = "misc"
+    default_date: _Datetime = None
     default_date_format: str = "%a %d %B %Y"
     default_lang: str = "en"
     default_metadata: dict = pydantic.Field(default_factory=dict)
