@@ -36,6 +36,7 @@ __all__ = [
     "CHECK_MODIFIED_METHOD",
     "CONTENT_CACHING_LAYER",
     "CSS_FILE",
+    "DATE_FORMATS",
     "DAY_ARCHIVE_SAVE_AS",
     "DAY_ARCHIVE_URL",
     "DEFAULT_CATEGORY",
@@ -250,6 +251,10 @@ CATEGORY_URL: str = _get("category_url", "category/{slug}.html")
 CHECK_MODIFIED_METHOD: str = _get("check_modified_method", "mtime")
 CONTENT_CACHING_LAYER: str = _get("content_caching_layer", "reader")
 CSS_FILE: str = _get("css_file", "main.css")
+DATE_FORMATS: dict[str, str | tuple[str, str]] = {
+    lang: (tuple(date_format) if isinstance(date_format, list) else date_format)
+    for (lang, date_format) in _get("date_formats", {}).items()
+}
 DAY_ARCHIVE_SAVE_AS: str = _get("day_archive_save_as", "")
 DAY_ARCHIVE_URL: str = _get("day_archive_url", "")
 DEFAULT_CATEGORY: str = _get("default_category", "misc")
