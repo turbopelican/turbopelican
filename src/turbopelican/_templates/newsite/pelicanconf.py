@@ -130,6 +130,7 @@ __all__ = [
     "TAG_SAVE_AS",
     "TAG_URL",
     "TEMPLATE_EXTENSIONS",
+    "TEMPLATE_PAGES",
     "THEME",
     "THEME_STATIC_DIR",
     "THEME_STATIC_PATHS",
@@ -290,6 +291,7 @@ TAG_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = _config.tag_regex_substitutions
 TAG_SAVE_AS: str = _config.tag_save_as
 TAG_URL: str = _config.tag_url
 TEMPLATE_EXTENSIONS: list[str] = _config.template_extensions
+TEMPLATE_PAGES: dict[str, str] = _config.template_pages
 THEME: str = _config.theme
 THEME_STATIC_DIR: str = _config.theme_static_dir
 THEME_STATIC_PATHS: list[str] = _config.theme_static_paths
