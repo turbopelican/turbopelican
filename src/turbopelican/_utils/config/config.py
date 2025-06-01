@@ -113,6 +113,19 @@ def _validate_date_formats(value: dict) -> dict[str, str | tuple[str, str]]:
     return value
 
 
+def _validate_string_dict(value: dict) -> dict[str, str]:
+    """Raises an error if the field is not a dictionary with string values.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[dict[str, str]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -133,6 +146,7 @@ _Datetime = Annotated[
 _DateFormats = Annotated[
     dict[str, str | tuple[str, str]], pydantic.AfterValidator(_validate_date_formats)
 ]
+_StringDict = Annotated[dict[str, str], pydantic.AfterValidator(_validate_string_dict)]
 
 
 class PelicanConfig(pydantic.BaseModel):
@@ -301,6 +315,7 @@ class PelicanConfig(pydantic.BaseModel):
     tag_save_as: str = "tag/{slug}.html"
     tag_url: str = "tag/{slug}.html"
     template_extensions: _ListOfStrings = pydantic.Field(default_factory=[".html"].copy)
+    template_pages: _StringDict = pydantic.Field(default_factory=dict)
     theme: str = "notmyidea"
     theme_static_dir: str = "theme"
     theme_static_paths: _ListOfStrings = pydantic.Field(default_factory=["static"].copy)

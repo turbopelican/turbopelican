@@ -131,6 +131,7 @@ __all__ = [
     "TAG_SAVE_AS",
     "TAG_URL",
     "TEMPLATE_EXTENSIONS",
+    "TEMPLATE_PAGES",
     "THEME",
     "THEME_STATIC_DIR",
     "THEME_STATIC_PATHS",
@@ -378,6 +379,7 @@ TAG_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = list(
 TAG_SAVE_AS: str = _get("tag_save_as", "tag/{slug}.html")
 TAG_URL: str = _get("tag_url", "tag/{slug}.html")
 TEMPLATE_EXTENSIONS: list[str] = _get("template_extensions", [".html"])
+TEMPLATE_PAGES: dict[str, str] = _get("template_pages", {})
 THEME: str = _get("theme", "notmyidea")
 THEME_STATIC_DIR: str = _get("theme_static_dir", "theme")
 THEME_STATIC_PATHS: list[str] = _get("theme_static_paths", ["static"])
