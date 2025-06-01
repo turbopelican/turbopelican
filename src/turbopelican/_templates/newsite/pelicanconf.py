@@ -197,6 +197,7 @@ CSS_FILE: str = _config.css_file
 DAY_ARCHIVE_SAVE_AS: str = _config.day_archive_save_as
 DAY_ARCHIVE_URL: str = _config.day_archive_url
 DEFAULT_CATEGORY: str = _config.default_category
+DEFAULT_DATE: str | tuple[int, ...] | None = _config.default_date
 DEFAULT_DATE_FORMAT: str = _config.default_date_format
 DEFAULT_LANG: str = _config.default_lang
 DEFAULT_METADATA: dict = _config.default_metadata

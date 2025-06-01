@@ -7,6 +7,7 @@ from turbopelican import PelicanConfig, TurbopelicanError, config
 from turbopelican._utils.config.config import (
     _CombinedConfig,
     _handle_validation_error,
+    _validate_datetime,
     _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
     _validate_tuple_of_title_url_pairs,
@@ -46,6 +47,15 @@ def test_pelicanconfig_validate_list_of_regex_substitutions() -> None:
     with pytest.raises(pydantic.ValidationError, match="Input should be a valid tuple"):
         _validate_list_of_regex_substitutions([("a", "b"), "c"])
     _validate_list_of_regex_substitutions([("a", "b"), ("c", "d")])
+
+
+def test_pelicanconfig_validate_datetime() -> None:
+    """Tests the validator for datetimes."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid integer"
+    ):
+        _validate_datetime((1, 2, 3.1))
+    _validate_datetime((1, 2, 3))
 
 
 def test_pelicanconfig_default_regex_substitutions() -> None:
