@@ -19,6 +19,7 @@ __all__ = [
     "AUTHOR_FEED_ATOM_URL",
     "AUTHOR_FEED_RSS",
     "AUTHOR_FEED_RSS_URL",
+    "AUTHOR_REGEX_SUBSTITUTIONS",
     "AUTHOR_SAVE_AS",
     "AUTHOR_URL",
     "BIND",
@@ -29,6 +30,7 @@ __all__ = [
     "CATEGORY_FEED_ATOM_URL",
     "CATEGORY_FEED_RSS",
     "CATEGORY_FEED_RSS_URL",
+    "CATEGORY_REGEX_SUBSTITUTIONS",
     "CATEGORY_SAVE_AS",
     "CATEGORY_URL",
     "CHECK_MODIFIED_METHOD",
@@ -107,6 +109,7 @@ __all__ = [
     "SLUGIFY_PRESERVE_CASE",
     "SLUGIFY_SOURCE",
     "SLUGIFY_USE_UNICODE",
+    "SLUG_REGEX_SUBSTITUTIONS",
     "SOCIAL",
     "SOCIAL_WIDGET_NAME",
     "STATIC_CHECK_IF_MODIFIED",
@@ -122,6 +125,7 @@ __all__ = [
     "TAG_FEED_ATOM",
     "TAG_FEED_ATOM_URL",
     "TAG_FEED_RSS",
+    "TAG_REGEX_SUBSTITUTIONS",
     "TAG_SAVE_AS",
     "TAG_URL",
     "TEMPLATE_EXTENSIONS",
@@ -171,6 +175,7 @@ AUTHOR_FEED_ATOM: str | None = _config.author_feed_atom
 AUTHOR_FEED_ATOM_URL: str | None = _config.author_feed_atom_url
 AUTHOR_FEED_RSS: str | None = _config.author_feed_rss
 AUTHOR_FEED_RSS_URL: str | None = _config.author_feed_rss_url
+AUTHOR_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = _config.author_regex_substitutions
 AUTHOR_SAVE_AS: str = _config.author_save_as
 AUTHOR_URL: str = _config.author_url
 BIND: str = _config.bind
@@ -181,6 +186,9 @@ CATEGORY_FEED_ATOM: str | None = _config.category_feed_atom
 CATEGORY_FEED_ATOM_URL: str | None = _config.category_feed_atom_url
 CATEGORY_FEED_RSS: str | None = _config.category_feed_rss
 CATEGORY_FEED_RSS_URL: str | None = _config.category_feed_rss_url
+CATEGORY_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = (
+    _config.category_regex_substitutions
+)
 CATEGORY_SAVE_AS: str = _config.category_save_as
 CATEGORY_URL: str = _config.category_url
 CHECK_MODIFIED_METHOD: str = _config.check_modified_method
@@ -259,6 +267,7 @@ SITEURL: str = _config.site_url
 SLUGIFY_PRESERVE_CASE: bool = _config.slugify_preserve_case
 SLUGIFY_SOURCE: str = _config.slugify_source
 SLUGIFY_USE_UNICODE: bool = _config.slugify_use_unicode
+SLUG_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = _config.slug_regex_substitutions
 SOCIAL: tuple[tuple[str, str], ...] = _config.social
 SOCIAL_WIDGET_NAME: str | None = _config.social_widget_name
 STATIC_CHECK_IF_MODIFIED: bool = _config.static_check_if_modified
@@ -274,6 +283,7 @@ TAGS_SAVE_AS: str = _config.tags_save_as
 TAG_FEED_ATOM: str | None = _config.tag_feed_atom
 TAG_FEED_ATOM_URL: str | None = _config.tag_feed_atom_url
 TAG_FEED_RSS: str | None = _config.tag_feed_rss
+TAG_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = _config.tag_regex_substitutions
 TAG_SAVE_AS: str = _config.tag_save_as
 TAG_URL: str = _config.tag_url
 TEMPLATE_EXTENSIONS: list[str] = _config.template_extensions
