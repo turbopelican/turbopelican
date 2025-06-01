@@ -19,6 +19,7 @@ __all__ = [
     "AUTHOR_FEED_ATOM_URL",
     "AUTHOR_FEED_RSS",
     "AUTHOR_FEED_RSS_URL",
+    "AUTHOR_REGEX_SUBSTITUTIONS",
     "AUTHOR_SAVE_AS",
     "AUTHOR_URL",
     "BIND",
@@ -29,6 +30,7 @@ __all__ = [
     "CATEGORY_FEED_ATOM_URL",
     "CATEGORY_FEED_RSS",
     "CATEGORY_FEED_RSS_URL",
+    "CATEGORY_REGEX_SUBSTITUTIONS",
     "CATEGORY_SAVE_AS",
     "CATEGORY_URL",
     "CHECK_MODIFIED_METHOD",
@@ -107,6 +109,7 @@ __all__ = [
     "SLUGIFY_PRESERVE_CASE",
     "SLUGIFY_SOURCE",
     "SLUGIFY_USE_UNICODE",
+    "SLUG_REGEX_SUBSTITUTIONS",
     "SOCIAL",
     "SOCIAL_WIDGET_NAME",
     "STATIC_CHECK_IF_MODIFIED",
@@ -122,6 +125,7 @@ __all__ = [
     "TAG_FEED_ATOM",
     "TAG_FEED_ATOM_URL",
     "TAG_FEED_RSS",
+    "TAG_REGEX_SUBSTITUTIONS",
     "TAG_SAVE_AS",
     "TAG_URL",
     "TEMPLATE_EXTENSIONS",
@@ -198,6 +202,17 @@ def _get(setting_name: str, fallback: object) -> _AnyJson:
     return _complete_config["pelican"].get(setting_name, fallback)
 
 
+_default_regex_substitutions = _get(
+    "slug_regex_substitutions",
+    [
+        [r"[^\\w\\s-]", ""],
+        [r"(?u)\\A\\s*", ""],
+        [r"(?u)\\s*\\Z", ""],
+        [r"[-\\s]+", "-"],
+    ],
+)
+
+
 ANALYTICS: str | None = _get("analytics", None)
 ARCHIVES_SAVE_AS: str = _get("archives_save_as", "archives.html")
 ARTICLE_EXCLUDES: list[str] = _get("article_excludes", [])
@@ -213,6 +228,9 @@ AUTHOR_FEED_ATOM: str | None = _get("author_feed_atom", "feeds/{slug}.atom.xml")
 AUTHOR_FEED_ATOM_URL: str | None = _get("author_feed_atom_url", None)
 AUTHOR_FEED_RSS: str | None = _get("author_feed_rss", "feeds/{slug}.rss.xml")
 AUTHOR_FEED_RSS_URL: str | None = _get("author_feed_rss_url", None)
+AUTHOR_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = list(
+    map(tuple, _get("author_regex_substitutions", _default_regex_substitutions))
+)
 AUTHOR_SAVE_AS: str = _get("author_save_as", "author/{slug}.html")
 AUTHOR_URL: str = _get("author_url", "author/{slug}.html")
 BIND: str = _get("bind", "127.0.0.1")
@@ -223,6 +241,9 @@ CATEGORY_FEED_ATOM: str | None = _get("category_feed_atom", "feeds/{slug}.atom.x
 CATEGORY_FEED_ATOM_URL: str | None = _get("category_feed_atom_url", None)
 CATEGORY_FEED_RSS: str | None = _get("category_feed_rss", None)
 CATEGORY_FEED_RSS_URL: str | None = _get("category_feed_rss_url", None)
+CATEGORY_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = list(
+    map(tuple, _get("category_regex_substitutions", _default_regex_substitutions))
+)
 CATEGORY_SAVE_AS: str = _get("category_save_as", "category/{slug}.html")
 CATEGORY_URL: str = _get("category_url", "category/{slug}.html")
 CHECK_MODIFIED_METHOD: str = _get("check_modified_method", "mtime")
@@ -326,6 +347,9 @@ SITEURL: str = _get("site_url", "")
 SLUGIFY_PRESERVE_CASE: bool = _get("slugify_preserve_case", fallback=False)
 SLUGIFY_SOURCE: str = _get("slugify_source", "title")
 SLUGIFY_USE_UNICODE: bool = _get("slugify_use_unicode", fallback=False)
+SLUG_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = list(
+    map(tuple, _default_regex_substitutions)
+)
 SOCIAL: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("social", [])))
 SOCIAL_WIDGET_NAME: str | None = _get("social_widget_name", None)
 STATIC_CHECK_IF_MODIFIED: bool = _get("static_check_if_modified", fallback=False)
@@ -341,6 +365,9 @@ TAGS_SAVE_AS: str = _get("tags_save_as", "tags.html")
 TAG_FEED_ATOM: str | None = _get("tag_feed_atom", None)
 TAG_FEED_ATOM_URL: str | None = _get("tag_feed_atom_url", None)
 TAG_FEED_RSS: str | None = _get("tag_feed_rss", None)
+TAG_REGEX_SUBSTITUTIONS: list[tuple[str, str]] = list(
+    map(tuple, _get("tag_regex_substitutions", _default_regex_substitutions))
+)
 TAG_SAVE_AS: str = _get("tag_save_as", "tag/{slug}.html")
 TAG_URL: str = _get("tag_url", "tag/{slug}.html")
 TEMPLATE_EXTENSIONS: list[str] = _get("template_extensions", [".html"])
