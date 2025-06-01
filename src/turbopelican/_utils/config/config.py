@@ -100,6 +100,19 @@ def _validate_datetime(value: str | tuple | None) -> str | tuple[int, ...] | Non
     return value
 
 
+def _validate_date_formats(value: dict) -> dict[str, str | tuple[str, str]]:
+    """Raises an error if the field is not a date format dictionary.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[dict[str, str | tuple[str, str]]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -116,6 +129,9 @@ _ListOfRegexSubstitutions = Annotated[
 ]
 _Datetime = Annotated[
     str | tuple[int, ...] | None, pydantic.AfterValidator(_validate_datetime)
+]
+_DateFormats = Annotated[
+    dict[str, str | tuple[str, str]], pydantic.AfterValidator(_validate_date_formats)
 ]
 
 
@@ -168,6 +184,7 @@ class PelicanConfig(pydantic.BaseModel):
     check_modified_method: str = "mtime"
     content_caching_layer: str = "reader"
     css_file: str = "main.css"
+    date_formats: _DateFormats = pydantic.Field(default_factory=dict)
     day_archive_save_as: str = ""
     day_archive_url: str = ""
     default_category: str = "misc"

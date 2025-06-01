@@ -36,6 +36,7 @@ __all__ = [
     "CHECK_MODIFIED_METHOD",
     "CONTENT_CACHING_LAYER",
     "CSS_FILE",
+    "DATE_FORMATS",
     "DAY_ARCHIVE_SAVE_AS",
     "DAY_ARCHIVE_URL",
     "DEFAULT_CATEGORY",
@@ -194,6 +195,7 @@ CATEGORY_URL: str = _config.category_url
 CHECK_MODIFIED_METHOD: str = _config.check_modified_method
 CONTENT_CACHING_LAYER: str = _config.content_caching_layer
 CSS_FILE: str = _config.css_file
+DATE_FORMATS: dict[str, str | tuple[str, str]] = _config.date_formats
 DAY_ARCHIVE_SAVE_AS: str = _config.day_archive_save_as
 DAY_ARCHIVE_URL: str = _config.day_archive_url
 DEFAULT_CATEGORY: str = _config.default_category
