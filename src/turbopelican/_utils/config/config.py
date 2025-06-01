@@ -232,6 +232,7 @@ class PelicanConfig(pydantic.BaseModel):
     feed_append_ref: bool = False
     feed_atom: str | None = None
     feed_atom_url: str | None = None
+    feed_domain: str = ""
     feed_max_items: int | None = 100
     feed_rss: str | None = None
     feed_rss_url: str | None = None

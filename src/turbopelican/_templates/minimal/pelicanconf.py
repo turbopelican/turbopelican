@@ -68,6 +68,7 @@ __all__ = [
     "FEED_APPEND_REF",
     "FEED_ATOM",
     "FEED_ATOM_URL",
+    "FEED_DOMAIN",
     "FEED_MAX_ITEMS",
     "FEED_RSS",
     "FEED_RSS_URL",
@@ -298,6 +299,7 @@ FEED_ALL_RSS_URL: str | None = _get("feed_all_rss_url", None)
 FEED_APPEND_REF: bool = _get("feed_append_ref", fallback=False)
 FEED_ATOM: str | None = _get("feed_atom", None)
 FEED_ATOM_URL: str | None = _get("feed_atom_url", None)
+FEED_DOMAIN: str = _get("feed_domain", "")
 FEED_MAX_ITEMS: int | None = _get("feed_max_items", 100)
 FEED_RSS: str | None = _get("feed_rss", None)
 FEED_RSS_URL: str | None = _get("feed_rss_url", None)

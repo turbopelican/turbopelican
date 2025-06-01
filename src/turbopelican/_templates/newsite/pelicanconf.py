@@ -67,6 +67,7 @@ __all__ = [
     "FEED_APPEND_REF",
     "FEED_ATOM",
     "FEED_ATOM_URL",
+    "FEED_DOMAIN",
     "FEED_MAX_ITEMS",
     "FEED_RSS",
     "FEED_RSS_URL",
@@ -228,6 +229,7 @@ FEED_ALL_RSS_URL: str | None = _config.feed_all_rss_url
 FEED_APPEND_REF: bool = _config.feed_append_ref
 FEED_ATOM: str | None = _config.feed_atom
 FEED_ATOM_URL: str | None = _config.feed_atom_url
+FEED_DOMAIN: str = _config.feed_domain
 FEED_MAX_ITEMS: int | None = _config.feed_max_items
 FEED_RSS: str | None = _config.feed_rss
 FEED_RSS_URL: str | None = _config.feed_rss_url
