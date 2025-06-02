@@ -103,6 +103,7 @@ __all__ = [
     "PAGE_TRANSLATION_ID",
     "PAGE_URL",
     "PAGINATED_TEMPLATES",
+    "PAGINATION_PATTERNS",
     "PATH",
     "PATH_METADATA",
     "PLUGIN_PATHS",
@@ -357,6 +358,13 @@ PAGE_URL: str = _get("page_url", "pages/{slug}.html")
 PAGINATED_TEMPLATES: dict[str, int | None] = _get(
     "paginated_templates",
     {"index": None, "tag": None, "category": None, "author": None},
+)
+PAGINATION_PATTERNS: list[tuple[int, str, str]] = _get(
+    "pagination_patterns",
+    [
+        (1, "{name}{extension}", "{name}{extension}"),
+        (2, "{name}{number}{extension}", "{name}{number}{extension}"),
+    ],
 )
 PATH: str = _get("path", ".")
 PATH_METADATA: str = _get("path_metadata", "")
