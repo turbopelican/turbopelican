@@ -144,7 +144,7 @@ def _validate_locale(value: str | list) -> str | list[str]:
 
 
 def _validate_paginated_templates(value: dict) -> dict[str, int | None]:
-    """Raises an error if the field is not a valid locale field.
+    """Raises an error if the field is not a valid paginated templates field.
 
     Args:
         value: The provided field to be validated.
