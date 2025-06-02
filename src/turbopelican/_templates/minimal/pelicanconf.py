@@ -85,6 +85,7 @@ __all__ = [
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
     "MARKDOWN",
+    "MENUITEMS",
     "MONTH_ARCHIVE_SAVE_AS",
     "MONTH_ARCHIVE_URL",
     "NEWEST_FIRST_ARCHIVES",
@@ -334,6 +335,7 @@ MARKDOWN: dict = _get(
         "output_format": "html5",
     },
 )
+MENUITEMS: tuple[tuple[str, str], ...] = _get("menuitems", ())
 MONTH_ARCHIVE_SAVE_AS: str = _get("month_archive_save_as", "")
 MONTH_ARCHIVE_URL: str = _get("month_archive_url", "")
 NEWEST_FIRST_ARCHIVES: bool = _get("newest_first_archives", fallback=True)
