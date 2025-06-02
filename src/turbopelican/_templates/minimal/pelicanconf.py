@@ -102,6 +102,7 @@ __all__ = [
     "PAGE_SAVE_AS",
     "PAGE_TRANSLATION_ID",
     "PAGE_URL",
+    "PAGINATED_TEMPLATES",
     "PATH",
     "PATH_METADATA",
     "PLUGIN_PATHS",
@@ -353,6 +354,10 @@ PAGE_PATHS: list[str] = _get("page_paths", ["pages"])
 PAGE_SAVE_AS: str = _get("page_save_as", "pages/{slug}.html")
 PAGE_TRANSLATION_ID: str | Literal[False] | None = _get("page_translation_id", "slug")
 PAGE_URL: str = _get("page_url", "pages/{slug}.html")
+PAGINATED_TEMPLATES: dict[str, int | None] = _get(
+    "paginated_templates",
+    {"index": None, "tag": None, "category": None, "author": None},
+)
 PATH: str = _get("path", ".")
 PATH_METADATA: str = _get("path_metadata", "")
 PLUGIN_PATHS: list[str] = _get("plugin_paths", [])
