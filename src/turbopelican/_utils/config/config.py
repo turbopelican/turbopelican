@@ -126,6 +126,19 @@ def _validate_string_dict(value: dict) -> dict[str, str]:
     return value
 
 
+def _validate_locale(value: str | list) -> str | list[str]:
+    """Raises an error if the field is not a valid locale field.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[str | list[str]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -147,6 +160,7 @@ _DateFormats = Annotated[
     dict[str, str | tuple[str, str]], pydantic.AfterValidator(_validate_date_formats)
 ]
 _StringDict = Annotated[dict[str, str], pydantic.AfterValidator(_validate_string_dict)]
+_Locale = Annotated[str | list[str], pydantic.AfterValidator(_validate_locale)]
 
 
 class PelicanConfig(pydantic.BaseModel):
@@ -254,6 +268,7 @@ class PelicanConfig(pydantic.BaseModel):
     links: _TupleOfTitleURLPairs = ()
     links_widget_name: str | None = None
     load_content_cache: bool = False
+    locale: _Locale = pydantic.Field(default_factory=[""].copy)
     markdown: dict = pydantic.Field(default_factory=_default_markdown)
     menuitems: _TupleOfTitleURLPairs = ()
     month_archive_save_as: str = ""

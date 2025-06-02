@@ -11,6 +11,7 @@ from turbopelican._utils.config.config import (
     _validate_datetime,
     _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
+    _validate_locale,
     _validate_string_dict,
     _validate_tuple_of_title_url_pairs,
     _validate_twice_nested_dict,
@@ -76,6 +77,15 @@ def test_pelicanconfig_validate_string_dict() -> None:
     ):
         _validate_string_dict({"jp": 1})
     _validate_string_dict({"jp": "a"})
+
+
+def test_pelicanconfig_validate_locale() -> None:
+    """Tests the validator for locale fields."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid string"
+    ):
+        _validate_locale([[1, 2]])
+    _validate_locale(["a", "b"])
 
 
 def test_pelicanconfig_default_regex_substitutions() -> None:
