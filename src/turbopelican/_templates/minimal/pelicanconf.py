@@ -84,6 +84,7 @@ __all__ = [
     "LINKS",
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
+    "LOCALE",
     "MARKDOWN",
     "MENUITEMS",
     "MONTH_ARCHIVE_SAVE_AS",
@@ -324,6 +325,7 @@ JINJA_ENVIRONMENT: dict = _get(
 LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
 LINKS_WIDGET_NAME: str | None = _get("links_widget_name", None)
 LOAD_CONTENT_CACHE: bool = _get("load_content_cache", fallback=False)
+LOCALE: str | list[str] = _get("locale", [""])
 MARKDOWN: dict = _get(
     "markdown",
     {
