@@ -160,6 +160,7 @@ class PelicanConfig(pydantic.BaseModel):
     article_order_by: str = "reversed-date"
     article_paths: _ListOfStrings = pydantic.Field(default_factory=[""].copy)
     article_save_as: str = "{slug}.html"
+    article_translation_id: str | Literal[False] | None = "slug"
     article_url: str = "{slug}.html"
     author: str | None = None
     authors_save_as: str = "authors.html"
@@ -267,6 +268,7 @@ class PelicanConfig(pydantic.BaseModel):
     page_order_by: str = "basename"
     page_paths: _ListOfStrings = pydantic.Field(default_factory=["pages"].copy)
     page_save_as: str = "pages/{slug}.html"
+    page_translation_id: str | Literal[False] | None = "slug"
     page_url: str = "pages/{slug}.html"
     path: str = "."
     path_metadata: str = ""
