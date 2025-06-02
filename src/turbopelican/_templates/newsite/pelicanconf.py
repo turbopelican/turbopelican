@@ -84,6 +84,7 @@ __all__ = [
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
     "MARKDOWN",
+    "MENUITEMS",
     "MONTH_ARCHIVE_SAVE_AS",
     "MONTH_ARCHIVE_URL",
     "NEWEST_FIRST_ARCHIVES",
@@ -249,6 +250,7 @@ LINKS: tuple[tuple[str, str], ...] = _config.links
 LINKS_WIDGET_NAME: str | None = _config.links_widget_name
 LOAD_CONTENT_CACHE: bool = _config.load_content_cache
 MARKDOWN: dict = _config.markdown
+MENUITEMS: tuple[tuple[str, str], ...] = _config.menuitems
 MONTH_ARCHIVE_SAVE_AS: str = _config.month_archive_save_as
 MONTH_ARCHIVE_URL: str = _config.month_archive_url
 NEWEST_FIRST_ARCHIVES: bool = _config.newest_first_archives

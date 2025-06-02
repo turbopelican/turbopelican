@@ -255,6 +255,7 @@ class PelicanConfig(pydantic.BaseModel):
     links_widget_name: str | None = None
     load_content_cache: bool = False
     markdown: dict = pydantic.Field(default_factory=_default_markdown)
+    menuitems: _TupleOfTitleURLPairs = ()
     month_archive_save_as: str = ""
     month_archive_url: str = ""
     newest_first_archives: bool = True
