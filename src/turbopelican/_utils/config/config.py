@@ -165,6 +165,19 @@ def _validate_paginated_templates(value: dict) -> dict[str, int | None]:
     return value
 
 
+def _validate_pagination_patterns(value: list) -> list[tuple[int, str, str]]:
+    """Raises an error if the field is not a valid pagination patterns field.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[list[tuple[int, str, str]]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -189,6 +202,9 @@ _StringDict = Annotated[dict[str, str], pydantic.AfterValidator(_validate_string
 _Locale = Annotated[str | list[str], pydantic.AfterValidator(_validate_locale)]
 _PaginatedTemplates = Annotated[
     dict[str, int | None], pydantic.AfterValidator(_validate_paginated_templates)
+]
+_PaginationPatterns = Annotated[
+    list[tuple[int, str, str]], pydantic.AfterValidator(_validate_pagination_patterns)
 ]
 
 
@@ -317,6 +333,12 @@ class PelicanConfig(pydantic.BaseModel):
     page_url: str = "pages/{slug}.html"
     paginated_templates: _PaginatedTemplates = pydantic.Field(
         default_factory=_default_paginated_templates
+    )
+    pagination_patterns: _PaginationPatterns = pydantic.Field(
+        default_factory=[
+            (1, "{name}{extension}", "{name}{extension}"),
+            (2, "{name}{number}{extension}", "{name}{number}{extension}"),
+        ].copy
     )
     path: str = "."
     path_metadata: str = ""

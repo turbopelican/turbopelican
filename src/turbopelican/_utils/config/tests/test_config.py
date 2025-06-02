@@ -13,6 +13,7 @@ from turbopelican._utils.config.config import (
     _validate_list_of_strings,
     _validate_locale,
     _validate_paginated_templates,
+    _validate_pagination_patterns,
     _validate_string_dict,
     _validate_tuple_of_title_url_pairs,
     _validate_twice_nested_dict,
@@ -96,6 +97,15 @@ def test_pelicanconfig_validate_paginated_templates() -> None:
     ):
         _validate_paginated_templates({"badkey": 1})
     _validate_paginated_templates({"author": 2})
+
+
+def test_pelicanconfig_validate_pagination_patterns() -> None:
+    """Tests the validator for pagination patterns."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid integer"
+    ):
+        _validate_pagination_patterns([("a", "b", "c")])
+    _validate_pagination_patterns([(1, "b", "c")])
 
 
 def test_pelicanconfig_default_regex_substitutions() -> None:
