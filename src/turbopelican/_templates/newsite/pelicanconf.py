@@ -83,6 +83,7 @@ __all__ = [
     "LINKS",
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
+    "LOCALE",
     "MARKDOWN",
     "MENUITEMS",
     "MONTH_ARCHIVE_SAVE_AS",
@@ -249,6 +250,7 @@ JINJA_ENVIRONMENT: dict = _config.jinja_environment
 LINKS: tuple[tuple[str, str], ...] = _config.links
 LINKS_WIDGET_NAME: str | None = _config.links_widget_name
 LOAD_CONTENT_CACHE: bool = _config.load_content_cache
+LOCALE: str | list[str] = _config.locale
 MARKDOWN: dict = _config.markdown
 MENUITEMS: tuple[tuple[str, str], ...] = _config.menuitems
 MONTH_ARCHIVE_SAVE_AS: str = _config.month_archive_save_as
