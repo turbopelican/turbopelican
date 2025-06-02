@@ -12,6 +12,7 @@ __all__ = [
     "ARTICLE_ORDER_BY",
     "ARTICLE_PATHS",
     "ARTICLE_SAVE_AS",
+    "ARTICLE_TRANSLATION_ID",
     "ARTICLE_URL",
     "AUTHOR",
     "AUTHORS_SAVE_AS",
@@ -96,6 +97,7 @@ __all__ = [
     "PAGE_ORDER_BY",
     "PAGE_PATHS",
     "PAGE_SAVE_AS",
+    "PAGE_TRANSLATION_ID",
     "PAGE_URL",
     "PATH",
     "PATH_METADATA",
@@ -153,6 +155,7 @@ __all__ = [
 ]
 
 import os
+from typing import Literal
 
 from turbopelican import config
 
@@ -171,6 +174,7 @@ ARTICLE_LANG_URL: str = _config.article_lang_url
 ARTICLE_ORDER_BY: str = _config.article_order_by
 ARTICLE_PATHS: list[str] = _config.article_paths
 ARTICLE_SAVE_AS: str = _config.article_save_as
+ARTICLE_TRANSLATION_ID: str | Literal[False] | None = _config.article_translation_id
 ARTICLE_URL: str = _config.article_url
 AUTHOR: str | None = _config.author
 AUTHORS_SAVE_AS: str = _config.authors_save_as
@@ -258,6 +262,7 @@ PAGE_LANG_URL: str = _config.page_lang_url
 PAGE_ORDER_BY: str = _config.page_order_by
 PAGE_PATHS: list[str] = _config.page_paths
 PAGE_SAVE_AS: str = _config.page_save_as
+PAGE_TRANSLATION_ID: str | Literal[False] | None = _config.page_translation_id
 PAGE_URL: str = _config.page_url
 PATH: str = _config.path
 PATH_METADATA: str = _config.path_metadata
