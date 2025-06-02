@@ -12,6 +12,7 @@ from turbopelican._utils.config.config import (
     _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
     _validate_locale,
+    _validate_paginated_templates,
     _validate_string_dict,
     _validate_tuple_of_title_url_pairs,
     _validate_twice_nested_dict,
@@ -86,6 +87,15 @@ def test_pelicanconfig_validate_locale() -> None:
     ):
         _validate_locale([[1, 2]])
     _validate_locale(["a", "b"])
+
+
+def test_pelicanconfig_validate_paginated_templates() -> None:
+    """Tests the validator for paginated templates."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Extra inputs are not permitted"
+    ):
+        _validate_paginated_templates({"badkey": 1})
+    _validate_paginated_templates({"author": 2})
 
 
 def test_pelicanconfig_default_regex_substitutions() -> None:

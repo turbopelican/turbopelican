@@ -35,6 +35,10 @@ def _default_markdown() -> dict:
     }
 
 
+def _default_paginated_templates() -> dict[str, int | None]:
+    return {"index": None, "tag": None, "category": None, "author": None}
+
+
 def _validate_tuple_of_title_url_pairs(value: tuple) -> tuple[tuple[str, str]]:
     """Raises an error if field is not a tuple with any number of title/URL pairs.
 
@@ -139,6 +143,28 @@ def _validate_locale(value: str | list) -> str | list[str]:
     return value
 
 
+def _validate_paginated_templates(value: dict) -> dict[str, int | None]:
+    """Raises an error if the field is not a valid locale field.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+
+    class _PaginatedTemplates(pydantic.BaseModel, extra="forbid"):
+        """Allows validation of `PAGINATED_TEMPLATES`."""
+
+        index: int | None = None
+        tag: int | None = None
+        category: int | None = None
+        author: int | None = None
+
+    _PaginatedTemplates.model_validate(value, strict=True)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -161,6 +187,9 @@ _DateFormats = Annotated[
 ]
 _StringDict = Annotated[dict[str, str], pydantic.AfterValidator(_validate_string_dict)]
 _Locale = Annotated[str | list[str], pydantic.AfterValidator(_validate_locale)]
+_PaginatedTemplates = Annotated[
+    dict[str, int | None], pydantic.AfterValidator(_validate_paginated_templates)
+]
 
 
 class PelicanConfig(pydantic.BaseModel):
@@ -286,6 +315,9 @@ class PelicanConfig(pydantic.BaseModel):
     page_save_as: str = "pages/{slug}.html"
     page_translation_id: str | Literal[False] | None = "slug"
     page_url: str = "pages/{slug}.html"
+    paginated_templates: _PaginatedTemplates = pydantic.Field(
+        default_factory=_default_paginated_templates
+    )
     path: str = "."
     path_metadata: str = ""
     plugin_paths: _ListOfStrings = pydantic.Field(default_factory=list)

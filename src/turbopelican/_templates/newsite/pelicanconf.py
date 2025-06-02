@@ -101,6 +101,7 @@ __all__ = [
     "PAGE_SAVE_AS",
     "PAGE_TRANSLATION_ID",
     "PAGE_URL",
+    "PAGINATED_TEMPLATES",
     "PATH",
     "PATH_METADATA",
     "PLUGIN_PATHS",
@@ -268,6 +269,7 @@ PAGE_PATHS: list[str] = _config.page_paths
 PAGE_SAVE_AS: str = _config.page_save_as
 PAGE_TRANSLATION_ID: str | Literal[False] | None = _config.page_translation_id
 PAGE_URL: str = _config.page_url
+PAGINATED_TEMPLATES: dict[str, int | None] = _config.paginated_templates
 PATH: str = _config.path
 PATH_METADATA: str = _config.path_metadata
 PLUGIN_PATHS: list[str] = _config.plugin_paths
