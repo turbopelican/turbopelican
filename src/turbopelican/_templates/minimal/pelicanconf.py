@@ -12,6 +12,7 @@ __all__ = [
     "ARTICLE_ORDER_BY",
     "ARTICLE_PATHS",
     "ARTICLE_SAVE_AS",
+    "ARTICLE_TRANSLATION_ID",
     "ARTICLE_URL",
     "AUTHOR",
     "AUTHORS_SAVE_AS",
@@ -97,6 +98,7 @@ __all__ = [
     "PAGE_ORDER_BY",
     "PAGE_PATHS",
     "PAGE_SAVE_AS",
+    "PAGE_TRANSLATION_ID",
     "PAGE_URL",
     "PATH",
     "PATH_METADATA",
@@ -156,7 +158,7 @@ __all__ = [
 import os
 import tomllib
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 _AnyJson = Any
 
@@ -225,6 +227,9 @@ ARTICLE_LANG_URL: str = _get("article_lang_url", "{slug}-{lang}.html")
 ARTICLE_ORDER_BY: str = _get("article_order_by", "reversed-date")
 ARTICLE_PATHS: list[str] = _get("article_paths", [""])
 ARTICLE_SAVE_AS: str = _get("article_save_as", "{slug}.html")
+ARTICLE_TRANSLATION_ID: str | Literal[False] | None = _get(
+    "article_translation_id", "slug"
+)
 ARTICLE_URL: str = _get("article_url", "{slug}.html")
 AUTHOR: str | None = _get("author", None)
 AUTHORS_SAVE_AS: str = _get("authors_save_as", "authors.html")
@@ -342,6 +347,7 @@ PAGE_LANG_URL: str = _get("page_lang_url", "pages/{slug}-{lang}.html")
 PAGE_ORDER_BY: str = _get("page_order_by", "basename")
 PAGE_PATHS: list[str] = _get("page_paths", ["pages"])
 PAGE_SAVE_AS: str = _get("page_save_as", "pages/{slug}.html")
+PAGE_TRANSLATION_ID: str | Literal[False] | None = _get("page_translation_id", "slug")
 PAGE_URL: str = _get("page_url", "pages/{slug}.html")
 PATH: str = _get("path", ".")
 PATH_METADATA: str = _get("path_metadata", "")
