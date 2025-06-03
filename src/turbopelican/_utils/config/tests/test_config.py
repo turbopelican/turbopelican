@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 import pydantic
@@ -12,6 +13,7 @@ from turbopelican._utils.config.config import (
     _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
     _validate_locale,
+    _validate_log_filter,
     _validate_paginated_templates,
     _validate_pagination_patterns,
     _validate_string_dict,
@@ -108,6 +110,15 @@ def test_pelicanconfig_validate_pagination_patterns() -> None:
     _validate_pagination_patterns([(1, "b", "c")])
 
 
+def test_pelicanconfig_validate_log_filter() -> None:
+    """Tests the validator for log filters."""
+    with pytest.raises(
+        pydantic.ValidationError, match="Input should be a valid integer"
+    ):
+        _validate_log_filter([("WARNS", "My message")])
+    _validate_log_filter([(20, "My message")])
+
+
 def test_pelicanconfig_default_regex_substitutions() -> None:
     """Tests that regular expression substitutions are defaulted correctly."""
     assert PelicanConfig._default_regex_substitutions({}) == {}
@@ -140,6 +151,13 @@ def test_pelicanconfig_transform_links() -> None:
         ("a", "b"),
         ("c", "d"),
     )
+
+
+def test_pelicanconfig_transform_log_filter() -> None:
+    """Tests that a log filter can be transformed for use by Pelican."""
+    assert PelicanConfig._transform_log_filter([("WARN", "My message")]) == [
+        (logging.WARNING, "My message")
+    ]
 
 
 def test_pelicanconfig_transform_single_extra_path_metadata() -> None:

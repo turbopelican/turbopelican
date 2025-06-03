@@ -85,6 +85,7 @@ __all__ = [
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
     "LOCALE",
+    "LOG_FILTER",
     "MARKDOWN",
     "MENUITEMS",
     "MONTH_ARCHIVE_SAVE_AS",
@@ -159,6 +160,7 @@ __all__ = [
     "YEAR_ARCHIVE_URL",
 ]
 
+import logging
 import os
 import tomllib
 from pathlib import Path
@@ -328,6 +330,19 @@ LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
 LINKS_WIDGET_NAME: str | None = _get("links_widget_name", None)
 LOAD_CONTENT_CACHE: bool = _get("load_content_cache", fallback=False)
 LOCALE: str | list[str] = _get("locale", [""])
+LOG_FILTER: list[tuple[int, str]] = [
+    (
+        {
+            "WARNING": logging.WARNING,
+            "WARN": logging.WARNING,
+            "INFO": logging.INFO,
+            "DEBUG": logging.DEBUG,
+            "NOTSET": logging.NOTSET,
+        }.get(level, int(level)),
+        str(msg),
+    )
+    for level, msg in _get("log_filter", [])
+]
 MARKDOWN: dict = _get(
     "markdown",
     {
