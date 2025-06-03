@@ -84,6 +84,7 @@ __all__ = [
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
     "LOCALE",
+    "LOG_FILTER",
     "MARKDOWN",
     "MENUITEMS",
     "MONTH_ARCHIVE_SAVE_AS",
@@ -253,6 +254,7 @@ LINKS: tuple[tuple[str, str], ...] = _config.links
 LINKS_WIDGET_NAME: str | None = _config.links_widget_name
 LOAD_CONTENT_CACHE: bool = _config.load_content_cache
 LOCALE: str | list[str] = _config.locale
+LOG_FILTER: list[tuple[int, str]] = _config.log_filter
 MARKDOWN: dict = _config.markdown
 MENUITEMS: tuple[tuple[str, str], ...] = _config.menuitems
 MONTH_ARCHIVE_SAVE_AS: str = _config.month_archive_save_as
