@@ -10,6 +10,7 @@ __all__ = [
     "config",
 ]
 
+import logging
 from enum import StrEnum
 from typing import TYPE_CHECKING, Annotated, Literal, NoReturn, TypeVar
 
@@ -178,6 +179,19 @@ def _validate_pagination_patterns(value: list) -> list[tuple[int, str, str]]:
     return value
 
 
+def _validate_log_filter(value: list) -> list[tuple[int, str]]:
+    """Raises an error if the field is not a valid log filter field.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[list[tuple[int, str]]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -205,6 +219,9 @@ _PaginatedTemplates = Annotated[
 ]
 _PaginationPatterns = Annotated[
     list[tuple[int, str, str]], pydantic.AfterValidator(_validate_pagination_patterns)
+]
+_LogFilter = Annotated[
+    list[tuple[int, str]], pydantic.AfterValidator(_validate_log_filter)
 ]
 
 
@@ -314,6 +331,7 @@ class PelicanConfig(pydantic.BaseModel):
     links_widget_name: str | None = None
     load_content_cache: bool = False
     locale: _Locale = pydantic.Field(default_factory=[""].copy)
+    log_filter: _LogFilter = pydantic.Field(default_factory=list)
     markdown: dict = pydantic.Field(default_factory=_default_markdown)
     menuitems: _TupleOfTitleURLPairs = ()
     month_archive_save_as: str = ""
@@ -437,6 +455,31 @@ class PelicanConfig(pydantic.BaseModel):
         _social = pydantic.RootModel[list[list[str]]]
         _social.model_validate(value)
         return tuple((title, url) for title, url in value)
+
+    @pydantic.field_validator("log_filter", mode="before")
+    @classmethod
+    def _transform_log_filter(cls, value: list) -> list[tuple[int, str]]:
+        """Transforms the log filter for use by Pelican.
+
+        Args:
+            value: The log filter in TOML form.
+
+        Returns:
+            The log filter, in a form acceptable to Pelican.
+        """
+        log_mapping = {
+            "WARNING": logging.WARNING,
+            "WARN": logging.WARNING,
+            "INFO": logging.INFO,
+            "DEBUG": logging.DEBUG,
+            "NOTSET": logging.NOTSET,
+        }
+        _log_filter = pydantic.RootModel[list[tuple[str | int, str]]]
+        _log_filter.model_validate(value)
+        final_value = []
+        for level, msg in value:
+            final_value.append((log_mapping.get(level, level), msg))
+        return final_value
 
     @classmethod
     def _transform_single_extra_path_metadata(
