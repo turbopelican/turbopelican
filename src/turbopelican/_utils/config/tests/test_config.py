@@ -292,7 +292,7 @@ def test_parse_sentinel_as_function() -> None:
 )
 def test_parse_sentinels(value: object, expected: object) -> None:
     """Tests that the sentinels can be nullified."""
-    assert _parse_sentinels(value, _MetaConfig()) == expected
+    assert _parse_sentinels(value, _MetaConfig(null_sentinel=-1)) == expected
 
 
 def test_combinedconfig_defaults() -> None:
