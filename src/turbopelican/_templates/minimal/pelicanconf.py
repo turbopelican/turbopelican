@@ -110,6 +110,7 @@ __all__ = [
     "PAGINATION_PATTERNS",
     "PATH",
     "PATH_METADATA",
+    "PLUGINS",
     "PLUGIN_PATHS",
     "PORT",
     "PYGMENTS_RST_OPTIONS",
@@ -420,6 +421,7 @@ PAGINATION_PATTERNS: list[tuple[int, str, str]] = _get(
 PATH: str = _get("path", ".")
 PATH_METADATA: str = _get("path_metadata", "")
 PLUGIN_PATHS: list[str] = _get("plugin_paths", [])
+PLUGINS: dict[str, Callable | str] = _get("plugins", {})
 PORT: int = _get("port", 8000)
 PYGMENTS_RST_OPTIONS: dict = _get("pygments_rst_options", {})
 READERS: dict[str, Callable | None] = _get("readers", {})

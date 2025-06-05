@@ -20,6 +20,7 @@ from turbopelican._utils.config.config import (
     _validate_date_formats,
     _validate_datetime,
     _validate_dict_of_functions,
+    _validate_dict_of_functions_and_names,
     _validate_dict_of_nullable_functions,
     _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
@@ -174,6 +175,13 @@ def test_pelicanconfig_validate_dict_of_nullable_functions() -> None:
     with pytest.raises(pydantic.ValidationError, match="Input should be callable"):
         _validate_dict_of_nullable_functions({"a": "1"})
     _validate_dict_of_nullable_functions({"a": print, "b": None})
+
+
+def test_pelicanconfig_validate_dict_of_functions_and_names() -> None:
+    """Tests the validator for dictionaries with function/string values."""
+    with pytest.raises(pydantic.ValidationError, match="Input should be callable"):
+        _validate_dict_of_functions_and_names({"a": 1})
+    _validate_dict_of_functions_and_names({"a": print, "b": "print"})
 
 
 def test_pelicanconfig_default_regex_substitutions() -> None:

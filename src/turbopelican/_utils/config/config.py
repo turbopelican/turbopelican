@@ -229,6 +229,19 @@ def _validate_dict_of_nullable_functions(value: dict) -> dict[str, Callable | No
     return value
 
 
+def _validate_dict_of_functions_and_names(value: dict) -> dict[str, Callable | str]:
+    """Raises an error if the field is not a dictionary with function/string values.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[dict[str, Callable | str]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -266,6 +279,10 @@ _DictOfFunctions = Annotated[
 _DictOfNullableFunctions = Annotated[
     dict[str, Callable | None],
     pydantic.AfterValidator(_validate_dict_of_nullable_functions),
+]
+_DictOfFunctionsAndNames = Annotated[
+    dict[str, Callable | str],
+    pydantic.AfterValidator(_validate_dict_of_functions_and_names),
 ]
 
 
@@ -407,6 +424,7 @@ class PelicanConfig(pydantic.BaseModel):
     )
     path: str = "."
     path_metadata: str = ""
+    plugins: _DictOfFunctionsAndNames = pydantic.Field(default_factory=dict)
     plugin_paths: _ListOfStrings = pydantic.Field(default_factory=list)
     port: int = 8000
     pygments_rst_options: dict = pydantic.Field(default_factory=dict)
