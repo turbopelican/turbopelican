@@ -216,6 +216,19 @@ def _validate_dict_of_functions(value: dict) -> dict[str, Callable]:
     return value
 
 
+def _validate_dict_of_nullable_functions(value: dict) -> dict[str, Callable | None]:
+    """Raises an error if the field is not a dictionary with nullable function values.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[dict[str, Callable | None]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -249,6 +262,10 @@ _LogFilter = Annotated[
 ]
 _DictOfFunctions = Annotated[
     dict[str, Callable], pydantic.AfterValidator(_validate_dict_of_functions)
+]
+_DictOfNullableFunctions = Annotated[
+    dict[str, Callable | None],
+    pydantic.AfterValidator(_validate_dict_of_nullable_functions),
 ]
 
 
@@ -393,6 +410,7 @@ class PelicanConfig(pydantic.BaseModel):
     plugin_paths: _ListOfStrings = pydantic.Field(default_factory=list)
     port: int = 8000
     pygments_rst_options: dict = pydantic.Field(default_factory=dict)
+    readers: _DictOfNullableFunctions = pydantic.Field(default_factory=dict)
     relative_urls: bool = False
     reverse_category_order: bool = False
     rss_feed_summary_only: bool = True
