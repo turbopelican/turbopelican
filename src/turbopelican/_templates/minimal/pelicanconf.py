@@ -210,7 +210,7 @@ def _parse_sentinels(data: object, meta_config: dict) -> object:
         }
     if isinstance(data, list):
         return [_parse_sentinels(datum, meta_config) for datum in data]
-    if data == -1:
+    if data == meta_config.get("null_sentinel", "None"):
         return None
     if isinstance(data, str):
         return _parse_sentinel_as_function(data, meta_config)

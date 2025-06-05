@@ -20,11 +20,11 @@ static_paths = ["static", "images"]
 
 index_save_as = ""
 
-author_feed_atom = -1 # null
-author_feed_rss = -1 # null
-category_feed_atom = -1 # null
-feed_all_atom = -1 # null
-translation_feed_atom = -1 # null
+author_feed_atom = "None"
+author_feed_rss = "None"
+category_feed_atom = "None"
+feed_all_atom = "None"
+translation_feed_atom = "None"
 
 [[pelican.extra_path_metadata]]
 origin = "static/favicon.ico"
