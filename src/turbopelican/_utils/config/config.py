@@ -652,6 +652,7 @@ class _MetaConfig(pydantic.BaseModel):
     module_prefix: _ModulePrefixConfigList = pydantic.Field(
         default_factory=lambda: _ModulePrefixConfigList([]),
     )
+    null_sentinel: str | int | float = "None"
 
 
 def _parse_sentinel_as_function(data: str, meta_config: _MetaConfig) -> str | Callable:
@@ -688,7 +689,7 @@ def _parse_sentinels(data: object, meta_config: _MetaConfig) -> object:
         }
     if isinstance(data, list):
         return [_parse_sentinels(datum, meta_config) for datum in data]
-    if data == -1:
+    if data == meta_config.null_sentinel:
         return None
     if isinstance(data, str):
         return _parse_sentinel_as_function(data, meta_config)
