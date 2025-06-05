@@ -1,4 +1,8 @@
+import importlib
 import logging
+import pprint
+import sys
+from collections.abc import Generator
 from pathlib import Path
 
 import pydantic
@@ -8,8 +12,14 @@ from turbopelican import PelicanConfig, TurbopelicanError, config
 from turbopelican._utils.config.config import (
     _CombinedConfig,
     _handle_validation_error,
+    _MetaConfig,
+    _ModulePrefixConfig,
+    _ModulePrefixConfigList,
+    _parse_sentinel_as_function,
+    _parse_sentinels,
     _validate_date_formats,
     _validate_datetime,
+    _validate_dict_of_functions,
     _validate_list_of_regex_substitutions,
     _validate_list_of_strings,
     _validate_locale,
@@ -20,6 +30,38 @@ from turbopelican._utils.config.config import (
     _validate_tuple_of_title_url_pairs,
     _validate_twice_nested_dict,
 )
+
+
+@pytest.fixture
+def temp_module_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> Generator[Path, None, None]:
+    """Makes a function available for import via a temporary module.
+
+    Args:
+        tmp_path: A temporary directory in which to store the module. Supplied via
+            fixture.
+        monkeypatch: Allows modifying of `sys.path`.
+
+    Yields:
+        The temporary directory containing the module.
+    """
+    module_content = "def hello(): print('Hello World!')"
+
+    temp_dir = tmp_path / "temp_module"
+    temp_dir.mkdir()
+
+    module_file = temp_dir / "jinja_filters.py"
+    module_file.write_text(module_content)
+
+    monkeypatch.syspath_prepend(str(temp_dir))
+
+    importlib.invalidate_caches()
+
+    yield temp_dir
+
+    if "jinja_filters" in sys.modules:
+        del sys.modules["jinja_filters"]
 
 
 def test_validate_tuple_of_title_url_pairs() -> None:
@@ -119,6 +161,13 @@ def test_pelicanconfig_validate_log_filter() -> None:
     _validate_log_filter([(20, "My message")])
 
 
+def test_pelicanconfig_validate_dict_of_functions() -> None:
+    """Tests the validator for dictionaries with function values."""
+    with pytest.raises(pydantic.ValidationError, match="Input should be callable"):
+        _validate_dict_of_functions({"a": "1"})
+    _validate_dict_of_functions({"a": print})
+
+
 def test_pelicanconfig_default_regex_substitutions() -> None:
     """Tests that regular expression substitutions are defaulted correctly."""
     assert PelicanConfig._default_regex_substitutions({}) == {}
@@ -207,6 +256,15 @@ def test_pelicanconfig_validators() -> None:
     assert config == expected
 
 
+def test_parse_sentinel_as_function() -> None:
+    """Tests that the sentinels can be replaced with functions as needed."""
+    module_prefix_config = _ModulePrefixConfig(prefix="@pprint:", module_name="pprint")
+    meta_config = _MetaConfig(
+        module_prefix=_ModulePrefixConfigList([module_prefix_config])
+    )
+    assert _parse_sentinel_as_function("@pprint:pprint", meta_config) == pprint.pprint
+
+
 @pytest.mark.parametrize(
     ("value", "expected"),
     [
@@ -216,9 +274,9 @@ def test_pelicanconfig_validators() -> None:
         ([-1, "a"], [None, "a"]),
     ],
 )
-def test_combinedconfig_nullify_sentinels(value: object, expected: object) -> None:
+def test_parse_sentinels(value: object, expected: object) -> None:
     """Tests that the sentinels can be nullified."""
-    assert _CombinedConfig._nullify_sentinels(value) == expected
+    assert _parse_sentinels(value, _MetaConfig()) == expected
 
 
 def test_combinedconfig_defaults() -> None:

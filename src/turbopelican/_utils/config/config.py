@@ -10,9 +10,11 @@ __all__ = [
     "config",
 ]
 
+import importlib
 import logging
+from collections.abc import Callable
 from enum import StrEnum
-from typing import TYPE_CHECKING, Annotated, Literal, NoReturn, TypeVar
+from typing import TYPE_CHECKING, Annotated, Any, Literal, NoReturn, TypeVar
 
 import pydantic
 
@@ -23,6 +25,15 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 T = TypeVar("T", bound=Toml)
+
+GlobalAny = Any
+
+
+class DeploymentType(StrEnum):
+    """The deployment settings to be used."""
+
+    DEV = "DEV"
+    PUBLISH = "PUBLISH"
 
 
 def _default_markdown() -> dict:
@@ -192,6 +203,19 @@ def _validate_log_filter(value: list) -> list[tuple[int, str]]:
     return value
 
 
+def _validate_dict_of_functions(value: dict) -> dict[str, Callable]:
+    """Raises an error if the field is not a dictionary with function values.
+
+    Args:
+        value: The provided field to be validated.
+
+    Returns:
+        The value unchanged.
+    """
+    pydantic.RootModel[dict[str, Callable]].model_validate(value)
+    return value
+
+
 _TupleOfTitleURLPairs = Annotated[
     tuple[tuple[str, str], ...],
     pydantic.AfterValidator(_validate_tuple_of_title_url_pairs),
@@ -222,6 +246,9 @@ _PaginationPatterns = Annotated[
 ]
 _LogFilter = Annotated[
     list[tuple[int, str]], pydantic.AfterValidator(_validate_log_filter)
+]
+_DictOfFunctions = Annotated[
+    dict[str, Callable], pydantic.AfterValidator(_validate_dict_of_functions)
 ]
 
 
@@ -327,6 +354,9 @@ class PelicanConfig(pydantic.BaseModel):
             "lstrip_blocks": True,
         }.copy
     )
+    jinja_filters: _DictOfFunctions = pydantic.Field(default_factory=dict)
+    jinja_globals: dict = pydantic.Field(default_factory=dict)
+    jinja_tests: _DictOfFunctions = pydantic.Field(default_factory=dict)
     links: _TupleOfTitleURLPairs = ()
     links_widget_name: str | None = None
     load_content_cache: bool = False
@@ -570,33 +600,74 @@ class PelicanConfig(pydantic.BaseModel):
         return cls._default_regex_substitutions(data)
 
 
+class _ModulePrefixConfig(pydantic.BaseModel):
+    """The configuration for identifying a prefix with a module."""
+
+    prefix: str
+    module_name: str
+
+
+_ModulePrefixConfigList = pydantic.RootModel[list[_ModulePrefixConfig]]
+
+
+class _MetaConfig(pydantic.BaseModel):
+    """The configuration for interpreting Pelican configuration."""
+
+    module_prefix: _ModulePrefixConfigList = pydantic.Field(
+        default_factory=lambda: _ModulePrefixConfigList([]),
+    )
+
+
+def _parse_sentinel_as_function(data: str, meta_config: _MetaConfig) -> str | Callable:
+    """Replaces a string with a function, if appropriate.
+
+    Args:
+        data: A string which may or may not need conversion.
+        meta_config: The configuration used to interpret Pelican configuration.
+
+    Returns:
+        Either the same string that was inputted, or a function.
+    """
+    for module_prefix in meta_config.module_prefix.root:
+        if data.startswith(module_prefix.prefix):
+            module = importlib.import_module(module_prefix.module_name)
+            return getattr(module, data.removeprefix(module_prefix.prefix))
+
+    return data
+
+
+def _parse_sentinels(data: object, meta_config: _MetaConfig) -> object:
+    """Recursively replaces sentinel values as required.
+
+    Args:
+        data: Whatever data still contains any sentinel values.
+        meta_config: The configuration used to interpret Pelican configuration.
+
+    Returns:
+        The data with sentinel values replaced.
+    """
+    if isinstance(data, dict):
+        return {
+            key: _parse_sentinels(value, meta_config) for key, value in data.items()
+        }
+    if isinstance(data, list):
+        return [_parse_sentinels(datum, meta_config) for datum in data]
+    if data == -1:
+        return None
+    if isinstance(data, str):
+        return _parse_sentinel_as_function(data, meta_config)
+    return data
+
+
 class _CombinedConfig(pydantic.BaseModel):
     """The complete configuration for both development and publication."""
 
     pelican: PelicanConfig = pydantic.Field(default_factory=PelicanConfig)
     publish: PelicanConfig
 
-    @classmethod
-    def _nullify_sentinels(cls, data: object) -> object:
-        """Recursively replaces sentinel values with None in dictionaries.
-
-        Args:
-            data: Whatever data still contains any sentinel values.
-
-        Returns:
-            The data with sentinel values replaced with None.
-        """
-        if isinstance(data, dict):
-            return {key: cls._nullify_sentinels(value) for key, value in data.items()}
-        if isinstance(data, list):
-            return list(map(cls._nullify_sentinels, data))
-        if data == -1:
-            return None
-        return data
-
     @pydantic.model_validator(mode="before")
     @classmethod
-    def _accept_defaults(cls, data: object) -> object:
+    def _transform(cls, data: object) -> object:
         """Applies `pelican` settings override missing `publish` settings.
 
         Args:
@@ -607,7 +678,11 @@ class _CombinedConfig(pydantic.BaseModel):
             setting in the `pelican` section without specifying it in the
             `publish` section, it should be inferred to be the same.
         """
-        data = cls._nullify_sentinels(data)
+        if not isinstance(data, dict):
+            return data
+
+        meta_config = _MetaConfig.model_validate(data.get("meta", {}))
+        data = _parse_sentinels(data, meta_config)
 
         # Allow Pydantic validation to operate if anything is invalid.
         if not isinstance(data, dict):
@@ -621,13 +696,6 @@ class _CombinedConfig(pydantic.BaseModel):
         # Pelican configuration settings if provided.
         data["publish"] = {**data.get("pelican", {}), **data.get("publish", {})}
         return data
-
-
-class DeploymentType(StrEnum):
-    """The deployment settings to be used."""
-
-    DEV = "DEV"
-    PUBLISH = "PUBLISH"
 
 
 def _handle_validation_error(exc: pydantic.ValidationError) -> NoReturn:
