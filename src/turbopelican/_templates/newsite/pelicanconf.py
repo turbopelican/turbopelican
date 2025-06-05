@@ -109,6 +109,7 @@ __all__ = [
     "PAGINATION_PATTERNS",
     "PATH",
     "PATH_METADATA",
+    "PLUGINS",
     "PLUGIN_PATHS",
     "PORT",
     "PYGMENTS_RST_OPTIONS",
@@ -284,6 +285,7 @@ PAGINATED_TEMPLATES: dict[str, int | None] = _config.paginated_templates
 PAGINATION_PATTERNS: list[tuple[int, str, str]] = _config.pagination_patterns
 PATH: str = _config.path
 PATH_METADATA: str = _config.path_metadata
+PLUGINS: dict[str, Callable | str] = _config.plugins
 PLUGIN_PATHS: list[str] = _config.plugin_paths
 PORT: int = _config.port
 PYGMENTS_RST_OPTIONS: dict = _config.pygments_rst_options
