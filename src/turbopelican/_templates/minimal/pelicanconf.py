@@ -81,6 +81,9 @@ __all__ = [
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
     "JINJA_ENVIRONMENT",
+    "JINJA_FILTERS",
+    "JINJA_GLOBALS",
+    "JINJA_TESTS",
     "LINKS",
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
@@ -160,30 +163,55 @@ __all__ = [
     "YEAR_ARCHIVE_URL",
 ]
 
+import importlib
 import logging
 import os
 import tomllib
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any, Literal
 
 _AnyJson = Any
 
 
-def _nullify_sentinels(data: dict) -> dict:
-    """Recursively replaces sentinel values with None in dictionaries.
+def _parse_sentinel_as_function(data: str, meta_config: dict) -> str | Callable:
+    """Replaces a string with a function, if appropriate.
+
+    Args:
+        data: A string which may or may not need conversion.
+        meta_config: The configuration used to interpret Pelican configuration.
+
+    Returns:
+        Either the same string that was inputted, or a function.
+    """
+    for module_prefix in meta_config.get("module_prefix", []):
+        if data.startswith(module_prefix["prefix"]):
+            module = importlib.import_module(module_prefix["module_name"])
+            return getattr(module, data.removeprefix(module_prefix["prefix"]))
+
+    return data
+
+
+def _parse_sentinels(data: object, meta_config: dict) -> object:
+    """Recursively replaces sentinel values as required.
 
     Args:
         data: Whatever data still contains any sentinel values.
+        meta_config: The configuration used to interpret Pelican configuration.
 
     Returns:
-        The data with sentinel values replaced with None.
+        The data with sentinel values replaced.
     """
     if isinstance(data, dict):
-        return {key: _nullify_sentinels(value) for key, value in data.items()}
+        return {
+            key: _parse_sentinels(value, meta_config) for key, value in data.items()
+        }
     if isinstance(data, list):
-        return list(map(_nullify_sentinels, data))
+        return [_parse_sentinels(datum, meta_config) for datum in data]
     if data == -1:
         return None
+    if isinstance(data, str):
+        return _parse_sentinel_as_function(data, meta_config)
     return data
 
 
@@ -191,9 +219,13 @@ _turbopelican_config_type = os.environ.get("TURBOPELICAN_CONFIG_TYPE", "DEV")
 
 with Path("turbopelican.toml").open("rb") as config:
     _complete_config = tomllib.load(config)
-    _complete_config["pelican"] = _nullify_sentinels(_complete_config["pelican"])
+    _complete_config["pelican"] = _parse_sentinels(
+        _complete_config["pelican"], _complete_config.get("meta", {})
+    )
     if _turbopelican_config_type == "PUBLISH":
-        _complete_config["publish"] = _nullify_sentinels(_complete_config["publish"])
+        _complete_config["publish"] = _parse_sentinels(
+            _complete_config["publish"], _complete_config.get("meta", {})
+        )
 
 
 def _get(setting_name: str, fallback: object) -> _AnyJson:
@@ -326,6 +358,9 @@ INTRASITE_LINK_REGEX: str = _get("intrasite_link_regex", "[{|](?P<what>.*?)[|}]"
 JINJA_ENVIRONMENT: dict = _get(
     "jinja_environment", {"extensions": [], "trim_blocks": True, "lstrip_blocks": True}
 )
+JINJA_FILTERS: dict[str, Callable] = _get("jinja_filters", {})
+JINJA_GLOBALS: dict[str, Callable] = _get("jinja_globals", {})
+JINJA_TESTS: dict[str, Callable] = _get("jinja_tests", {})
 LINKS: tuple[tuple[str, str], ...] = tuple(map(tuple, _get("links", [])))
 LINKS_WIDGET_NAME: str | None = _get("links_widget_name", None)
 LOAD_CONTENT_CACHE: bool = _get("load_content_cache", fallback=False)
