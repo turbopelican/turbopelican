@@ -113,6 +113,7 @@ __all__ = [
     "PLUGIN_PATHS",
     "PORT",
     "PYGMENTS_RST_OPTIONS",
+    "READERS",
     "RELATIVE_URLS",
     "REVERSE_CATEGORY_ORDER",
     "RSS_FEED_SUMMARY_ONLY",
@@ -421,6 +422,7 @@ PATH_METADATA: str = _get("path_metadata", "")
 PLUGIN_PATHS: list[str] = _get("plugin_paths", [])
 PORT: int = _get("port", 8000)
 PYGMENTS_RST_OPTIONS: dict = _get("pygments_rst_options", {})
+READERS: dict[str, Callable | None] = _get("readers", {})
 RELATIVE_URLS: bool = _get("relative_urls", fallback=False)
 REVERSE_CATEGORY_ORDER: bool = _get("reverse_category_order", fallback=False)
 RSS_FEED_SUMMARY_ONLY: bool = _get("rss_feed_summary_only", fallback=True)
