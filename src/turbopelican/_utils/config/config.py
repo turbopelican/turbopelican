@@ -29,7 +29,7 @@ T = TypeVar("T", bound=Toml)
 GlobalAny = Any
 
 
-class DeploymentType(StrEnum):
+class _DeploymentType(StrEnum):
     """The deployment settings to be used."""
 
     DEV = "DEV"
@@ -756,7 +756,7 @@ def _handle_validation_error(exc: pydantic.ValidationError) -> NoReturn:
 
 
 def config(
-    config_type: DeploymentType | Literal["DEV", "PUBLISH"] = DeploymentType.DEV,
+    config_type: _DeploymentType | Literal["DEV", "PUBLISH"] = _DeploymentType.DEV,
     /,
     *,
     start_path: Path | str = ".",
@@ -776,10 +776,10 @@ def config(
     except pydantic.ValidationError as exc:
         _handle_validation_error(exc)
 
-    if config_type in {DeploymentType.DEV, "DEV"}:
+    if config_type in {_DeploymentType.DEV, "DEV"}:
         return config.pelican
 
-    if config_type in {DeploymentType.PUBLISH, "PUBLISH"}:
+    if config_type in {_DeploymentType.PUBLISH, "PUBLISH"}:
         return config.publish
 
     raise TurbopelicanError(
