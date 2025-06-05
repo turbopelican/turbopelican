@@ -1,5 +1,26 @@
 # Changelog
 
+## Version 0.5.0
+
+### Features
+
+- Using Pydantic to validate configuration.
+- Allowing Pelican configuration settings in their entirety to be configured
+  via `turbopelican.toml`.
+- Introducing configuration `meta.module_prefix` setting for Turbopelican to
+  parse certain strings as functions.
+- Introducing configuration `meta.null_sentinel` setting for Turbopelican to
+  replace certain values with `null`.
+- Using configuration overrides, such that when a configuration setting should
+  be the same for development and publication, it only needs to be set in the
+  development settings.
+
+### Other changes
+
+- Updating dependencies, including `tomlkit` to `v0.13.3`, `freezegun` to
+  `v1.5.2`, `pyright` to `v1.1.401`, `pytest` to `v8.4.0`, and `ruff to
+  `v0.11.12`.
+
 ## Version 0.4.3
 
 ### Bug fixes
