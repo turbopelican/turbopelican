@@ -80,6 +80,9 @@ __all__ = [
     "INDEX_SAVE_AS",
     "INTRASITE_LINK_REGEX",
     "JINJA_ENVIRONMENT",
+    "JINJA_FILTERS",
+    "JINJA_GLOBALS",
+    "JINJA_TESTS",
     "LINKS",
     "LINKS_WIDGET_NAME",
     "LOAD_CONTENT_CACHE",
@@ -160,6 +163,7 @@ __all__ = [
 ]
 
 import os
+from collections.abc import Callable
 from typing import Literal
 
 from turbopelican import config
@@ -250,6 +254,9 @@ IGNORE_FILES: list[str] = _config.ignore_files
 INDEX_SAVE_AS: str = _config.index_save_as
 INTRASITE_LINK_REGEX: str = _config.intrasite_link_regex
 JINJA_ENVIRONMENT: dict = _config.jinja_environment
+JINJA_FILTERS: dict[str, Callable] = _config.jinja_filters
+JINJA_GLOBALS: dict = _config.jinja_globals
+JINJA_TESTS: dict[str, Callable] = _config.jinja_tests
 LINKS: tuple[tuple[str, str], ...] = _config.links
 LINKS_WIDGET_NAME: str | None = _config.links_widget_name
 LOAD_CONTENT_CACHE: bool = _config.load_content_cache
