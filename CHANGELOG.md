@@ -18,7 +18,7 @@
 ### Other changes
 
 - Updating dependencies, including `tomlkit` to `v0.13.3`, `freezegun` to
-  `v1.5.2`, `pyright` to `v1.1.401`, `pytest` to `v8.4.0`, and `ruff to
+  `v1.5.2`, `pyright` to `v1.1.401`, `pytest` to `v8.4.0`, and `ruff` to
   `v0.11.12`.
 
 ## Version 0.4.3
