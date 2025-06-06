@@ -57,8 +57,8 @@ Next, you need to run `turbopelican`. Users are recommended to run
 
 You can use the defaults, or choose your own values. In the example above, I
 have decided to give the website a non-default name, but I have left the other
-settings. `turbopelican` then creates a new repository `mypersonalsite`, with
-everything ready to push to GitHub.
+settings. `turbopelican` then creates a new repository
+`my-turbopelican-website`, with everything ready to push to GitHub.
 
 > ℹ️  **_NOTE:_**  Make sure that the site-url uses the GitHub repository's name.
 For example, if you want the website to be `https://johndoe.github.io`, your
@@ -67,10 +67,10 @@ GitHub repository will need to be called `johndoe.github.io`.
 You will then need to push your code to GitHub:
 
 ```sh
-cd turbopelican.github.io
+cd my-turbopelican-website
 git add .
 git commit -q -m "Initial commit."
-git remote add origin git@github.com:turbopelican/turbopelican.github.io.git # Use your own git repo reference
+git remote add origin git@github.com:my-turbopelican-website/my-turbopelican-website.github.io.git # Use your own git repo reference
 git push -q --set-upstream origin main
 ```
 
