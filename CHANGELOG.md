@@ -14,12 +14,31 @@
 - Using configuration overrides, such that when a configuration setting should
   be the same for development and publication, it only needs to be set in the
   development settings.
+- Printing message when Turbopelican finishes project initialization.
+- `publishconf.py` is no longer distributed, and Turbopelican can infer both
+  development configuration and production configuration only using
+  `pelicanconf.py`.
+- Introduction of configurable nullable sentinel values. By using the
+  configuration setting `meta.null_sentinel`, one can determine which values
+  under `pelican` or `publish` are to be swapped for `None` when parsed into
+  Python.
+- Introduction of configurable module prefixes. The configuration setting
+  `meta.module_prefx` should be an array of tables, each with a `prefix` value
+  and a `module_name` value. Any string with the specified prefixes are
+  swapped out for functions imported from the associated module. E.g. if a
+  `prefix` value is set to `"@mymodule:"`, and the associated `module_name`
+  value is set to `mypackage.mymodule`, then the string value
+  `"@mymodule:func"` will be replaced with the function `func` from
+  `mypackage.mymodule`.
 
 ### Other changes
 
 - Updating dependencies, including `tomlkit` to `v0.13.3`, `freezegun` to
   `v1.5.2`, `pyright` to `v1.1.401`, `pytest` to `v8.4.0`, and `ruff` to
   `v0.11.12`.
+- Aliasing virtual environment in `Makefile`.
+- Extracting contents of `_utils/config.py` into multiple files for greater
+  extensibility.
 
 ## Version 0.4.3
 
