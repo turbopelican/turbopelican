@@ -251,10 +251,10 @@ def _get(setting_name: str, fallback: object) -> _AnyJson:
 _default_regex_substitutions = _get(
     "slug_regex_substitutions",
     [
-        [r"[^\\w\\s-]", ""],
-        [r"(?u)\\A\\s*", ""],
-        [r"(?u)\\s*\\Z", ""],
-        [r"[-\\s]+", "-"],
+        [r"[^\w\s-]", ""],
+        [r"(?u)\A\s*", ""],
+        [r"(?u)\s*\Z", ""],
+        [r"[-\s]+", "-"],
     ],
 )
 

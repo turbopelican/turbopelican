@@ -440,10 +440,10 @@ class PelicanConfig(pydantic.BaseModel):
     slugify_use_unicode: bool = False
     slug_regex_substitutions: _ListOfRegexSubstitutions = pydantic.Field(
         default_factory=[
-            (r"[^\\w\\s-]", ""),
-            (r"(?u)\\A\\s*", ""),
-            (r"(?u)\\s*\\Z", ""),
-            (r"[-\\s]+", "-"),
+            (r"[^\w\s-]", ""),
+            (r"(?u)\A\s*", ""),
+            (r"(?u)\s*\Z", ""),
+            (r"[-\s]+", "-"),
         ].copy
     )
     social: _TupleOfTitleURLPairs = ()
