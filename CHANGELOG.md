@@ -1,5 +1,30 @@
 # Changelog
 
+## Version 0.5.1
+
+### Bug fixes
+
+- In the version prior, the `SLUG_REGEX_SUBSTITUTIONS` values were incorrect.
+  This drastically affected site generation by creating a file `.html` instead
+  of `my-article.html`, which in turn would make the site practically
+  unusable. Now the correct substitutions are being made.
+- In version 0.2.0, the `base.html` file contained a typo in `initial-scale`.
+  Now the typo has been corrected.
+- In version 0.2.0, the `index.md` file contained an `<img>` tag with an
+  erroneous closing tag. Now the tag is correctly used.
+- In version 0.2.0, any file generated using `base.html` would contain
+  `<html lang="">` instead of a tag containing the default language. Now the
+  language appears correctly in the HTML.
+
+### Other changes
+
+- Generating an example usage of Turbopelican with Terminalizer for use in
+  `README.md`.
+- Using more generic examples in `README.md`.
+- Adding missing changes (including features) to `CHANGELOG.md` for version
+  0.5.0.
+- Correcting formatting issue in `CHANGELOG.md`.
+
 ## Version 0.5.0
 
 ### Features
