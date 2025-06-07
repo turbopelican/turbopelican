@@ -4,7 +4,7 @@ Category: Hidden
 Date: {date}
 
 <div>
-    <img style="display: block; margin: auto;" width="200" src="/logo.svg"></img>
+    <img style="display: block; margin: auto;" width="200" src="/logo.svg" />
 </div>
 
 Congratulations on setting up your GitHub page with turbopelican!
