@@ -64,6 +64,7 @@ class InitConfiguration:
     input_mode: InputMode
     handle_defaults_mode: HandleDefaultsMode
     install_type: InstallType
+    commit_changes: bool = True
 
     @classmethod
     def from_args(cls, raw_args: Namespace) -> InitConfiguration:
@@ -133,6 +134,7 @@ class InitConfiguration:
             input_mode=input_mode,
             handle_defaults_mode=handle_defaults_mode,
             install_type=install_type,
+            commit_changes=not raw_args.no_commit,
         )
 
     @staticmethod

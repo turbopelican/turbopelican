@@ -150,6 +150,7 @@ def test_turbo_configuration_from_args(tmp_path: Path) -> None:
         site_url=None,
         quiet=True,
         minimal_install=False,
+        no_commit=False,
     )
     config = InitConfiguration.from_args(namespace)
     assert config.directory == new_repo
