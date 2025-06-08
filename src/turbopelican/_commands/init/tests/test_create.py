@@ -18,6 +18,7 @@ from turbopelican._commands.init.config import (
 )
 from turbopelican._commands.init.create import (
     _copy_template,
+    commit_changes,
     generate_repository,
     update_contents,
     update_pyproject,
@@ -246,3 +247,58 @@ def test_update_contents(config: InitConfiguration) -> None:
 
     assert first_file.read_text() == "Date: 2011-11-11"
     assert second_file.read_text().splitlines()[2].lstrip() == "Date: 2011-11-11"
+
+
+def test_commit_changes(config: InitConfiguration) -> None:
+    """Checks that changes can be committed successfully.
+
+    Args:
+        config: The configuration for Turbopelican. Suppied via fixture.
+    """
+    git_path = shutil.which("git")
+    assert git_path
+    subprocess.run([git_path, "init"], check=True, cwd=config.directory)
+    (config.directory / "commit-me.txt").touch()
+    commit_changes(config)
+    subprocess.run(
+        [git_path, "rev-parse", "--is-empty-tree", "HEAD"],
+        check=True,
+        cwd=config.directory,
+    )
+
+
+def test_commit_changes_no_commit(config: InitConfiguration) -> None:
+    """Checks that changes are not configured if Turbopelican instructed not to commit.
+
+    Args:
+        config: The configuration for Turbopelican. Suppied via fixture.
+    """
+    config.commit_changes = False
+    git_path = shutil.which("git")
+    assert git_path
+    subprocess.run([git_path, "init"], check=True, cwd=config.directory)
+    (config.directory / "commit-me.txt").touch()
+    commit_changes(config)
+    with pytest.raises(subprocess.CalledProcessError):
+        subprocess.run(
+            [git_path, "rev-parse", "--is-empty-tree", "HEAD"],
+            check=True,
+            cwd=config.directory,
+        )
+
+
+@pytest.mark.parametrize("setting", ["user.name", "user.email"])
+def test_commit_changes_bad_git_config(config: InitConfiguration, setting: str) -> None:
+    """Checks that appropriate error is raised if git is not configured correctly.
+
+    Args:
+        config: The configuration for Turbopelican. Suppied via fixture.
+        setting: The name of the setting to mangle. Supplied via parameterization.
+    """
+    git_path = shutil.which("git")
+    assert git_path
+    subprocess.run([git_path, "init"], check=True, cwd=config.directory)
+    subprocess.run([git_path, "config", setting, " "], check=True, cwd=config.directory)
+    (config.directory / "commit-me.txt").touch()
+    with pytest.raises(RuntimeError):
+        commit_changes(config)

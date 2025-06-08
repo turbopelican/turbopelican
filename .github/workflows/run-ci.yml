@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: git config --global user.name "GitHub Actions"
+      - run: git config --global user.email "elliot@p-s.co.nz"
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:

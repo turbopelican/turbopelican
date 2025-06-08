@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from turbopelican._commands.init.config import InitConfiguration
 from turbopelican._commands.init.create import (
+    commit_changes,
     generate_repository,
     report_completion,
     update_contents,
@@ -82,6 +83,12 @@ def add_options(parser: ArgumentParser) -> None:
         action="store_true",
         default=False,
     )
+    parser.add_argument(
+        "--no-commit",
+        help="Do not commit initial code.",
+        action="store_true",
+        default=False,
+    )
     parser.set_defaults(func=command)
 
 
@@ -97,4 +104,5 @@ def command(raw_args: Namespace) -> None:
     update_pyproject(config.directory)
     update_contents(config)
     uv_sync(directory=config.directory, verbosity=config.verbosity)
+    commit_changes(config)
     report_completion(config)
