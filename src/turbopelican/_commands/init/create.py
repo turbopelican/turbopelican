@@ -156,6 +156,49 @@ def update_contents(args: InitConfiguration) -> None:
         file.write_text(text.format(date=today))
 
 
+def commit_changes(args: InitConfiguration) -> None:
+    """Stages and commits the new files.
+
+    Args:
+        args: The arguments to configure the website.
+    """
+    if not args.commit_changes:
+        return
+
+    git_path = shutil.which("git")
+    if git_path is None:
+        raise OSError("git not installed")
+
+    git_add_args = [git_path, "add", "."]
+    subprocess.run(git_add_args, check=True, cwd=args.directory)
+
+    try:
+        email = subprocess.run(
+            [git_path, "config", "user.email"],
+            check=True,
+            cwd=args.directory,
+            capture_output=True,
+        )
+        username = subprocess.run(
+            [git_path, "config", "user.name"],
+            check=True,
+            cwd=args.directory,
+            capture_output=True,
+        )
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(
+            "git not configured with `user.email` and `user.name`."
+        ) from exc
+
+    if not email.stdout.strip() or not username.stdout.strip():
+        raise RuntimeError("git not configured with `user.email` and `user.name`.")
+
+    git_commit_args = [git_path, "commit", "--no-edit", "-m", "Initial commit."]
+    if args.verbosity == Verbosity.QUIET:
+        git_commit_args.append("--quiet")
+    subprocess.run(git_commit_args, check=True, cwd=args.directory)
+
+
 def report_completion(args: InitConfiguration) -> None:
     """Reports that Turbopelican has finished initializing the repository.
 
