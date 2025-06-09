@@ -65,6 +65,7 @@ class InitConfiguration:
     handle_defaults_mode: HandleDefaultsMode
     install_type: InstallType
     commit_changes: bool = True
+    use_gh_cli: bool = False
 
     @classmethod
     def from_args(cls, raw_args: Namespace) -> InitConfiguration:
@@ -122,6 +123,9 @@ class InitConfiguration:
             input_mode=input_mode,
             handle_defaults_mode=handle_defaults_mode,
         )
+        commit_changes = cls._get_commit_changes(
+            no_commit=raw_args.no_commit, use_gh_cli=raw_args.use_gh_cli
+        )
 
         return InitConfiguration(
             directory=path,
@@ -134,7 +138,8 @@ class InitConfiguration:
             input_mode=input_mode,
             handle_defaults_mode=handle_defaults_mode,
             install_type=install_type,
-            commit_changes=not raw_args.no_commit,
+            commit_changes=commit_changes,
+            use_gh_cli=raw_args.use_gh_cli,
         )
 
     @staticmethod
@@ -375,3 +380,20 @@ class InitConfiguration:
 
         cls._validate_site_url(chosen_name)
         return chosen_name
+
+    @classmethod
+    def _get_commit_changes(cls, *, no_commit: bool, use_gh_cli: bool) -> bool:
+        """Ensures that non-conflicting instructions are provided for git actions.
+
+        Args:
+            no_commit: If True, does not make any commits.
+            use_gh_cli: If True, creates the remote repository on GitHub automatically.
+
+        Returns:
+            Whether or not to commit the changes.
+        """
+        if use_gh_cli and no_commit:
+            msg = "Cannot run GitHub CLI without committing changes."
+            raise ConfigurationError(msg)
+
+        return not no_commit

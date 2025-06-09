@@ -199,6 +199,102 @@ def commit_changes(args: InitConfiguration) -> None:
     subprocess.run(git_commit_args, check=True, cwd=args.directory)
 
 
+def _create_remote_repo(args: InitConfiguration, gh_path: str) -> None:
+    """Creates the remote repository.
+
+    Args:
+        args: The arguments to configure the website.
+        gh_path: The string path to the GitHub executable.
+    """
+    repo_name = args.site_url.removeprefix("https://")
+    gh_repo_create_args = [
+        gh_path,
+        "repo",
+        "create",
+        repo_name,
+        "--public",
+        "--source",
+        ".",
+        "--remote",
+        "origin",
+    ]
+    capture_output = args.verbosity == Verbosity.QUIET
+    try:
+        subprocess.run(
+            gh_repo_create_args,
+            cwd=args.directory,
+            check=True,
+            capture_output=capture_output,
+        )
+    except subprocess.CalledProcessError as exc:
+        if capture_output:
+            sys.stderr.write(exc.stderr.decode())
+        raise
+
+
+def _configure_remote_deployment(args: InitConfiguration, gh_path: str) -> None:
+    """Configures the remote repository to deploy from GitHub Actions.
+
+    Args:
+        args: The arguments to configure the website.
+        gh_path: The string path to the GitHub executable.
+    """
+    repo_name = args.site_url.removeprefix("https://")
+    owner = repo_name.removesuffix(".github.io")
+    subprocess.check_call(
+        [
+            gh_path,
+            "api",
+            "--method",
+            "POST",
+            "-H",
+            "Accept: application/vnd.github+json",
+            "-H",
+            "X-GitHub-Api-Version: 2022-11-28",
+            f"/repos/{owner}/{repo_name}/pages",
+            "-f",
+            "build_type=workflow",
+        ],
+        stdout=subprocess.DEVNULL,
+        cwd=args.directory,
+    )
+
+
+def _push_code_to_remote(args: InitConfiguration, git_path: str) -> None:
+    """Pushes the code in the local repository to GitHub.
+
+    Args:
+        args: The arguments to configure the website.
+        git_path: The string path to the Git executable.
+    """
+    git_push_args = [git_path, "push", "--set-upstream", "origin", "main"]
+    if args.verbosity == Verbosity.QUIET:
+        git_push_args.append("--quiet")
+    subprocess.check_call(git_push_args, cwd=args.directory)
+
+
+def run_gh_cli(args: InitConfiguration) -> None:
+    """Runs any required GitHub CLI commands to create the remote repository.
+
+    Args:
+        args: The arguments to configure the website.
+    """
+    if not args.use_gh_cli:
+        return
+
+    gh_path = shutil.which("gh")
+    if gh_path is None:
+        raise RuntimeError("gh not installed")
+
+    git_path = shutil.which("git")
+    if git_path is None:
+        raise OSError("git not installed")
+
+    _create_remote_repo(args, gh_path)
+    _configure_remote_deployment(args, gh_path)
+    _push_code_to_remote(args, git_path)
+
+
 def report_completion(args: InitConfiguration) -> None:
     """Reports that Turbopelican has finished initializing the repository.
 
