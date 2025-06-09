@@ -9,6 +9,7 @@ from turbopelican._commands.init.create import (
     commit_changes,
     generate_repository,
     report_completion,
+    run_gh_cli,
     update_contents,
     update_pyproject,
     update_website,
@@ -89,6 +90,12 @@ def add_options(parser: ArgumentParser) -> None:
         action="store_true",
         default=False,
     )
+    parser.add_argument(
+        "--use-gh-cli",
+        help="Create the remote GitHub repository and deploy website automatically.",
+        action="store_true",
+        default=False,
+    )
     parser.set_defaults(func=command)
 
 
@@ -105,4 +112,5 @@ def command(raw_args: Namespace) -> None:
     update_contents(config)
     uv_sync(directory=config.directory, verbosity=config.verbosity)
     commit_changes(config)
+    run_gh_cli(config)
     report_completion(config)

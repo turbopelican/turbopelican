@@ -151,6 +151,7 @@ def test_turbo_configuration_from_args(tmp_path: Path) -> None:
         quiet=True,
         minimal_install=False,
         no_commit=False,
+        use_gh_cli=False,
     )
     config = InitConfiguration.from_args(namespace)
     assert config.directory == new_repo

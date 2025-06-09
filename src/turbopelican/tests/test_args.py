@@ -22,6 +22,7 @@ def test_get_raw_args_without_subcommand() -> None:
         func=init.command,
         minimal_install=False,
         no_commit=False,
+        use_gh_cli=False,
     )
 
 
@@ -41,4 +42,5 @@ def test_get_raw_args() -> None:
         func=init.command,
         minimal_install=False,
         no_commit=False,
+        use_gh_cli=False,
     )
