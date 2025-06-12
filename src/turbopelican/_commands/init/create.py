@@ -7,19 +7,14 @@ import importlib.resources as pkg_resources
 import shutil
 import subprocess
 import sys
-from datetime import datetime
 from pathlib import Path
 from typing import Literal, cast
-from zoneinfo import ZoneInfo
 
 import tomlkit
 import tomlkit.items
 
-from turbopelican._commands.init.config import (
-    InitConfiguration,
-    InstallType,
-    Verbosity,
-)
+from turbopelican._commands.init.config import InitConfiguration
+from turbopelican._utils.shared.args import InstallType, Verbosity
 
 
 def uv_sync(directory: Path, *, verbosity: Verbosity) -> None:
@@ -99,30 +94,6 @@ def generate_repository(args: InitConfiguration) -> None:
     subprocess.run(git_use_main_branch, check=True, cwd=args.directory)
 
 
-def update_website(args: InitConfiguration) -> None:
-    """Updates the Pelican website to use the provided information.
-
-    Args:
-        args: The arguments to configure the website.
-    """
-    turbopelican_conf = Path(args.directory) / "turbopelican.toml"
-
-    with turbopelican_conf.open(encoding="utf8") as configuration:
-        toml = tomlkit.load(configuration)
-
-    pelican = cast("tomlkit.items.Table", toml["pelican"])
-    publish = cast("tomlkit.items.Table", toml["publish"])
-
-    pelican["author"] = args.author
-    pelican["sitename"] = args.site_name
-    pelican["timezone"] = args.timezone
-    pelican["default_lang"] = args.default_lang
-    publish["site_url"] = args.site_url
-
-    with turbopelican_conf.open("w", encoding="utf8") as configuration:
-        tomlkit.dump(toml, configuration)
-
-
 def update_pyproject(directory: Path) -> None:
     """Updates pyproject.toml to use the provided information.
 
@@ -142,18 +113,6 @@ def update_pyproject(directory: Path) -> None:
 
     with pyproject_conf.open("w", encoding="utf8") as configuration:
         tomlkit.dump(toml, configuration)
-
-
-def update_contents(args: InitConfiguration) -> None:
-    """Updates the Markdown contents to be ready for publication.
-
-    Args:
-        args: The arguments to configure the website.
-    """
-    today = datetime.now(tz=ZoneInfo(args.timezone)).date()
-    for file in (args.directory / "content").glob("*.md"):
-        text = file.read_text()
-        file.write_text(text.format(date=today))
 
 
 def commit_changes(args: InitConfiguration) -> None:

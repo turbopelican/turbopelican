@@ -7,6 +7,7 @@ import argparse
 import io
 from contextlib import redirect_stderr
 
+from turbopelican._commands.adorn import adorn
 from turbopelican._commands.init import init
 
 
@@ -70,6 +71,13 @@ def get_raw_args(*, inputs: list[str] | None = None) -> argparse.Namespace:
         description="Creates a new turbopelican repository at the specified location.",
     )
     init.add_options(init_parser)
+
+    adorn_parser = subparsers.add_parser(
+        "adorn",
+        help="Generates a GitHub Page website for an existing repository with Pelican.",
+        description="Modifies a repository to publish a Pelican static-site to GitHub.",
+    )
+    adorn.add_options(adorn_parser)
 
     f = io.StringIO()
     try:

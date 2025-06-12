@@ -21,21 +21,37 @@ type-check:
 	uv run pyright
 
 integration-test:
-	# Run normally.
+	# Run `turbopelican init` normally.
 	uv run turbopelican init --author "GNU make" "$(TARGET)" -nd
 	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
 	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
 	$(VENV) $(CONFIG_TYPE) uv run --directory "$(TARGET)" --no-sync pelican content
 
-	# Run with a minimal install.
+	# Run `turbopelican init` with a minimal install.
 	@rm -rf "$(TARGET)"
 	uv run turbopelican init --author "GNU make" "$(TARGET)" -nd --minimal-install
 	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
 	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
 	$(VENV) $(CONFIG_TYPE) uv run --directory "$(TARGET)" --no-sync pelican content
 
+	# Run `turbopelican adorn` normally.
+	@rm -rf "$(TARGET)"
+	uv init "$(TARGET)"
+	uv run turbopelican adorn --author "GNU make" "$(TARGET)" -nd
+	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
+	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
+	$(VENV) $(CONFIG_TYPE) uv run --directory "$(TARGET)" --no-sync pelican content
+
+	# Run `turbopelican adorn` with a minimal install.
+	@rm -rf "$(TARGET)"
+	uv init "$(TARGET)"
+	uv run turbopelican adorn --author "GNU make" "$(TARGET)" -nd --minimal-install
+	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
+	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
+	$(VENV) $(CONFIG_TYPE) uv run --directory "$(TARGET)" --no-sync pelican content
+
 	# Clean up.
-	@rm -rf "$(TEMP_DIR)"
+	@#rm -rf "$(TEMP_DIR)"
 
 ci: lint format test type-check integration-test
 	@echo "CI run passed"
