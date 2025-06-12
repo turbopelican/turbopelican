@@ -7,23 +7,20 @@ from unittest import mock
 
 import pytest
 import tomlkit
-from freezegun import freeze_time
 
-from turbopelican._commands.init.config import (
-    HandleDefaultsMode,
-    InitConfiguration,
-    InputMode,
-    InstallType,
-    Verbosity,
-)
+from turbopelican._commands.init.config import InitConfiguration
 from turbopelican._commands.init.create import (
     _copy_template,
     commit_changes,
     generate_repository,
-    update_contents,
     update_pyproject,
-    update_website,
     uv_sync,
+)
+from turbopelican._utils.shared.args import (
+    HandleDefaultsMode,
+    InputMode,
+    InstallType,
+    Verbosity,
 )
 
 
@@ -163,41 +160,6 @@ def test_generate_repository_empty_folder(config: InitConfiguration) -> None:
     assert (config.directory / "turbopelican.toml").exists()
 
 
-def test_update_website(config: InitConfiguration) -> None:
-    """Checks that `turbopelican.toml` is updated appropraitely.
-
-    Args:
-        config: The configuration for Turbopelican. Suppied via fixture.
-    """
-    config.directory = config.directory / "myrepo"
-    config.directory.mkdir()
-    path_to_toml = config.directory / "turbopelican.toml"
-    with path_to_toml.open("w", encoding="utf8") as write_toml:
-        write_toml.write(
-            """
-            [pelican]
-            author = "Fred"
-            sitename = "Fred's website"
-            timezone = "Asia/Tbilisi"
-            default_lang = "en"
-
-            [publish]
-            site_url = "https://spaghetti.github.io"
-            """,
-        )
-
-    update_website(config)
-
-    with path_to_toml.open(encoding="utf8") as read_toml:
-        toml = tomlkit.load(read_toml)
-
-    assert toml.get("pelican", {}).get("author") == "Bob"
-    assert toml.get("pelican", {}).get("sitename") == "Bob's website"
-    assert toml.get("pelican", {}).get("timezone") == "Antarctica/Troll"
-    assert toml.get("pelican", {}).get("default_lang") == "ru"
-    assert toml.get("publish", {}).get("site_url") == "https://hellothere.github.io"
-
-
 def test_update_pyproject(tmp_path: Path) -> None:
     """Checks that the project can be updated appropriately.
 
@@ -221,32 +183,6 @@ def test_update_pyproject(tmp_path: Path) -> None:
         toml = tomlkit.load(read_toml)
 
     assert toml.get("project", {}).get("name") == "bobswebsite"
-
-
-@freeze_time("2011-11-11")
-def test_update_contents(config: InitConfiguration) -> None:
-    """Checks that the website contents can be updated appropriately.
-
-    Args:
-        config: The configuration for Turbopelican. Suppied via fixture.
-    """
-    contents_dir = config.directory / "content"
-    contents_dir.mkdir()
-    first_file = contents_dir / "first-article.md"
-    first_file.write_text("Date: {date}")
-    second_file = contents_dir / "second-article.md"
-    second_file.write_text(
-        """
-        Other: 1
-        Date: {date}
-        Something: 2
-        """
-    )
-
-    update_contents(config)
-
-    assert first_file.read_text() == "Date: 2011-11-11"
-    assert second_file.read_text().splitlines()[2].lstrip() == "Date: 2011-11-11"
 
 
 def test_commit_changes(config: InitConfiguration) -> None:

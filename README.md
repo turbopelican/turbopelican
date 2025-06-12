@@ -93,6 +93,10 @@ If you follow the link, you should be able to see your newly deployed website.
 
 You can learn more about Pelican [here](https://getpelican.com).
 
+It is also possible to add a GitHub Page website to an *existing* repository
+using the `turbopelican adorn` command, which works similarly to the
+`turbopelican init` command.
+
 ### Configuration
 
 Pelican still targets Python 3.9, which does not bundle built-in support for

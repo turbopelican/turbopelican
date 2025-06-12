@@ -1,13 +1,9 @@
-"""Stores configuration specific to creating fresh Pelican websites."""
-
 import shutil
 from argparse import Namespace
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Self
 
 from turbopelican._utils.shared.args import (
-    ConfigurationError,
     CreateConfiguration,
     HandleDefaultsMode,
     InputMode,
@@ -16,12 +12,8 @@ from turbopelican._utils.shared.args import (
 )
 
 
-@dataclass
-class InitConfiguration(CreateConfiguration):
-    """The command line arguments to configure the turbopelican website/project."""
-
-    commit_changes: bool = True
-    use_gh_cli: bool = False
+class AdornConfiguration(CreateConfiguration):
+    """The command line arguments to configure the Turbopelican website/project."""
 
     @classmethod
     def from_args(cls, raw_args: Namespace) -> Self:
@@ -79,9 +71,6 @@ class InitConfiguration(CreateConfiguration):
             input_mode=input_mode,
             handle_defaults_mode=handle_defaults_mode,
         )
-        commit_changes = cls._get_commit_changes(
-            no_commit=raw_args.no_commit, use_gh_cli=raw_args.use_gh_cli
-        )
 
         return cls(
             directory=path,
@@ -94,23 +83,4 @@ class InitConfiguration(CreateConfiguration):
             input_mode=input_mode,
             handle_defaults_mode=handle_defaults_mode,
             install_type=install_type,
-            commit_changes=commit_changes,
-            use_gh_cli=raw_args.use_gh_cli,
         )
-
-    @classmethod
-    def _get_commit_changes(cls, *, no_commit: bool, use_gh_cli: bool) -> bool:
-        """Ensures that non-conflicting instructions are provided for git actions.
-
-        Args:
-            no_commit: If True, does not make any commits.
-            use_gh_cli: If True, creates the remote repository on GitHub automatically.
-
-        Returns:
-            Whether or not to commit the changes.
-        """
-        if use_gh_cli and no_commit:
-            msg = "Cannot run GitHub CLI without committing changes."
-            raise ConfigurationError(msg)
-
-        return not no_commit
