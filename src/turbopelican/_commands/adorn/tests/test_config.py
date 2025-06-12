@@ -1,7 +1,7 @@
 from argparse import Namespace
 from pathlib import Path
 
-from turbopelican._commands.init.config import InitConfiguration
+from turbopelican._commands.adorn.config import AdornConfiguration
 from turbopelican._utils.shared.args import HandleDefaultsMode, InputMode, Verbosity
 
 
@@ -25,9 +25,8 @@ def test_turbo_configuration_from_args(tmp_path: Path) -> None:
         quiet=True,
         minimal_install=False,
         no_commit=False,
-        use_gh_cli=False,
     )
-    config = InitConfiguration.from_args(namespace)
+    config = AdornConfiguration.from_args(namespace)
     assert config.directory == new_repo
     assert config.author == "Fred"
     assert config.input_mode == InputMode.REJECT_INPUT
