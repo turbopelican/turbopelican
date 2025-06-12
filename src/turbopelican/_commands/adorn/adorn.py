@@ -1,17 +1,14 @@
-"""Initializes a dedicated repository to deploy a Pelican website to GitHub Pages."""
+"""Updates an existing repository to deploy a Pelican website to GitHub Pages."""
 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from turbopelican._commands.init.config import InitConfiguration
-from turbopelican._commands.init.create import (
-    commit_changes,
-    generate_repository,
-    report_completion,
-    run_gh_cli,
-    update_pyproject,
-    uv_sync,
+from turbopelican._commands.adorn.config import AdornConfiguration
+from turbopelican._commands.adorn.create import (
+    check_repository,
+    copy_files,
+    install_packages,
 )
 from turbopelican._utils.shared.create import update_contents, update_website
 
@@ -20,14 +17,14 @@ if TYPE_CHECKING:
 
 
 def add_options(parser: ArgumentParser) -> None:
-    """Adds the options for the init subparser.
+    """Adds the options for the adorn subparser.
 
     Args:
         parser: The parser/subparser to be updated.
     """
     parser.add_argument(
         "directory",
-        help="Path to the repository to be created.",
+        help="Path to the repository to be modified.",
         default=".",
         nargs="?",
     )
@@ -83,33 +80,18 @@ def add_options(parser: ArgumentParser) -> None:
         action="store_true",
         default=False,
     )
-    parser.add_argument(
-        "--no-commit",
-        help="Do not commit initial code.",
-        action="store_true",
-        default=False,
-    )
-    parser.add_argument(
-        "--use-gh-cli",
-        help="Create the remote GitHub repository and deploy website automatically.",
-        action="store_true",
-        default=False,
-    )
     parser.set_defaults(func=command)
 
 
 def command(raw_args: Namespace) -> None:
-    """Uses the provided configuration to initialize a new repository.
+    """Uses the provided configuration to modify an existing repository.
 
     Args:
         raw_args: The command-line provided arguments.
     """
-    config = InitConfiguration.from_args(raw_args)
-    generate_repository(config)
+    config = AdornConfiguration.from_args(raw_args)
+    check_repository(config)
+    copy_files(config)
     update_website(config)
-    update_pyproject(config.directory)
     update_contents(config)
-    uv_sync(directory=config.directory, verbosity=config.verbosity)
-    commit_changes(config)
-    run_gh_cli(config)
-    report_completion(config)
+    install_packages(config)
