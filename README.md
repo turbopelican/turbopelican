@@ -68,8 +68,6 @@ You will then need to push your code to GitHub:
 
 ```sh
 cd my-turbopelican-website
-git add .
-git commit -q -m "Initial commit."
 git remote add origin git@github.com:my-turbopelican-website/my-turbopelican-website.github.io.git # Use your own git repo reference
 git push -q --set-upstream origin main
 ```
