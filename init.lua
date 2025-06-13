@@ -3,23 +3,28 @@ local lspconfig = require("lspconfig")
 lspconfig.ruff.setup(
     {
         on_attach = function(client, bufnr)
-            vim.api.nvim_create_autocmd(
-                "BufWritePre",
-                {
-                    buffer = bufnr,
-                    callback = function()
-                        vim.lsp.buf.format({bufnr = bufnr})
-                    end
-                }
-            )
-        end,
-        init_options = {
-            settings = {
-                ruff = {
-                    formatOnSave = true
-                }
-            }
-        }
+            if client.supports_method("textDocument/formatting") then
+                vim.api.nvim_create_autocmd(
+                    "BufWritePre",
+                    {
+                        group = vim.api.nvim_create_augroup("LspFormattingRuff", {clear = true}),
+                        buffer = bufnr,
+                        callback = function()
+                            vim.lsp.buf.format({bufnr = bufnr})
+                            vim.lsp.buf.code_action(
+                                {
+                                    bufnr = bufnr,
+                                    context = {
+                                        only = {"source.organizeImports"}
+                                    },
+                                    apply = true
+                                }
+                            )
+                        end
+                    }
+                )
+            end
+        end
     }
 )
 
