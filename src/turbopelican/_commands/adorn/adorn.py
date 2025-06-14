@@ -9,6 +9,7 @@ from turbopelican._commands.adorn.create import (
     check_repository,
     copy_files,
     install_packages,
+    report_completion,
 )
 from turbopelican._utils.shared.create import update_contents, update_website
 
@@ -95,3 +96,4 @@ def command(raw_args: Namespace) -> None:
     update_website(config)
     update_contents(config)
     install_packages(config)
+    report_completion(config)
