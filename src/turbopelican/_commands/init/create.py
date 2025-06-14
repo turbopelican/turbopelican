@@ -77,6 +77,12 @@ def generate_repository(args: InitConfiguration) -> None:
             f"Cannot create repository. {args.directory.parent} does not exist.",
         )
     if args.directory.exists():
+        if not args.directory.is_dir():
+            raise NotADirectoryError("Cannot create repository at {args.directory}.")
+        if any(args.directory.iterdir()):
+            error_message = f"Non-empty target directory at {args.directory}."
+            tip_message = "Use `turbopelican adorn` to modify existing repository."
+            raise RuntimeError(f"{error_message}\n{tip_message}")
         args.directory.rmdir()
     _copy_template(args.directory, "newsite")
     if args.install_type == InstallType.MINIMAL_INSTALL:
