@@ -144,3 +144,13 @@ def install_packages(config: AdornConfiguration) -> None:
     environ.pop("VIRTUAL_ENV")
 
     subprocess.check_call(uv_add_args, cwd=config.directory, env=environ)
+
+
+def report_completion(args: AdornConfiguration) -> None:
+    """Reports that Turbopelican has finished adorning the repository.
+
+    Args:
+        args: The arguments to configure the website.
+    """
+    if args.verbosity == Verbosity.NORMAL:
+        print("⚡ Turbopelican adorned! ⚡")
