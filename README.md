@@ -37,23 +37,23 @@ source for your website.
 For example, if you want the website to be `https://johndoe.github.io`, your
 GitHub repository will need to be called `johndoe.github.io`.
 
-![Create your repository on GitHub](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/create-repo.png)
+![Create your repository on GitHub](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/readme/create-repo.png)
 
 After your repository is created, copy the git repository URL. You'll need it
 later.
 
-![Obtain your repository URL](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/get-repo-reference.png)
+![Obtain your repository URL](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/readme/get-repo-reference.png)
 
 Then enter your settings for your repository, and under "**Code and
 automation**" click "**Pages**". The section "**Build and deployment**" allows
 you to choose a source. Chose "**GitHub actions**".
 
-![Configure site publication](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/github-actions-settings.png)
+![Configure site publication](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/readme/github-actions-settings.png)
 
 Next, you need to run `turbopelican`. Users are recommended to run
 `turbopelican` using `uvx`:
 
-![Run turbopelican](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/run-turbopelican-init.gif)
+![Run turbopelican](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/readme/run-turbopelican-init.gif)
 
 You can use the defaults, or choose your own values. In the example above, I
 have decided to give the website a non-default name, but I have left the other
@@ -75,7 +75,7 @@ git push -q --set-upstream origin main
 Now look at your repository on GitHub. You should be able to see the
 repository:
 
-![View new repository](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/view-new-repo.png)
+![View new repository](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/readme/view-new-repo.png)
 
 If you navigate back to the settings for GitHub Pages, you should see a
 message informing you that your website is already live.
@@ -83,11 +83,11 @@ message informing you that your website is already live.
 > ℹ️  **_NOTE:_** It may take a minute for this prompt to appear, because
 GitHub Actions must first deploy your website.
 
-![Site is live](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/site-is-live.png)
+![Site is live](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/readme/site-is-live.png)
 
 If you follow the link, you should be able to see your newly deployed website.
 
-![View website](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/docs/main-page.png)
+![View website](https://raw.githubusercontent.com/turbopelican/turbopelican/refs/heads/main/assets/readme/main-page.png)
 
 You can learn more about Pelican [here](https://getpelican.com).
 
