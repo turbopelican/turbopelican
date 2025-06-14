@@ -1,5 +1,29 @@
 # Changelog
 
+## Version 0.6.0
+
+### Features
+
+- Adding `turbopelican adorn` subcommand, which can be used to add Pelican
+  static-site websites to existing Git repositories.
+- Adding `--no-commit` flag, in the absence of which, `Turbopelican` will
+  automatically attempt to create an initial commit in the repository once the
+  repository has been fully populated.
+- Adding `--use-gh-cli` flag (for use only with a working installation of
+  [GitHub CLI](https://cli.github.com/)) which causes Turbopelican to
+  automatically attempt to create the GitHub repository and push the local
+  tree to GitHub.
+- When a user attempts to perform `turbopelican init` on a directory that
+  already contains some files, Turbopelican suggests for the user to run
+  `turbopelican adorn` instead.
+
+### Other changes
+
+- Cutting redundant NeoVim configuration, while also configuring NeoVim to run
+  Ruff's import sorting fix on save.
+- Updating dependencies, including `pydantic` to `v2.11.6`, `pyright` to
+  `v1.1.402`, and `ruff` to `v0.11.13`.
+
 ## Version 0.5.1
 
 ### Bug fixes
