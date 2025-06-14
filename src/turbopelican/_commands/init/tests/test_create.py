@@ -135,6 +135,31 @@ def test_generate_repository_bad_directory(config: InitConfiguration) -> None:
         generate_repository(config)
 
 
+def test_generate_repository_not_a_directory(config: InitConfiguration) -> None:
+    """Tests that the appropriate error is raised when a non-directory is given.
+
+    Args:
+        config: The configuration for Turbopelican. Supplied via fixture.
+    """
+    config.directory = config.directory / "myfile"
+    config.directory.touch()
+    with pytest.raises(NotADirectoryError):
+        generate_repository(config)
+
+
+def test_generate_repository_not_empty(config: InitConfiguration) -> None:
+    """Tests that the appropriate error is raised when a non-empty directory is given.
+
+    Args:
+        config: The configuration for Turbopelican. Supplied via fixture.
+    """
+    config.directory = config.directory / "myrepo"
+    config.directory.mkdir()
+    (config.directory / "hello-world.txt").touch()
+    with pytest.raises(RuntimeError):
+        generate_repository(config)
+
+
 @pytest.mark.usefixtures("mock_subprocess_run")
 def test_generate_repository_new_folder(config: InitConfiguration) -> None:
     """Tests that the repository can be generated successfully, creating a new folder.
