@@ -6,6 +6,12 @@ Date: 2025-06-16
 Before you try Turbopelican, make sure that all
 [prerequisites](/get-started/prerequisites) are met.
 
+This explains how to create a static website for your personal GitHub account,
+or for an organization you control. If your GitHub username is `johndoe123`,
+you can create the website `https://johndoe123.github.io`. If your GitHub
+organization is `wemakethings`, you can create the website
+`https://wemakethings.github.io`.
+
 ## Run Turbopelican
 
 If you have chosen to install
