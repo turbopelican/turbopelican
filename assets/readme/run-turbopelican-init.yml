@@ -9,7 +9,7 @@ config:
   
   # Specify the current working directory path
   # the default is the current working directory path
-  cwd: /home/user
+  cwd: /home/johndoe
   
   # Export additional ENV variables
   env:
@@ -113,7 +113,7 @@ records:
   - delay: 1
     content: "\r\n"
   - delay: 100
-    content: "user@host:~$ "
+    content: "johndoe@host:~$ "
   - delay: 994
     content: u
   - delay: 128
@@ -160,50 +160,28 @@ records:
     content: ' '
   - delay: 80
     content: m
-  - delay: 125
-    content: 'y'
-  - delay: 160
-    content: '-'
-  - delay: 144
-    content: t
-  - delay: 104
-    content: u
-  - delay: 143
+  - delay: 94
     content: r
-  - delay: 124
-    content: b
-  - delay: 161
-    content: o
-  - delay: 100
-    content: p
-  - delay: 143
-    content: e
-  - delay: 144
-    content: l
   - delay: 80
-    content: i
-  - delay: 96
-    content: c
+    content: j
+  - delay: 125
+    content: o
+  - delay: 160
+    content: h
   - delay: 144
-    content: a
-  - delay: 177
-    content: 'n'
-  - delay: 120
-    content: '-'
-  - delay: 191
-    content: w
-  - delay: 64
+    content: n
+  - delay: 104
+    content: d
+  - delay: 143
+    content: o
+  - delay: 124
     content: e
-  - delay: 128
-    content: b
-  - delay: 192
-    content: s
-  - delay: 192
-    content: i
-  - delay: 112
-    content: t
-  - delay: 128
-    content: e
+  - delay: 161
+    content: 1
+  - delay: 100
+    content: 2
+  - delay: 143
+    content: 3
   - delay: 124
     content: "\r\n\e[?2004l\r\e]133;C\e\\\r"
   - delay: 51
@@ -271,9 +249,9 @@ records:
   - delay: 26
     content: "\r\e[2K\e[2mInstalled \e[1m13 packages\e[0m \e[2min 30ms\e[0m\e[0m\r\n"
   - delay: 389
-    content: 'Who is the website author? [Ilya Simpson] '
+    content: 'Who is the website author? [John Doe] '
   - delay: 668
-    content: "\r\nWhat is the name of the website? [my-turbopelican-website] "
+    content: "\r\nWhat is the name of the website? [mrjohndoe123] "
   - delay: 708
     content: M
   - delay: 240
@@ -301,11 +279,11 @@ records:
   - delay: 7
     content: 'What language will your website use? [en] '
   - delay: 1224
-    content: "\r\nWhat is your website URL? [https://my-turbopelican-website.github.io] "
+    content: "\r\nWhat is your website URL? [https://mrjohndoe123.github.io] "
   - delay: 1312
     content: "\r\n"
   - delay: 12
-    content: "Initialized empty Git repository in /home/user/my-turbopelican-website/.git/\r\n"
+    content: "Initialized empty Git repository in /home/johndoe/mrjohndoe123/.git/\r\n"
   - delay: 50
     content: "Using CPython 3.11.11\r\nCreating virtual environment at: .venv\r\n"
   - delay: 353
@@ -329,6 +307,6 @@ records:
   - delay: 8
     content: "⚡ Turbopelican initialized! ⚡\r\n"
   - delay: 28
-    content: "user@host:~$ "
+    content: "johndoe@host:~$ "
   - delay: 1626
-    content: "\ruser@host:~$ "
+    content: "\rjohndoe@host:~$ "
