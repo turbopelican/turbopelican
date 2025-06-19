@@ -5,7 +5,7 @@ Date: 2025-06-16
 
 # Turbopelican
 
-Ever wanted to create a personal website with no cost?
+Ever wanted to create a personal website at no cost?
 
 Turbopelican is the fastest and easiest tool for setting up a GitHub Page
 static website using Pelican.
