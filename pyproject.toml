@@ -35,6 +35,7 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
+Homepage = "https://turbopelican.github.io"
 Source = "https://github.com/turbopelican/turbopelican"
 Issues = "https://github.com/turbopelican/turbopelican/issues"
 Changelog = "https://github.com/turbopelican/turbopelican/blob/main/CHANGELOG.md"
