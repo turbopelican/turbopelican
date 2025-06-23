@@ -141,7 +141,7 @@ def install_packages(config: AdornConfiguration) -> None:
         uv_add_args.append("--quiet")
 
     environ = os.environ.copy()
-    environ.pop("VIRTUAL_ENV")
+    environ.pop("VIRTUAL_ENV", None)
 
     subprocess.check_call(uv_add_args, cwd=config.directory, env=environ)
 
