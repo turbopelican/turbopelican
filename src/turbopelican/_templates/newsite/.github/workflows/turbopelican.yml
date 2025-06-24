@@ -2,7 +2,7 @@ name: Build static site
 run-name: ${{ github.actor }}
 on:
   push:
-    braches:
+    branches:
       - main
 jobs:
   build-static-site:
