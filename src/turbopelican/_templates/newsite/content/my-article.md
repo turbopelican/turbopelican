@@ -1,5 +1,5 @@
 Title: My article
-Date: {date}
+Date: $date
 
 ## My article
 
