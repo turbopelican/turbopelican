@@ -1,5 +1,6 @@
 from datetime import datetime
 from pathlib import Path
+from string import Template
 from typing import cast
 from zoneinfo import ZoneInfo
 
@@ -42,4 +43,4 @@ def update_contents(config: CreateConfiguration) -> None:
     today = datetime.now(tz=ZoneInfo(config.timezone)).date()
     for file in (config.directory / "content").glob("*.md"):
         text = file.read_text()
-        file.write_text(text.format(date=today))
+        file.write_text(Template(text).safe_substitute(date=today))

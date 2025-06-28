@@ -15,6 +15,7 @@ theme = "themes/plain-theme"
 article_paths = []
 page_paths = [""]
 page_save_as = "{slug}.html"
+page_url = "{slug}.html"
 
 static_paths = ["static", "images"]
 

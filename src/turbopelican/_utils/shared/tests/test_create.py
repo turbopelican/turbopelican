@@ -71,12 +71,12 @@ def test_update_contents(config: CreateConfiguration) -> None:
     contents_dir = config.directory / "content"
     contents_dir.mkdir()
     first_file = contents_dir / "first-article.md"
-    first_file.write_text("Date: {date}")
+    first_file.write_text("Date: $date")
     second_file = contents_dir / "second-article.md"
     second_file.write_text(
         """
         Other: 1
-        Date: {date}
+        Date: $date
         Something: 2
         """
     )
