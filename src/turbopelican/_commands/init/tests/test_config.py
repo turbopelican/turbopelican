@@ -37,3 +37,24 @@ def test_turbo_configuration_from_args(tmp_path: Path) -> None:
     assert config.default_lang == "en"
     assert config.site_url == "https://my-website.github.io"
     assert config.verbosity == Verbosity.QUIET
+
+
+def test_turbo_configuration_default_site_url_regular(tmp_path: Path) -> None:
+    """Checks a valid site URL can be inferred from a repository."""
+    assert (
+        InitConfiguration._default_site_url(tmp_path / "repo-name")
+        == "https://repo-name.github.io"
+    )
+
+
+def test_turbo_configuration_default_site_url_explicit(tmp_path: Path) -> None:
+    """Checks a valid site URL can be inferred from a repository with explicit name."""
+    assert (
+        InitConfiguration._default_site_url(tmp_path / "repo_name.github.io")
+        == "https://repo-name.github.io"
+    )
+
+
+def test_turbo_configuration_default_site_url_invalid(tmp_path: Path) -> None:
+    """Checks a valid site URL can be inferred from a repository with explicit name."""
+    assert InitConfiguration._default_site_url(tmp_path / "?") is None

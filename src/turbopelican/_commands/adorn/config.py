@@ -1,4 +1,5 @@
 import shutil
+import subprocess
 from argparse import Namespace
 from pathlib import Path
 from typing import Self
@@ -84,3 +85,35 @@ class AdornConfiguration(CreateConfiguration):
             handle_defaults_mode=handle_defaults_mode,
             install_type=install_type,
         )
+
+    @classmethod
+    def _default_site_url(cls, path: Path) -> str | None:
+        """Obtains the default site URL if none is provided by the user explicitly.
+
+        Args:
+            path: The resolved path to the directory where the project is located.
+
+        Returns:
+            The default site URL if it can be obtained.
+        """
+        git_path = shutil.which("git")
+        if not git_path:
+            raise RuntimeError("git not installed")
+
+        remote = subprocess.run(
+            [git_path, "config", "--get", "remote.origin.url"],
+            cwd=path,
+            capture_output=True,
+            check=False,
+        ).stdout
+
+        if not remote:
+            return None
+
+        decoded_remote = remote.decode().strip().removesuffix(".git")
+        if decoded_remote.startswith("https://"):
+            _, owner, repo = decoded_remote.rsplit("/", 2)
+        else:
+            owner, repo = decoded_remote.rsplit(":", 1)[1].split("/")
+
+        return f"https://{owner}.github.io/{repo}"
