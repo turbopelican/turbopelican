@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import subprocess
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import StrEnum
 from typing import TYPE_CHECKING
@@ -49,7 +50,7 @@ class ConfigurationError(ValueError):
 
 
 @dataclass
-class CreateConfiguration:
+class CreateConfiguration(ABC):
     """The command line arguments to configure the turbopelican website/project."""
 
     directory: Path
@@ -279,14 +280,8 @@ class CreateConfiguration:
         ):
             raise ConfigurationError("Could not obtain site URL without user input.")
 
-        website_name = path.name.removesuffix(".github.io").replace("_", "-")
-        filtered_name = "".join(
-            char
-            for char in website_name
-            if char.isalpha() or char.isdigit() or char == "-"
-        )
-        if filtered_name:
-            default_url = f"https://{filtered_name}.github.io"
+        default_url = cls._default_site_url(path=path)
+        if default_url:
             if handle_defaults_mode == HandleDefaultsMode.USE_DEFAULTS:
                 return default_url
             chosen_name = input(f"What is your website URL? [{default_url}] ")
@@ -301,3 +296,16 @@ class CreateConfiguration:
 
         cls._validate_site_url(chosen_name)
         return chosen_name
+
+    @classmethod
+    @abstractmethod
+    def _default_site_url(cls, path: Path) -> str | None:
+        """Obtains the default site URL if none is provided by the user explicitly.
+
+        Args:
+            path: The resolved path to the directory where the project is located.
+
+        Returns:
+            The default site URL if it can be obtained.
+        """
+        return NotImplemented

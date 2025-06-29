@@ -99,6 +99,27 @@ class InitConfiguration(CreateConfiguration):
         )
 
     @classmethod
+    def _default_site_url(cls, path: Path) -> str | None:
+        """Obtains the default site URL if none is provided by the user explicitly.
+
+        Args:
+            path: The resolved path to the directory where the project is located.
+
+        Returns:
+            The default site URL if it can be obtained.
+        """
+        website_name = path.name.removesuffix(".github.io").replace("_", "-")
+        filtered_name = "".join(
+            char
+            for char in website_name
+            if char.isalpha() or char.isdigit() or char == "-"
+        )
+        if filtered_name:
+            return f"https://{filtered_name}.github.io"
+
+        return None
+
+    @classmethod
     def _get_commit_changes(cls, *, no_commit: bool, use_gh_cli: bool) -> bool:
         """Ensures that non-conflicting instructions are provided for git actions.
 

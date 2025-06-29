@@ -14,9 +14,23 @@ from turbopelican._utils.shared.args import (
 from turbopelican._utils.shared.create import update_contents, update_website
 
 
+class CreateConfigurationComplete(CreateConfiguration):
+    @classmethod
+    def _default_site_url(cls, path: Path) -> str | None:
+        """Obtains the default site URL if none is provided by the user explicitly.
+
+        Args:
+            path: The resolved path to the directory where the project is located.
+
+        Returns:
+            The default site URL if it can be obtained.
+        """
+        return path.name
+
+
 @pytest.fixture
-def config(tmp_path: Path) -> CreateConfiguration:
-    return CreateConfiguration(
+def config(tmp_path: Path) -> CreateConfigurationComplete:
+    return CreateConfigurationComplete(
         directory=tmp_path,
         author="Bob",
         site_name="Bob's website",

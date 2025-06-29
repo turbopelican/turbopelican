@@ -37,6 +37,7 @@ integration-test:
 	# Run `turbopelican adorn` normally.
 	@rm -rf "$(TARGET)"
 	uv init "$(TARGET)"
+	git -C "$(TARGET)" remote add origin "git@github.com:myuser/myrepo"
 	uv run turbopelican adorn --author "GNU make" "$(TARGET)" -nd
 	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
 	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
@@ -45,6 +46,7 @@ integration-test:
 	# Run `turbopelican adorn` with a minimal install.
 	@rm -rf "$(TARGET)"
 	uv init "$(TARGET)"
+	git -C "$(TARGET)" remote add origin "git@github.com:myuser/myrepo"
 	uv run turbopelican adorn --author "GNU make" "$(TARGET)" -nd --minimal-install
 	$(VENV) uv pip --directory "$(TARGET)" install -qe "$(shell pwd)"
 	$(VENV) uv run --directory "$(TARGET)" --no-sync pelican content
