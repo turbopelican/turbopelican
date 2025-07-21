@@ -1,5 +1,37 @@
 # Changelog
 
+## Version 0.6.1
+
+### Bug fixes
+
+- In the version prior, adorning a version prior without having sourced a
+  virtual environment would raise an error, given that the environment
+  variable `VIRTUAL_ENV` would not exist. Now the environment variable being
+  absent not cause any such issue.
+- In version 0.1.0, when a branch on a Turbopelican website repository other
+  than `main` was pushed, it would still publish the website due to a typo in
+  the GitHub workflow. Now the typo is corrected.
+- In version 0.1.0, a Turbopelican website not hosted at the root domain would
+  have linking issues. Now the links are appropriately relative to the
+  project's root.
+- In the version prior, a user adorning a website would be suggested an
+  incorrect default site URL. Now the default should be correct.
+- In version 0.1.0, a Turbopelican website not hosted at the root domain would
+  incorrectly link its CSS styling. Now the styling is correctly linked.
+- In version 0.1.0, a Turbopelican website not hosted at the root domain would
+  have a hyperlink to the website's root, rather than to the project's root.
+  Now correctly directing the hyperlink to the project's root.
+
+### Other changes
+
+- Renaming directory `assets/docs` to `assets/readme`. Documentation is now
+  kept at the [project's website](https://turbopelican.github.io).
+- Creating a new top-level directory called `docs` which contains the
+  contents for the new website, without including styling and boilerplate.
+- Using more intuitive example `run-turbopelican-init.gif` for `README.md`.
+- Adding project's website to the project's URLs.
+- Simplifying process of generating release notes to simple sed script.
+
 ## Version 0.6.0
 
 ### Features
