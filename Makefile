@@ -53,7 +53,7 @@ integration-test:
 	$(VENV) $(CONFIG_TYPE) uv run --directory "$(TARGET)" --no-sync pelican content
 
 	# Clean up.
-	@#rm -rf "$(TEMP_DIR)"
+	@rm -rf "$(TEMP_DIR)"
 
 ci: lint format test type-check integration-test
 	@echo "CI run passed"
