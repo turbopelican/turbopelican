@@ -12,6 +12,9 @@ you can create the website `https://johndoe123.github.io`. If your GitHub
 organization is `wemakethings`, you can create the website
 `https://wemakethings.github.io`.
 
+If you instead wish to create a repository for an individual project, click
+[here](/get-started/running-adorn) instead.
+
 ## Run Turbopelican
 
 If you have chosen to install
